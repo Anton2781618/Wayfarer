@@ -55,8 +55,6 @@ public class Unit : AbstractBehavior
         target = newTarget;
     }
 
-    
-
     public void AnimationStates()
     {
         anim.SetBool("walk", agent.remainingDistance > agent.stoppingDistance);
@@ -135,4 +133,5 @@ public class Unit : AbstractBehavior
         
         dSDialogue.StartDialogue(this);
     }
+    
 }

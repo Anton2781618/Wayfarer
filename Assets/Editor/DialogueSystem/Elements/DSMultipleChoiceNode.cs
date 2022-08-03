@@ -88,11 +88,11 @@ namespace DS.Elements
             //создаем контейнер с портом
             Port choicePort = this.CreatePort();
 
-            Test test = new Test(choicePort);
-            test.portName = choicePort.portName; 
+            // Test test = new Test(choicePort);
+            // test.portName = choicePort.portName; 
 
-            test.userData = userData;
-            // choicePort.userData = userData;
+            // test.userData = userData;
+            choicePort.userData = userData;
 
             DSChoiceSaveData choiceData = (DSChoiceSaveData) userData;
 
@@ -103,17 +103,17 @@ namespace DS.Elements
                     return;
                 }
 
-                // if (choicePort.connected)
-                if (test.connected)
+                if (choicePort.connected)
+                // if (test.connected)
                 {
-                    // graphView.DeleteElements(choicePort.connections);
-                    graphView.DeleteElements(test.connections);
+                    graphView.DeleteElements(choicePort.connections);
+                    // graphView.DeleteElements(test.connections);
                 }
 
                 Choices.Remove(choiceData);
 
-                graphView.RemoveElement(test);
-                // graphView.RemoveElement(choicePort);
+                // graphView.RemoveElement(test);
+                graphView.RemoveElement(choicePort);
             });
 
             deleteChoiceButton.AddToClassList("ds-node__button");
@@ -129,12 +129,13 @@ namespace DS.Elements
                 "ds-node__choice-text-field"
             );
 
-            test.Add(choiceTextField);
-            // choicePort.Add(choiceTextField);
-            // choicePort.Add(deleteChoiceButton);
-            test.Add(deleteChoiceButton);
+            // test.Add(choiceTextField);
+            choicePort.Add(choiceTextField);
+            choicePort.Add(deleteChoiceButton);
+            // test.Add(deleteChoiceButton);
 
-            return test;
+            // return test;
+            return choicePort;
         }        
     }
 }

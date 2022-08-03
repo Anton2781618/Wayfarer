@@ -169,7 +169,11 @@ public class GameManager : MonoBehaviour
     }
     public void CommandAttackTarget()
     {
-        if(!CheckTarget())return;
+        if(!CheckTarget())
+        {
+            Debug.Log("Нет таргета");
+            return;
+        }
 
         Unit tar = (Unit)targetHumanForHelp;
         tar.CommandAttackTheTarget();

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: f52fa749-a725-4537-9e62-09357590b04a
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: f52fa749-a725-4537-9e62-09357590b04a
+  <Text>k__BackingField: "\u0423 \u043C\u0435\u043D\u044F \u043D\u0435 \u0433\u0443\u0441\u0442\u043E,
+    \u043D\u043E \u043A\u043E\u0435-\u0447\u0442\u043E \u0438\u043C\u0435\u0435\u0442\u0441\u044F.
+    \u0421\u043C\u043E\u0442\u0440\u0438."
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: "\u0422\u043E\u0440\u0433\u043E\u0432\u0430\u0442\u044C"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b8d1f77b0fb82414f95d3802359e9952, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  <Action>k__BackingField: 4

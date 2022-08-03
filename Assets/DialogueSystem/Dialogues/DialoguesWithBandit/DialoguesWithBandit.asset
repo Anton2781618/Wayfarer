@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caaa76378291a144d849f29230be0a5a, type: 3}
+  m_Name: DialoguesWithBandit
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: DialoguesWithBandit
+  <DialogueGroups>k__BackingField:
+    list: []
+  <UngroupedDialogues>k__BackingField:
+  - {fileID: 11400000, guid: a652b43b14ed4e640a6a0033fb8c8d2f, type: 2}
+  - {fileID: 11400000, guid: bf72e034a2a85d94d8af368a76cddf93, type: 2}
+  - {fileID: 11400000, guid: 6a680443f380d3440ab380c78433847f, type: 2}
+  - {fileID: 11400000, guid: da8023a1c4a107d4b9ff587b5e1b9456, type: 2}
+  - {fileID: 11400000, guid: b8d1f77b0fb82414f95d3802359e9952, type: 2}
+  - {fileID: 11400000, guid: 4e07cd7fe4589694ea383f14cf93382b, type: 2}
+  - {fileID: 11400000, guid: 0f5d6d5732a6a9c4c86dcb445142e615, type: 2}
+  - {fileID: 11400000, guid: 87f8ac11214846c4fa0c5c667aee6ba7, type: 2}
+  - {fileID: 11400000, guid: 99ff7cc5c42595a4383ff36e2d7ee535, type: 2}
+  - {fileID: 11400000, guid: 4062321ca8eb79649881fdab06f20d80, type: 2}

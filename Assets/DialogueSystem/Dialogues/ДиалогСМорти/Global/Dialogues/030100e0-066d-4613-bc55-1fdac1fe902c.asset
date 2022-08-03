@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: 030100e0-066d-4613-bc55-1fdac1fe902c
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: 030100e0-066d-4613-bc55-1fdac1fe902c
+  <Text>k__BackingField: "\u0421\u0442\u043E\u0439! \u041F\u0440\u043E\u0445\u043E\u0434
+    \u0442\u0443\u0442 \u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0438 \u044F,
+    \u0442\u043E\u0435\u0441\u0442\u044C \u043C\u044B \u0442\u0443\u0442 \u0441\u0442\u043E\u0438\u043C...\u0432\u043E\u0442!\n\u0434\u0430\u0432\u0430\u0439
+    \u043F\u043B\u0430\u0442\u0438 \u043C\u043D\u0435 \u0434\u0435\u043D\u0435\u043A "
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: "\u042F \u0442\u0435\u0431\u0435 \u0449\u0430 \u043F\u043E
+      \u0433\u043E\u043B\u043E\u0432\u0435 \u0437\u0430\u043F\u043B\u0430\u0447\u0443"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b24e20606985b3646b303860baa0c49f, type: 2}
+  - <Text>k__BackingField: "\u0423 \u043C\u0435\u043D\u044F \u043D\u0435\u0442 \u0434\u0435\u043D\u0435\u0433"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 67c331fbea129fa4aa8f0465fe64318c, type: 2}
+  - <Text>k__BackingField: "\u043C\u043E\u0436\u0435\u0442\u0432\u043E\u0437\u044C\u043C\u0435\u0448
+      \u043D\u0430\u0442\u0443\u0440\u043E\u0439"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 48865cedd80e2a941b745c28f980d8c1, type: 2}
+  - <Text>k__BackingField: "\u0422\u043E\u0440\u0433\u043E\u0432\u0430\u0442\u044C"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8f7ebc5ba1ac98340a6abe8e1a4137ad, type: 2}
+  - <Text>k__BackingField: "\u0434\u0430\u0442\u044C 100\u0440"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 50e7bf79d8f42ba48919d096efe6ebc1, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 1
+  <Action>k__BackingField: 4

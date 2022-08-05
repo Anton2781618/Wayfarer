@@ -5,7 +5,7 @@ using UnityEngine;
 //Класс представляет контекстное меню
 public class ItemContextMenu : MonoBehaviour
 {
-    public InventoryItem targetItem;
+    private InventoryItem targetItem;
     private Transform player;
 
     private void Start() 

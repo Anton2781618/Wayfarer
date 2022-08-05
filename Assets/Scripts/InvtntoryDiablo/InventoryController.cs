@@ -7,8 +7,11 @@ using static ItemData;
 public class InventoryController : MonoBehaviour
 {
 
+    //инвнтарь игрока
     private Chest playerChest;
     private ItemGrid buferGrid;
+    
+    //выбраный инвентарь
     public Chest TheChest{get; set;}
     public bool IsTreid{get; set;} = false;
     private ItemGrid selectedItemGrid;
@@ -28,17 +31,20 @@ public class InventoryController : MonoBehaviour
 
     [SerializeField] private List<ItemData> items;
     [SerializeField] private GameObject itemPrefab;
-    [SerializeField] private Transform canvasTransform;
 
+    private Transform canvasTransform;
     private InventoryIHighLight inventoryIHighLight;
-    private Transform player;
+    private PLayerController player;
 
-    private void Awake() 
+    private void Start() 
     {
-        player = FindObjectOfType<PLayerController>().transform;
+        canvasTransform = transform.root;
         inventoryIHighLight = GetComponent<InventoryIHighLight>();  
-        playerChest = FindObjectOfType<PLayerController>().GetComponent<Chest>();
-        playerChest.GetChestGrid().wearer = FindObjectOfType<PLayerController>();
+
+        player = FindObjectOfType<PLayerController>();
+        
+        playerChest = player.GetComponent<Chest>();
+        playerChest.GetChestGrid().wearer = player; 
     }
 
     private void Update() 
@@ -110,6 +116,7 @@ public class InventoryController : MonoBehaviour
 
         CreateRandomItem();
         InventoryItem itemToInsert = selectedItem;
+
         selectedItem = null;
         InsertItem(itemToInsert);
     }
@@ -148,10 +155,7 @@ public class InventoryController : MonoBehaviour
         InsertItemV2(itemToInsert, grid);
     }
 
-    public Chest GetPlayerChest()
-    {
-        return playerChest;
-    }
+    public Chest GetPlayerChest() => playerChest;
 
     Vector2Int oldPosition;
     InventoryItem itemToHighLight;
@@ -392,7 +396,7 @@ public class InventoryController : MonoBehaviour
             Destroy(selectedItem.gameObject);
             
             Instantiate(selectedItem.itemData.prefab, 
-            new Vector3(player.position.x + 1, player.position.y + 1, player.position.z), Quaternion.identity);
+            new Vector3(player.transform.position.x + 1, player.transform.position.y + 1, player.transform.position.z), Quaternion.identity);
             
             selectedItem = null;
         }

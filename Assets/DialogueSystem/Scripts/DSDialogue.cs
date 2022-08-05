@@ -65,14 +65,12 @@ namespace DS
 
                 dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
             }
-            
         }
 
         public void SetChoice(int index)
         {
             dialogue = dialogue.Choices[Choice = index].NextDialogue;
             Next();
-
         }
 
         private void ExitTheDialog()

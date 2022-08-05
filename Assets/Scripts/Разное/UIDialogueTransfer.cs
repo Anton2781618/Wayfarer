@@ -8,10 +8,7 @@ public class UIDialogueTransfer : MonoBehaviour
 {
     [SerializeField] private GameObject dialogWindow;
     [SerializeField] private Text dialogText;
-    [SerializeField] private GameObject DialogTransfer2;
-    [SerializeField] private Text questText2;
     [SerializeField] private DialogButtonTransfer questButt;
-    [SerializeField] private GameObject sqipButt;
     private List<DialogButtonTransfer>questButtons = new List<DialogButtonTransfer>();
     private int index = 0;
 

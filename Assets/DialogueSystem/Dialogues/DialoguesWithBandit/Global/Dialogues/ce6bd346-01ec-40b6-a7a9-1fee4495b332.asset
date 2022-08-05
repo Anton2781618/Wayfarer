@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: 77edf8fd-85dd-4a6c-87c5-60b811d84bac
+  m_Name: ce6bd346-01ec-40b6-a7a9-1fee4495b332
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 77edf8fd-85dd-4a6c-87c5-60b811d84bac
+  <DialogueName>k__BackingField: ce6bd346-01ec-40b6-a7a9-1fee4495b332
   <Text>k__BackingField: "\u0414\u0430\u043B\u044C\u0448\u0435 \u0434\u043E\u0440\u043E\u0433\u0430
     \u043F\u043B\u0430\u0442\u043D\u0430\u044F. \u0413\u043E\u043D\u0438 10 \u043C\u043E\u043D\u0435\u0442
     \u0438\u043B\u0438 \u043F\u0440\u043E\u0432\u0430\u043B\u0438\u0432\u0430\u0439!"
   <Choices>k__BackingField:
   - <Text>k__BackingField: "\u041D\u0430, \u043F\u043E\u0434\u0430\u0432\u0438\u0441\u044C!"
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 99ff7cc5c42595a4383ff36e2d7ee535, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1cb7f569d310e4c4abe5d22a5d4347ac, type: 2}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   <Action>k__BackingField: 4

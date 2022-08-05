@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: e8159ff1-8e46-4c40-988b-73a39be4bf14
+  m_Name: 656a73d5-fb8d-41bb-b9a3-48cdd92f4128
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: e8159ff1-8e46-4c40-988b-73a39be4bf14
+  <DialogueName>k__BackingField: 656a73d5-fb8d-41bb-b9a3-48cdd92f4128
   <Text>k__BackingField: "\u0421\u0442\u043E\u0439! \u041F\u0440\u043E\u0445\u043E\u0434
     \u0437\u0430\u043A\u0440\u044B\u0442!"
   <Choices>k__BackingField:
   - <Text>k__BackingField: "\u0427\u0442\u043E \u0442\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E?"
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: bf72e034a2a85d94d8af368a76cddf93, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 03da6b2cf8b18264db4305b1e5bcd2b3, type: 2}
   - <Text>k__BackingField: "\u0414\u0430\u0439 \u043F\u0440\u043E\u0439\u0442\u0438,
       \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0442\u044C \u043D\u0435 \u0441\u0442\u0430\u043D\u0443."
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6a680443f380d3440ab380c78433847f, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: df2b1737a9b9e0942bcb2403b733ad64, type: 2}
   - <Text>k__BackingField: "\u0423 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C
       \u0447\u0442\u043E-\u0442\u043E \u043D\u0430 \u043E\u0431\u043C\u0435\u043D?"
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: da8023a1c4a107d4b9ff587b5e1b9456, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b0d4947587f73f34298e30b2b8d80b07, type: 2}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
   <Action>k__BackingField: 4

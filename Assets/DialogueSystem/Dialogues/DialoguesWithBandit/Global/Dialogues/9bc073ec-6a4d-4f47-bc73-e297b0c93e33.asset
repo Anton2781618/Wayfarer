@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: 6ff332e5-3e31-48ed-a1cb-23dac35c275a
+  m_Name: 9bc073ec-6a4d-4f47-bc73-e297b0c93e33
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 6ff332e5-3e31-48ed-a1cb-23dac35c275a
+  <DialogueName>k__BackingField: 9bc073ec-6a4d-4f47-bc73-e297b0c93e33
   <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
   <Choices>k__BackingField:
   - <Text>k__BackingField: New Choice
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 87f8ac11214846c4fa0c5c667aee6ba7, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: ce14716c3281fa743bc0c1672c150273, type: 2}
   <DialogueType>k__BackingField: 2
   <IsStartingDialogue>k__BackingField: 0
   <Action>k__BackingField: 0

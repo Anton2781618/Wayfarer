@@ -162,7 +162,7 @@ Animator:
   m_GameObject: {fileID: 2261661633899935360}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1875f8a8b8f85ae40be31f5bfea796b1, type: 3}
-  m_Controller: {fileID: 9100000, guid: 08755d03ebe1f544291d5013c1ef0157, type: 2}
+  m_Controller: {fileID: 9100000, guid: d7c55390ab0320c47b84f63184ecb1b9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -332,6 +332,9 @@ MonoBehaviour:
   unitCanvas: {fileID: 501600340426978261}
   aI:
     dialogueContainer: {fileID: 0}
+    dialogue: {fileID: 0}
+    Buferdialogue: {fileID: 0}
+    Buferdialogues: []
 --- !u!114 &2261661633899935388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueContainer: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
   dialogueGroup: {fileID: 11400000, guid: bc083d05c95610f4e897b8849d8a6cfb, type: 2}
-  dialogue: {fileID: 11400000, guid: 62c11ea6d611e1b4db8d2fba12cc0202, type: 2}
+  dialogue: {fileID: 11400000, guid: 4667b5159ce4e504881cb01126e57f68, type: 2}
   groupedDialogues: 0
   startingDialoguesOnly: 0
   selectedDialogueGroupIndex: 0

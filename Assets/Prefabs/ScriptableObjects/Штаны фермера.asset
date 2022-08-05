@@ -19,7 +19,7 @@ MonoBehaviour:
   width: 2
   height: 3
   itemIcon: {fileID: 21300000, guid: 699073324edfd8745a0649a7c221d2ae, type: 3}
-  prefab: {fileID: 919132149155446097, guid: 93558e513f5193f459b067ea578f4c10, type: 3}
-  prefabForPutOn: {fileID: 919132149155446097, guid: 93558e513f5193f459b067ea578f4c10, type: 3}
+  prefab: {fileID: 2311271085865604942, guid: 4ffd7269aa3e01c4196c6eb5ae4d7cae, type: 3}
+  prefabForPutOn: {fileID: 2311271085865604942, guid: 4ffd7269aa3e01c4196c6eb5ae4d7cae, type: 3}
   itemType: 8
   isSingle: 1

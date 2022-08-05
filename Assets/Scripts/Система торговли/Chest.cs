@@ -20,6 +20,13 @@ public class Chest : MonoBehaviour, ICanUse
         outline = GetComponent<Outline>();    
         inventoryController = FindObjectOfType<InventoryController>();
     }
+
+    public void InitChest(ItemGrid chestGrid, Image ImageMoney)
+    {
+        this.chestGrid = chestGrid;
+        this.ImageMoney = ImageMoney;
+    }
+    
     public void ShowOutline(bool value)
     {
         outline.enabled = value;

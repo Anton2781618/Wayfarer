@@ -32,7 +32,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     [SerializeField] protected States state = States.Патруль;
     
     protected Animator anim;
-    [SerializeField] protected Canvas unitCanvas;
+    
     protected NavMeshAgent agent;
     [SerializeField] private Sword sword;
     protected Chest chest;
@@ -43,10 +43,19 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         chest = GetComponent<Chest>();
+        
+        Init();
+
         unitStats.curHP = unitStats.maxHP;
         HpSlider.maxValue = unitStats.maxHP;
         HpSlider.value = unitStats.maxHP;
     }
+
+    public virtual void Init()
+    {
+
+    }
+
 
     public void TakeDamage(int value)
     {
@@ -88,24 +97,16 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         Die();
     }
 
-    public void Die()
+    public virtual void Die()
     {
         if(agent)agent.enabled = false;
 
         anim.SetBool("die", true);
-        SowHealthBar (false);
+        
         state = States.Мертв;
         this.enabled = false;
+
         Debug.Log(transform.name + " умер");
-    }
-    public void SowHealthBar(bool value)
-    {
-        if(unitCanvas == null)
-        {
-            Debug.Log("у " + transform.name + " не установлен unitCanvas");
-            return;
-        }
-        unitCanvas.gameObject.SetActive(value);
     }
 
     public UnitStats GetStats()
@@ -218,18 +219,18 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         return anim;
     }
 
+    public virtual void SowHealthBar(bool value)
+    {
+
+    }
+
     //метод переопределяется в классе Unit
     public virtual void Use()
     {
     }
 
-    public void ShowOutline(bool value)
+    public virtual void ShowOutline(bool value)
     {
-        if(state == States.Мертв)
-        {
-            SowHealthBar(false);    
-            return;
-        }
-        SowHealthBar(value);
+        
     }
 }

@@ -28,8 +28,9 @@ namespace DS
 
         public void StartDialogue(Unit unit)
         {
-            targetUnit = unit;
+            targetUnit = unit;            
             dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
+            
             GameManager.singleton.SwithCameraEnabled(false);
             GameManager.singleton.SetIsControlingPlayer(false);
 
@@ -79,7 +80,6 @@ namespace DS
             GameManager.singleton.SetIsControlingPlayer(true);
             GameManager.singleton.GetDialogueTransfer().ShowDialogWindow(false);
             GameManager.singleton.CloseAllUiPanels();
-        }
-        
+        }        
     }
 }

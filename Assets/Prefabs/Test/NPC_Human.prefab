@@ -330,6 +330,8 @@ MonoBehaviour:
   sword: {fileID: 0}
   dSDialogue: {fileID: 2261661633899935389}
   unitCanvas: {fileID: 501600340426978261}
+  aI:
+    dialogueContainer: {fileID: 0}
 --- !u!114 &2261661633899935388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueContainer: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
   dialogueGroup: {fileID: 11400000, guid: bc083d05c95610f4e897b8849d8a6cfb, type: 2}
-  dialogue: {fileID: 11400000, guid: 4667b5159ce4e504881cb01126e57f68, type: 2}
+  dialogue: {fileID: 11400000, guid: 62c11ea6d611e1b4db8d2fba12cc0202, type: 2}
   groupedDialogues: 0
   startingDialoguesOnly: 0
   selectedDialogueGroupIndex: 0

@@ -8,9 +8,9 @@ public class InventoryIHighLight : MonoBehaviour
     [SerializeField] private RectTransform highLighter;
 
     //показать подсветку
-    public void Show(bool b)
+    public void Show(bool value)
     {
-        highLighter.gameObject.SetActive(b);
+        highLighter.gameObject.SetActive(value);
         highLighter.SetAsFirstSibling();
     }
 

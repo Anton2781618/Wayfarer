@@ -28,8 +28,9 @@ namespace DS
 
         public void StartDialogue(Unit unit)
         {
-            targetUnit = unit;
+            targetUnit = unit;            
             dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
+            
             GameManager.singleton.SwithCameraEnabled(false);
             GameManager.singleton.SetIsControlingPlayer(false);
 
@@ -65,14 +66,12 @@ namespace DS
 
                 dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
             }
-            
         }
 
         public void SetChoice(int index)
         {
             dialogue = dialogue.Choices[Choice = index].NextDialogue;
             Next();
-
         }
 
         private void ExitTheDialog()
@@ -81,7 +80,6 @@ namespace DS
             GameManager.singleton.SetIsControlingPlayer(true);
             GameManager.singleton.GetDialogueTransfer().ShowDialogWindow(false);
             GameManager.singleton.CloseAllUiPanels();
-        }
-        
+        }        
     }
 }

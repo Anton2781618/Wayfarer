@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using DS;
+using DS.Data;
 using DS.Enumerations;
+using DS.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 using static ICanTakeDamage;
@@ -11,6 +14,7 @@ public class Unit : AbstractBehavior
     private delegate int Operation();
     [SerializeField] private DSDialogue dSDialogue;
     [SerializeField] protected Canvas unitCanvas;
+    [SerializeField] protected AI aI = new AI();
 
     public override void Init()
     {
@@ -93,6 +97,8 @@ public class Unit : AbstractBehavior
         target = newTarget;
     }
 
+    
+
     public void AnimationStates()
     {
         anim.SetBool("walk", agent.remainingDistance > agent.stoppingDistance);
@@ -171,5 +177,81 @@ public class Unit : AbstractBehavior
         
         dSDialogue.StartDialogue(this);
     }
+
+    [ContextMenu("пуск")]
+    public void st()
+    {
+        aI.ConsiderOptions();
+    }
+}
+
+[Serializable]
+public class AI
+{
+    [SerializeField] private DSDialogueContainerSO dialogueContainer;
+    [SerializeField] private DSDialogueSO dialogue;
+    [SerializeField] private DSDialogueSO Buferdialogue;
+    [SerializeField] private List<DSDialogueSO>  Buferdialogues = new List<DSDialogueSO>();
     
+
+
+    //выбрать вариант
+    public void ChooseOption()
+    {
+        
+    }
+
+    //расмотреть варианты ноды
+    public void ConsiderOptions()
+    {
+        
+        // dialogue.Choices.Sort();
+        foreach (var choice in dialogue.Choices)
+        {
+            Debug.Log("стою на ноде " + dialogue.DialogueName);
+
+            if(choice.NextDialogue == null)
+            {
+                Debug.Log("У ноды путой порт " + dialogue.DialogueName + " Выход!");
+                Buferdialogues.Clear();
+                return;
+            }
+            
+            if(choice.NextDialogue.Text == "да")//
+            {
+                NextNode(choice);
+                return;                
+            }
+            else Debug.Log("Нода  " + choice.NextDialogue.DialogueName + " заблокирована! Выполнить метод невозможно! перехожу к следующему варианту");
+
+        }
+
+        StepBack();
+    }
+
+    public void NextNode(DSDialogueChoiceData choice)
+    {
+        Debug.Log("есть проход к ноде " + choice.NextDialogue.DialogueName + ", прохожу");
+        Buferdialogues.Add(dialogue);
+        dialogue = choice.NextDialogue;
+        ConsiderOptions();
+    }
+
+    public void StepBack()
+    {
+        Debug.Log("у ноды " + dialogue.DialogueName +  " все варианты закрыты, ставлю отметку что сюда больше нельзя ходить! Шаг назад");
+        dialogue.Text = "нет";
+        if(Buferdialogues.Count > 0)Buferdialogues.Remove(dialogue);
+        
+        if(Buferdialogues.Count == 0)
+        {
+            Debug.Log("все варианты перебраны, выхода нет! Отмена операции");
+            Buferdialogues.Clear();
+            return;
+        }
+        
+        dialogue = Buferdialogues[Buferdialogues.Count - 1];
+        
+        ConsiderOptions();
+    }
 }

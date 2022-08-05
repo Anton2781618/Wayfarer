@@ -30,6 +30,7 @@ namespace CartoonHeroes
         {
             Item item = itemGroup.items[itemSlot];
             GameObject itemInstance = GameObject.Instantiate(item.prefab);
+            itemInstance.GetComponent<Collider>().enabled = false;
 
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
 

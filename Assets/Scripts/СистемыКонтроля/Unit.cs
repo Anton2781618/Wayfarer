@@ -2,16 +2,43 @@ using System;
 using DS;
 using DS.Enumerations;
 using UnityEngine;
+using UnityEngine.UI;
 using static ICanTakeDamage;
+using static Initializer;
 
 public class Unit : AbstractBehavior
 {
     private delegate int Operation();
     [SerializeField] private DSDialogue dSDialogue;
+    [SerializeField] protected Canvas unitCanvas;
+
+    public override void Init()
+    {
+        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>(),
+                        Initializer.singleton.InitObject(InitializerNames.Спрайт_денег_Моб).GetComponent<Image>()
+        );
+    }
+
     private void Update() 
     {
         Controller();
         if(unitCanvas.gameObject.activeSelf)RotateCanvas();
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        SowHealthBar (false);
+    }
+
+    public override void ShowOutline(bool value)
+    {
+        if(state == States.Мертв)
+        {
+            SowHealthBar(false);    
+            return;
+        }
+        SowHealthBar(value);
     }
 
     public int DelegatOperation(DSAction action)
@@ -20,6 +47,17 @@ public class Unit : AbstractBehavior
         return operation.Invoke();
 
     }
+
+    public override void SowHealthBar(bool value)
+    {
+        if(unitCanvas == null)
+        {
+            Debug.Log("у " + transform.name + " не установлен unitCanvas");
+            return;
+        }
+        unitCanvas.gameObject.SetActive(value);
+    }
+
     public void RotateCanvas()
     {
         if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
@@ -34,7 +72,7 @@ public class Unit : AbstractBehavior
     }
     
     private void Controller()
-    {
+    {        
         if( agent.isActiveAndEnabled && agent.remainingDistance <= agent.stoppingDistance && target != null)
         {
             // if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Tree"))

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static ICanTakeDamage;
+using static Initializer;
 
 public class PLayerController : AbstractBehavior
 {
@@ -9,21 +11,25 @@ public class PLayerController : AbstractBehavior
     [SerializeField] private Transform frontCheckObject;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask forwardMask;
-    private CharacterController controller;
-    
+
+    private CharacterController controller;    
     private bool isGrounded = true;
     private float smoothVel;
     private Vector3 velocity;
     public static int noOfcliks = 0;
     private float lastClicedTime = 0;
     private float nextFireTime = 0;
-
-    private void Awake()
+    public override void Init()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        anim = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
+
+        if(!controller)controller = GetComponent<CharacterController>();
+
+        if(!HpSlider) HpSlider = Initializer.singleton.InitObject(InitializerNames.ХПслайдер_Плеера).GetComponent<Slider>();
+        if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
+
+        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>(),
+                        Initializer.singleton.InitObject(InitializerNames.Спрайт_денег_Плеер).GetComponent<Image>()
+        );
     }
 
     void Update()

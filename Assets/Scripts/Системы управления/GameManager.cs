@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     private void Start() 
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        
         inventoryController = GetComponent<InventoryController>();
         singleton = this;
         pLayerController = FindObjectOfType<PLayerController>();     
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
 
         CloseAllUiPanels();
     }
+
     private void Update() 
     {
         if(Input.GetKeyDown(KeyCode.Tab))
@@ -126,6 +130,7 @@ public class GameManager : MonoBehaviour
         CollUIPanel(value);
     }
 
+    //метод вклюает/выключает переданый UI
     public void CollUIPanel( GameObject obj, bool value = false, bool tagetoff = true)
     {
         obj.SetActive(value);
@@ -143,7 +148,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-
+        
         SwithCameraEnabled(!value);
         SetIsControlingPlayer(!value);
         Cursor.visible = value;
@@ -153,7 +158,6 @@ public class GameManager : MonoBehaviour
     public void SwithCameraEnabled(bool value)
     {
         cameraControll.enabled = value;
-        
     }
 
     public void SetIsControlingPlayer(bool value)

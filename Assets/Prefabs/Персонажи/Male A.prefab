@@ -1995,7 +1995,6 @@ MonoBehaviour:
     curHP: 100
     maxMana: 5
     curMana: 5
-    money: 0
     experienceForKilling: 50
   HpSlider: {fileID: 2058919037}
   MpSlider: {fileID: 0}
@@ -2017,7 +2016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueContainer: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
   dialogueGroup: {fileID: 11400000, guid: bc083d05c95610f4e897b8849d8a6cfb, type: 2}
-  dialogue: {fileID: 11400000, guid: 14de6cd45714aa54380dbcd6768c2b16, type: 2}
+  dialogue: {fileID: 11400000, guid: 6176311efc2341845a65e722ab7b6568, type: 2}
   groupedDialogues: 0
   startingDialoguesOnly: 0
   selectedDialogueGroupIndex: 0

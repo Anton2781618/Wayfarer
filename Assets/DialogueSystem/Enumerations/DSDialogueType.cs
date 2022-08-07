@@ -18,6 +18,9 @@ namespace DS.Enumerations
         ExitTheDialog,
         CommandTrading,
         CommandGiveMoney,
+        CommandMoveToTarget,
+        CommandStandStill,
+        CommandStartDialogue,
 
     }
 

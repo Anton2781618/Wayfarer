@@ -15,7 +15,7 @@ public class ItemGrid : MonoBehaviour
     //это ссылка на того чей инвентарь
     public ICanUse wearer{get; set;}
     public AbstractBehavior abstractBehavior;
-    public int money{get; set;} = 500;
+    public int money = 500;//{get; set;} = 500;
     [SerializeField] private Text moneyText;
     private InventoryItem[,] inventoryItemSlot;
 

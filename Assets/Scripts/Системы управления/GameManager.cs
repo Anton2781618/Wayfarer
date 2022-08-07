@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public bool isControlingPlayer {get; private set;} = true;
     private UIDialogueTransfer uIDialogueTransfer;
 
+    //когда мы торгуем или ведем диалог сюда устанавливаем собеседника, для того что бы снять с него флаг ожедания
+    public Unit TargetForWaight{get; set;}
+
     public enum windowsUI { HelpUI, InventoryUI, StatsUI, ChestUI, ContextMenuUI, InfoItemUI, DialogUI }
 
     private void Start() 
@@ -136,6 +139,12 @@ public class GameManager : MonoBehaviour
         obj.SetActive(value);
         SetPLayerController(value);
         if(tagetoff)TargetOff();
+
+        if(!value && TargetForWaight !=null)
+        {
+            TargetForWaight.SetOffwaitAndNextStage();
+            TargetForWaight = null;
+        }
     }
 
     //метод отключает контроль у камеры и включает мышку 

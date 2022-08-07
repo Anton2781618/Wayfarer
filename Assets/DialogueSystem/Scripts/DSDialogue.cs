@@ -56,7 +56,7 @@ namespace DS
 
             if(dialogue.DialogueType == DSDialogueType.Action)
             {
-                SetChoice(targetUnit.DelegatOperation(dialogue.Action));
+                SetChoice(targetUnit.SetAction(dialogue.Action));
             }
             else
             {

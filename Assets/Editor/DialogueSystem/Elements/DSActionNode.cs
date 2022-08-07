@@ -74,10 +74,13 @@ namespace DS.Elements
             {                
                 DSElementUtility.CreateButton("Атакавать игрока", ()=> {actionTextFoldout.text = "Атакавать игрока"; Action = DSAction.CommandAttackTheTarget;}),
                 DSElementUtility.CreateButton("Убегать", ()=> {actionTextFoldout.text = "Убегать"; Action = DSAction.CommandRetreat;}),
+                DSElementUtility.CreateButton("Двигаться к цели", ()=> {actionTextFoldout.text = "двигаться к цели"; Action = DSAction.CommandMoveToTarget;}),
                 
                 DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> {actionTextFoldout.text = "Проверить инвентарь на предмет"; Action = DSAction.CheckInventoryForItem;}),
                 DSElementUtility.CreateButton("Проверка информации", ()=> {actionTextFoldout.text = "Проверка информации"; Action = DSAction.CheckingAvailabilityInformation;}),
                 DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = Action.ToString(); Action = DSAction.CommandTrading;}),
+                DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = "Начать диалог"; Action = DSAction.CommandStartDialogue;}),
+                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = "Дать денег"; Action = DSAction.CommandGiveMoney;}),
                 
                 DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = "Нет действий"; Action = DSAction.NotAction;}),
                 

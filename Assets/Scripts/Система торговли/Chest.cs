@@ -39,7 +39,7 @@ public class Chest : MonoBehaviour, ICanUse
     }
 
     public void StartTrading()
-    {
+    {        
         inventoryController.IsTreid = true;
         Use();
     }

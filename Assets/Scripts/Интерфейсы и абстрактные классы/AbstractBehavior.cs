@@ -24,9 +24,7 @@ public class UnitStats
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 {
     public UnitStats unitStats;
-    [SerializeField] protected ICanUse target;
-    // [SerializeField] protected ItemType itemType;
-     
+    protected ICanUse target;
     [SerializeField] protected Slider HpSlider;   
     [SerializeField] protected Slider MpSlider;   
     [SerializeField] protected States state = States.Патруль;

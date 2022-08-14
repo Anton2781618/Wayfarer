@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private UIDialogueTransfer uIDialogueTransfer;
 
     //когда мы торгуем или ведем диалог сюда устанавливаем собеседника, для того что бы снять с него флаг ожедания
-    public Unit TargetForWaight{get; set;}
+    public Unit TargetForPause{get; set;}
 
     public enum windowsUI { HelpUI, InventoryUI, StatsUI, ChestUI, ContextMenuUI, InfoItemUI, DialogUI }
 
@@ -31,9 +31,6 @@ public class GameManager : MonoBehaviour
         inventoryController = GetComponent<InventoryController>();
         singleton = this;
         pLayerController = FindObjectOfType<PLayerController>();     
-
-        //тут мы ставим главного героя владельцем его инвентаря  
-        inventoryController.GetPlayerChest().GetChestGrid().wearer = pLayerController;
 
         cameraControll = FindObjectOfType<CinemachineBrain>();
 
@@ -59,7 +56,7 @@ public class GameManager : MonoBehaviour
             if(uiWindows[(int)windowsUI.ChestUI].activeSelf)
             {
                 CollUIPanel(uiWindows[(int)windowsUI.ChestUI], !uiWindows[(int)windowsUI.ChestUI].activeSelf);
-                inventoryController.TheChest = null;
+                inventoryController.selectedChest = null;
             }
 
             //при открытии инвентаря создаем предметы внутри инвентаря
@@ -138,12 +135,13 @@ public class GameManager : MonoBehaviour
     {
         obj.SetActive(value);
         SetPLayerController(value);
+        
         if(tagetoff)TargetOff();
 
-        if(!value && TargetForWaight !=null)
+        if(!value && TargetForPause !=null)
         {
-            TargetForWaight.SetOffwaitAndNextStage();
-            TargetForWaight = null;
+            TargetForPause.SetPauseOffAndNextStage();
+            TargetForPause = null;
         }
     }
 

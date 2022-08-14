@@ -22,6 +22,7 @@ public class PLayerController : AbstractBehavior
     private float nextFireTime = 0;
     public override void Init()
     {
+        chest.GetChestGrid().chest = chest;
 
         if(!controller)controller = GetComponent<CharacterController>();
 

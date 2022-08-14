@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DS;
 using DS.Enumerations;
 using DS.ScriptableObjects;
@@ -15,7 +16,7 @@ public class Unit : AbstractBehavior
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
     [SerializeField] protected DSAction action;
-    private bool wait = false;
+    private bool pause = false;
 
     public override void Init()
     {
@@ -23,6 +24,7 @@ public class Unit : AbstractBehavior
                         Initializer.singleton.InitObject(InitializerNames.Спрайт_денег_Моб).GetComponent<Image>()
         );
     }    
+
     private void Update() => aI.Analyzer();
 
     public override void Die()
@@ -68,19 +70,12 @@ public class Unit : AbstractBehavior
         return 0;
     }
 
-    // public int StartAction(DSAction action)
-    // {
-    //     Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, action.ToString());
-    //     operation.Invoke();
-    //     return 0
-    // }
-    
     //метод выполняет текущую задачу
     public void CurrentAction()
     {
         if(unitCanvas.gameObject.activeSelf)RotateCanvas();
-        Debug.Log(wait);
-        if(wait) return;
+
+        if(pause) return;
 
         Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, action.ToString());
         operation.Invoke();
@@ -88,32 +83,45 @@ public class Unit : AbstractBehavior
 
     public void SetTarget(ICanUse newTarget) => target = newTarget;
 
-    public void AnimationStates() => anim.SetBool("walk", agent.remainingDistance > agent.stoppingDistance);
+    public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
 
-    private void FaceTarget()
+    private void FaceToTarget()
     {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    //снять с пауза выполнение решения и включить следующее решение
-    public void SetOffwaitAndNextStage()
+    public void SetPauseOff()
     {
+        pause = false;
+    }
+
+    //снять с пауза выполнение решения и включить следующее решение
+    public void SetPauseOffAndNextStage()
+    {
+        pause = false;
+        
+        action = DSAction.CommandStandStill;
+        
         aI.NextStage();
-        wait = false;
     }
 
     //поставить на паузу выполнение решения
-    public void SetWaitOn()
+    public void SetPauseOn()
     {
-        wait = true;
-        GameManager.singleton.TargetForWaight = this;
+        pause = true;
+
+        GameManager.singleton.TargetForPause = this;
     }
 
     //стоять на месте
     public int CommandStandStill()
     {
+        anim.SetBool("walk", false);
+
+        agent.SetDestination(this.transform.position);
+        
         return 0;
     }
 
@@ -123,25 +131,29 @@ public class Unit : AbstractBehavior
         if(target == null)
         {
             Debug.Log("У " + transform.name + " не установлен таргет");
+
             return 0;
         }
+
         AbstractBehavior buferTarget = target as AbstractBehavior;
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
             state = States.Патруль;
+            
+            aI.NextStage();
+            
             return 0;
         }
         
-        AnimationStates();
-        agent.SetDestination(target.transform.position);
+        FaceToTarget();        
 
-        // agent.enabled = !anim.GetCurrentAnimatorStateInfo(0).IsName("Atack 3");
+        agent.SetDestination(target.transform.position);        
 
-        if(agent.remainingDistance <= agent.stoppingDistance && target != null)
-        {
-            anim.SetBool("Hit", true);
-        }
+        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+
+        anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
+        
         return 0;
     }
 
@@ -155,7 +167,7 @@ public class Unit : AbstractBehavior
     {
         chest.StartTrading();
 
-        SetWaitOn();
+        SetPauseOn();
         
         return 0;
     }
@@ -166,35 +178,48 @@ public class Unit : AbstractBehavior
     {
         dSDialogue.StartDialogue(this);
 
-        SetWaitOn();
+        SetPauseOn();
 
         return 0;
     }
 
+    [ContextMenu("CommandGiveMoney")]
     public int CommandGiveMoney()
     {
         chest.GiveMoney(100);
+        
+        SetPauseOn();
+        
         return 0;
     }
 
     public int CommandMoveToTarget()
     {
-        if( agent.isActiveAndEnabled && agent.remainingDistance <= agent.stoppingDistance && target != null)
+        if(target == null)
         {
-            FaceTarget();
+            Debug.Log("у NPC не установлен таргет");
         }
 
-        agent.SetDestination(target.transform.position);
-        AnimationStates();
+        FaceToTarget();       
+
+        agent.SetDestination(target.transform.position);        
+        
+        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+
+        StartCoroutine(CheckAndSwitchStage());
+        
+        return 0;
+    }
+
+    private IEnumerator CheckAndSwitchStage()
+    {
+        yield return null;
 
         if(agent.remainingDistance <= agent.stoppingDistance)
         {
             aI.NextStage();
         }
-        return 0;
     }
-
-    
 
     [ContextMenu("пуск")]
     public void Action2() => aI.StartSolution();

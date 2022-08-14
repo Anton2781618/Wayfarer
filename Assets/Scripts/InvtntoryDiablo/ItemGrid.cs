@@ -13,7 +13,7 @@ public class ItemGrid : MonoBehaviour
     public const float titleSizeHeight = 32;
 
     //это ссылка на того чей инвентарь
-    public ICanUse wearer{get; set;}
+    public Chest chest {get; set;}
     public AbstractBehavior abstractBehavior;
     public int money = 500;//{get; set;} = 500;
     [SerializeField] private Text moneyText;

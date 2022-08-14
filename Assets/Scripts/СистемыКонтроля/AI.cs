@@ -11,7 +11,7 @@ public class AI
     [SerializeField] private Unit unit;
     [SerializeField] private DSDialogueContainerSO[] solutions;
     [SerializeField] private DSDialogueContainerSO currentSolution;
-    private DSDialogueSO stage;
+    public DSDialogueSO stage;
     [SerializeField] private List<DSDialogueSO>  Buferdialogues = new List<DSDialogueSO>();
 
     
@@ -49,8 +49,15 @@ public class AI
     //перейти на следующий этап
     public void NextStage()
     {
-        stage = stage.Choices[0].NextDialogue;
-        StartStage();
+        if(!stage || !stage.Choices[0].NextDialogue)
+        {
+            Debug.Log("ИИ пытается перейти к следующему этапу решения, но решение не установлено! Скорее всего игрок командует кнопками и это вызывает ошибку");
+        }
+        else
+        {
+            stage = stage.Choices[0].NextDialogue;
+            StartStage();
+        }
     }
 
     //расмотреть варианты ноды

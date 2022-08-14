@@ -12,7 +12,7 @@ public class InventoryController : MonoBehaviour
     private ItemGrid buferGrid;
     
     //выбраный инвентарь
-    public Chest TheChest{get; set;}
+    public Chest selectedChest{get; set;}
     public bool IsTreid{get; set;} = false;
     private ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid 
@@ -44,7 +44,6 @@ public class InventoryController : MonoBehaviour
         player = FindObjectOfType<PLayerController>();
         
         playerChest = player.GetComponent<Chest>();
-        playerChest.GetChestGrid().wearer = player; 
     }
 
     private void Update() 
@@ -265,7 +264,7 @@ public class InventoryController : MonoBehaviour
             PlaceItem(titleGridPosition);
         }
 
-        if(TheChest) TheChest.UpdateChestItems();
+        if(selectedChest) selectedChest.UpdateChestItems();
         playerChest.UpdateChestItems();
     }
 
@@ -324,7 +323,7 @@ public class InventoryController : MonoBehaviour
     //расположить предмет на сетке 
     private void PlaceItem(Vector2Int titleGridPosition)
     {
-        if(IsTreid && buferGrid.abstractBehavior != SelectedItemGrid.abstractBehavior)
+        if(IsTreid && buferGrid.chest != SelectedItemGrid.chest)
         {
             PlaceItemInTrade();
         }

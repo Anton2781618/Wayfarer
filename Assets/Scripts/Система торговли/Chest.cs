@@ -51,8 +51,8 @@ public class Chest : MonoBehaviour, ICanUse
 
     private void OpenChest(bool isPlayerInventory)
     {
-        if(!isPlayerInventory)inventoryController.TheChest = this;
-        chestGrid.wearer = this;
+        if(!isPlayerInventory)inventoryController.selectedChest = this;
+        chestGrid.chest = this;
         this.TryGetComponent(out chestGrid.abstractBehavior);
         
         ClearItems();
@@ -128,7 +128,7 @@ public class Chest : MonoBehaviour, ICanUse
     public void GiveMoney(int value)
     {
         chestGrid.money -= value;
-        inventoryController.TheChest.chestGrid.money += value;
+        inventoryController.selectedChest.chestGrid.money += value;
     }
 }
 

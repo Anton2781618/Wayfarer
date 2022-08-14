@@ -186,6 +186,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
             HpSlider.value = unitStats.curHP;
             return;
         }
+
         unitStats.curHP += value;
         HpSlider.value = unitStats.curHP;
     }

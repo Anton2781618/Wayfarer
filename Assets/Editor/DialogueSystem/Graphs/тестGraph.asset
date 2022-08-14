@@ -15,31 +15,31 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0442\u0435\u0441\u0442"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: e287c1c9-2d0d-4b65-9494-95134a9227ac
-    <Name>k__BackingField: 71a478e9-db44-4b45-ab89-ab4cd7b640ea
-    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: c06da1cb-d14b-4083-b7cb-18364c931915
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 768, y: 325}
-    <Action>k__BackingField: 8
-    <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
-  - <ID>k__BackingField: c06da1cb-d14b-4083-b7cb-18364c931915
-    <Name>k__BackingField: a4ec4ea3-0a5f-4664-ac0d-09dd363b57c0
+  - <ID>k__BackingField: df5c3d48-eae7-4ba4-a376-432969e0b91b
+    <Name>k__BackingField: 34392284-9bf0-4641-ba1e-7b0caa5809c3
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1217, y: 325}
-    <Action>k__BackingField: 6
+    <Position>k__BackingField: {x: 1248, y: 244}
+    <Action>k__BackingField: 10
+    <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
+  - <ID>k__BackingField: 9d4ca32c-fdfa-43f9-9086-261918656325
+    <Name>k__BackingField: a88760b3-6b86-42f5-a140-e4d1434296e6
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: df5c3d48-eae7-4ba4-a376-432969e0b91b
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 768, y: 244}
+    <Action>k__BackingField: 8
     <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 71a478e9-db44-4b45-ab89-ab4cd7b640ea
-  - a4ec4ea3-0a5f-4664-ac0d-09dd363b57c0
+  - 34392284-9bf0-4641-ba1e-7b0caa5809c3
+  - a88760b3-6b86-42f5-a140-e4d1434296e6
   <OldGroupedNodeNames>k__BackingField:
     list: []

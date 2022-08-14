@@ -17,7 +17,7 @@ namespace DS.Enumerations
         NotAction,
         ExitTheDialog,
         CommandTrading,
-        CommandGiveMoney,
+        CommandPlayerGiveMoney,
         CommandMoveToTarget,
         CommandStandStill,
         CommandStartDialogue,

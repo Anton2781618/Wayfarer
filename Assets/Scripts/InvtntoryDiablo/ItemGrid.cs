@@ -15,8 +15,9 @@ public class ItemGrid : MonoBehaviour
     //это ссылка на того чей инвентарь
     public Chest chest {get; set;}
     public AbstractBehavior abstractBehavior;
-    public int money = 500;//{get; set;} = 500;
-    [SerializeField] private Text moneyText;
+    
+    public Text moneyText;
+    public Image ImageMoney;
     private InventoryItem[,] inventoryItemSlot;
 
     private RectTransform rectTransform;
@@ -39,7 +40,6 @@ public class ItemGrid : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();    
         Init(GridSizeWidth,GridSizeHeight);
-        UpdateMoney();
     }
 
     public SetCharacter GetSetCharacter()
@@ -58,12 +58,6 @@ public class ItemGrid : MonoBehaviour
         inventoryItemSlot = new InventoryItem[width, height];
         Vector2 size = new Vector2(width * titleSizeWidth, height * titleSizeHeight);
         rectTransform.sizeDelta = size;
-    }
-
-    public void UpdateMoney()
-    {
-        if(!moneyText) return;
-        moneyText.text = money.ToString();
     }
 
     internal InventoryItem GetItem(int x, int y)

@@ -33,7 +33,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     
     protected NavMeshAgent agent;
     [SerializeField] private Sword sword;
-    protected Chest chest;
+    public Chest chest{get; private set;}
 
     private void Start() 
     {

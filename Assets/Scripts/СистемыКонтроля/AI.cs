@@ -49,15 +49,21 @@ public class AI
     //перейти на следующий этап
     public void NextStage()
     {
-        if(!stage || !stage.Choices[0].NextDialogue)
+        stage = stage.Choices[0].NextDialogue;
+        
+        if(!stage) 
         {
-            Debug.Log("ИИ пытается перейти к следующему этапу решения, но решение не установлено! Скорее всего игрок командует кнопками и это вызывает ошибку");
+            ExitSoltuin();
+            return;
         }
-        else
-        {
-            stage = stage.Choices[0].NextDialogue;
-            StartStage();
-        }
+        
+        StartStage();
+    }
+
+    //метод выходит из решения
+    private void ExitSoltuin()
+    {
+        Debug.Log("Решение выполнено!");
     }
 
     //расмотреть варианты ноды

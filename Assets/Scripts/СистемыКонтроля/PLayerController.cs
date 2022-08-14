@@ -29,9 +29,7 @@ public class PLayerController : AbstractBehavior
         if(!HpSlider) HpSlider = Initializer.singleton.InitObject(InitializerNames.ХПслайдер_Плеера).GetComponent<Slider>();
         if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
 
-        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>(),
-                        Initializer.singleton.InitObject(InitializerNames.Спрайт_денег_Плеер).GetComponent<Image>()
-        );
+        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
     }
 
     void Update()

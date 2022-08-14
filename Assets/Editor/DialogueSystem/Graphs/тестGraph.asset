@@ -16,18 +16,18 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: df5c3d48-eae7-4ba4-a376-432969e0b91b
-    <Name>k__BackingField: 34392284-9bf0-4641-ba1e-7b0caa5809c3
+    <Name>k__BackingField: dc142034-13f8-4eec-8475-ca057ddc74b9
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
+      <NodeID>k__BackingField: b2ce5404-0d8d-4ba3-97a1-c3f2da9772b0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
     <Position>k__BackingField: {x: 1248, y: 244}
     <Action>k__BackingField: 10
     <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
   - <ID>k__BackingField: 9d4ca32c-fdfa-43f9-9086-261918656325
-    <Name>k__BackingField: a88760b3-6b86-42f5-a140-e4d1434296e6
+    <Name>k__BackingField: 31e06693-6f50-42af-b7bd-05335ee9b268
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -37,9 +37,21 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 768, y: 244}
     <Action>k__BackingField: 8
     <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
+  - <ID>k__BackingField: b2ce5404-0d8d-4ba3-97a1-c3f2da9772b0
+    <Name>k__BackingField: 1e262128-2aa2-46a0-9fcc-0c356ff97fd0
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 1687, y: 244}
+    <Action>k__BackingField: 7
+    <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 34392284-9bf0-4641-ba1e-7b0caa5809c3
-  - a88760b3-6b86-42f5-a140-e4d1434296e6
+  - dc142034-13f8-4eec-8475-ca057ddc74b9
+  - 31e06693-6f50-42af-b7bd-05335ee9b268
+  - 1e262128-2aa2-46a0-9fcc-0c356ff97fd0
   <OldGroupedNodeNames>k__BackingField:
     list: []

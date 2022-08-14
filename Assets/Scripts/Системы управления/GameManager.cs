@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     [SerializeField] private GameObject[] uiWindows;
-    private PLayerController pLayerController;
+    public PLayerController pLayerController{get; private set;}
     private InventoryController inventoryController;
     private AbstractBehavior targetHumanForHelp;
     private Transform targetItemForHelp;
@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour
     public CinemachineBrain cameraControll {get; private set;}
     public bool isControlingPlayer {get; private set;} = true;
     private UIDialogueTransfer uIDialogueTransfer;
-
-    //когда мы торгуем или ведем диалог сюда устанавливаем собеседника, для того что бы снять с него флаг ожедания
-    public Unit TargetForPause{get; set;}
 
     public enum windowsUI { HelpUI, InventoryUI, StatsUI, ChestUI, ContextMenuUI, InfoItemUI, DialogUI }
 
@@ -137,12 +134,6 @@ public class GameManager : MonoBehaviour
         SetPLayerController(value);
         
         if(tagetoff)TargetOff();
-
-        if(!value && TargetForPause !=null)
-        {
-            TargetForPause.SetPauseOffAndNextStage();
-            TargetForPause = null;
-        }
     }
 
     //метод отключает контроль у камеры и включает мышку 

@@ -9,7 +9,8 @@ public class Chest : MonoBehaviour, ICanUse
 {
     private InventoryController inventoryController;
     [SerializeField] private ItemGrid chestGrid;
-    [SerializeField] private Image ImageMoney;
+    
+    public int money = 500;//{get; set;} = 500;
     
     private Outline outline;
     [Header("Предметы")]
@@ -19,12 +20,12 @@ public class Chest : MonoBehaviour, ICanUse
     {
         outline = GetComponent<Outline>();    
         inventoryController = FindObjectOfType<InventoryController>();
+        UpdateMoney();
     }
 
-    public void InitChest(ItemGrid chestGrid, Image ImageMoney)
+    public void InitChest(ItemGrid chestGrid)
     {
         this.chestGrid = chestGrid;
-        this.ImageMoney = ImageMoney;
     }
     
     public void ShowOutline(bool value)
@@ -36,6 +37,13 @@ public class Chest : MonoBehaviour, ICanUse
     {
         OpenChest(false);
         inventoryController.GetPlayerChest().OpenPlayerInventory();
+    }
+
+    public void UpdateMoney()
+    {
+        if(!chestGrid || !chestGrid.moneyText) return;
+
+        chestGrid.moneyText.text = money.ToString();
     }
 
     public void StartTrading()
@@ -64,11 +72,13 @@ public class Chest : MonoBehaviour, ICanUse
         yield return null;
 
         inventoryController.SelectedItemGrid = chestGrid;
+        
         InsertItems();
         
         inventoryController.SelectedItemGrid = null;
 
-        ImageMoney.gameObject.SetActive(inventoryController.IsTreid || isPlayerInventory);
+        chestGrid.ImageMoney.gameObject.SetActive(inventoryController.IsTreid || isPlayerInventory);
+
         if(!isPlayerInventory)GameManager.singleton.OpenChest();
     }
 
@@ -125,10 +135,13 @@ public class Chest : MonoBehaviour, ICanUse
         return chestGrid;
     }
 
-    public void GiveMoney(int value)
+    public void ReceiveMoney(Chest targetChest, int value)
     {
-        chestGrid.money -= value;
-        inventoryController.selectedChest.chestGrid.money += value;
+        money += value;
+        UpdateMoney();
+
+        targetChest.money -= value;
+        targetChest.UpdateMoney();
     }
 }
 

@@ -80,7 +80,7 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Проверка информации", ()=> {actionTextFoldout.text = "Проверка информации"; Action = DSAction.CheckingAvailabilityInformation;}),
                 DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = Action.ToString(); Action = DSAction.CommandTrading;}),
                 DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = "Начать диалог"; Action = DSAction.CommandStartDialogue;}),
-                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = "Дать денег"; Action = DSAction.CommandGiveMoney;}),
+                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = "Дать денег"; Action = DSAction.CommandPlayerGiveMoney;}),
                 
                 DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = "Нет действий"; Action = DSAction.NotAction;}),
                 

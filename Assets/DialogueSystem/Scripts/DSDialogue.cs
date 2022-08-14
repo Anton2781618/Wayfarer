@@ -57,7 +57,6 @@ namespace DS
             if(dialogue.DialogueType == DSDialogueType.Action)
             {
                 SetChoice(targetUnit.SetAction(dialogue.Action));
-                targetUnit.SetPauseOff();
             }
             else
             {

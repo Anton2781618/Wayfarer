@@ -358,17 +358,17 @@ public class InventoryController : MonoBehaviour
     //расположить при торговли
     private void PlaceItemInTrade()
     {
-        if(SelectedItemGrid.money < selectedItem.itemData.price)
+        if(SelectedItemGrid.chest.money < selectedItem.itemData.price)
         {
             SelectedItemGrid.NotEnoughMoneyAnimation();
             return;
         } 
 
-        SelectedItemGrid.money -= selectedItem.itemData.price;
-        buferGrid.money += selectedItem.itemData.price;
+        SelectedItemGrid.chest.money -= selectedItem.itemData.price;
+        buferGrid.chest.money += selectedItem.itemData.price;
 
-        buferGrid.UpdateMoney();
-        SelectedItemGrid.UpdateMoney();
+        buferGrid.chest.UpdateMoney();
+        SelectedItemGrid.chest.UpdateMoney();
 
         InventoryItem buferItem = selectedItem;
         CreateAndInsertItem(buferItem.itemData, selectedItemGrid, selectedItem.Amount);

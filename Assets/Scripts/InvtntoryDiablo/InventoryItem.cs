@@ -191,8 +191,8 @@ public class InventoryItem : MonoBehaviour, ICanUse
     private void UseMoney()
     {
         ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
-        buferGrid.money += Amount;
-        buferGrid.UpdateMoney();
+        buferGrid.chest.money += Amount;
+        buferGrid.chest.UpdateMoney();
         
         DestructSelf(buferGrid);
     }

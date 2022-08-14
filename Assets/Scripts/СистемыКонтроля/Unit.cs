@@ -16,13 +16,10 @@ public class Unit : AbstractBehavior
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
     [SerializeField] protected DSAction action;
-    private bool pause = false;
 
     public override void Init()
     {
-        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>(),
-                        Initializer.singleton.InitObject(InitializerNames.Спрайт_денег_Моб).GetComponent<Image>()
-        );
+        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
     }    
 
     private void Update() => aI.Analyzer();
@@ -75,8 +72,6 @@ public class Unit : AbstractBehavior
     {
         if(unitCanvas.gameObject.activeSelf)RotateCanvas();
 
-        if(pause) return;
-
         Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, action.ToString());
         operation.Invoke();
     }
@@ -92,27 +87,13 @@ public class Unit : AbstractBehavior
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    public void SetPauseOff()
+    public void SetCompleteCommand()
     {
-        pause = false;
-    }
+        this.action = DSAction.CommandStandStill;
 
-    //снять с пауза выполнение решения и включить следующее решение
-    public void SetPauseOffAndNextStage()
-    {
-        pause = false;
-        
-        action = DSAction.CommandStandStill;
+        Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
         aI.NextStage();
-    }
-
-    //поставить на паузу выполнение решения
-    public void SetPauseOn()
-    {
-        pause = true;
-
-        GameManager.singleton.TargetForPause = this;
     }
 
     //стоять на месте
@@ -141,7 +122,7 @@ public class Unit : AbstractBehavior
         {
             state = States.Патруль;
             
-            aI.NextStage();
+            SetCompleteCommand();
             
             return 0;
         }
@@ -167,7 +148,7 @@ public class Unit : AbstractBehavior
     {
         chest.StartTrading();
 
-        SetPauseOn();
+        SetCompleteCommand();
         
         return 0;
     }
@@ -178,17 +159,17 @@ public class Unit : AbstractBehavior
     {
         dSDialogue.StartDialogue(this);
 
-        SetPauseOn();
+        SetCompleteCommand();
 
         return 0;
     }
 
     [ContextMenu("CommandGiveMoney")]
-    public int CommandGiveMoney()
+    public int CommandPlayerGiveMoney()
     {
-        chest.GiveMoney(100);
+        chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, 100);
         
-        SetPauseOn();
+        SetCompleteCommand();
         
         return 0;
     }
@@ -205,7 +186,7 @@ public class Unit : AbstractBehavior
         agent.SetDestination(target.transform.position);        
         
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
-
+        
         StartCoroutine(CheckAndSwitchStage());
         
         return 0;
@@ -215,9 +196,9 @@ public class Unit : AbstractBehavior
     {
         yield return null;
 
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        if(agent.remainingDistance < agent.stoppingDistance)
         {
-            aI.NextStage();
+            SetCompleteCommand();
         }
     }
 

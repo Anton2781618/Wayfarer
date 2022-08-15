@@ -7,7 +7,9 @@ namespace DS.Elements
 {
     using Data.Save;
     using DS.Enumerations;
+    using UnityEditor;
     using UnityEditor.Experimental.GraphView;
+    using UnityEditor.UIElements;
     using Utilities;
     using Windows;
 
@@ -35,6 +37,7 @@ namespace DS.Elements
             base.Draw();
 
             /* MAIN CONTAINER */
+            
 
             Button addChoiceButton = DSElementUtility.CreateButton("Add Choice", () =>
             {
@@ -51,11 +54,14 @@ namespace DS.Elements
             });
 
             addChoiceButton.AddToClassList("ds-node__button");
+            ObjectField addChoiceButtondd = DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue);
 
+            mainContainer.Insert(1, addChoiceButtondd);
             mainContainer.Insert(1, addChoiceButton);
+            
 
             /* OUTPUT CONTAINER */
-
+            
             foreach (DSChoiceSaveData choice in Choices)
             {
                 Port choicePort = CreateChoicePort(choice);
@@ -66,7 +72,6 @@ namespace DS.Elements
             /* EXTENSION CONTAINER */
 
             VisualElement customDataContainer = new VisualElement();
-            
 
             Foldout actionTextFoldout = DSElementUtility.CreateFoldout(Action.ToString(), true);
             
@@ -76,13 +81,19 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Убегать", ()=> {actionTextFoldout.text = "Убегать"; Action = DSAction.CommandRetreat;}),
                 DSElementUtility.CreateButton("Двигаться к цели", ()=> {actionTextFoldout.text = "двигаться к цели"; Action = DSAction.CommandMoveToTarget;}),
                 
-                DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> {actionTextFoldout.text = "Проверить инвентарь на предмет"; Action = DSAction.CheckInventoryForItem;}),
+                DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> 
+                {
+                    actionTextFoldout.text = "Проверить инвентарь на предмет"; 
+                    Action = DSAction.CheckInventoryForItem; 
+
+                    addChoiceButtondd.objectType = typeof(ItemData);
+                }),
                 DSElementUtility.CreateButton("Проверка информации", ()=> {actionTextFoldout.text = "Проверка информации"; Action = DSAction.CheckingAvailabilityInformation;}),
                 DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = Action.ToString(); Action = DSAction.CommandTrading;}),
                 DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = "Начать диалог"; Action = DSAction.CommandStartDialogue;}),
                 DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = "Дать денег"; Action = DSAction.CommandPlayerGiveMoney;}),
                 
-                DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = "Нет действий"; Action = DSAction.NotAction;}),
+                DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = "Нет действий"; Action = DSAction.NotAction; Debug.Log(modelDate);}),
                 
                 DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = "Выйти из диалога"; Action = DSAction.ExitTheDialog; UpdateStyle(Color.yellow);}),
                 

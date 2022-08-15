@@ -17,6 +17,8 @@ namespace DS.Data.Save
         [field: SerializeField] public DSDialogueType DialogueType { get; set; }
         [field: SerializeField] public Vector2 Position { get; set; }
         [field: SerializeField] public DSAction Action { get; set; }
+        [field: SerializeField] public ModelDate ModelDate { get; set; }
         [field: SerializeField] public Color NodeMainColor { get; set; }
     }
+    
 }

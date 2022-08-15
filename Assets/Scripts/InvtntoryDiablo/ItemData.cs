@@ -20,6 +20,8 @@ public class ItemData : ScriptableObject
     //этот префаб одежды которая наденется непосредственно на
     public GameObject prefabForPutOn;
     public ItemType itemType;
+
+    public Vector3 pos;
     
     public bool isSingle = true; 
 

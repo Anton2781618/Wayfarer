@@ -14,8 +14,9 @@ namespace DS.ScriptableObjects
         [field: SerializeField] public DSDialogueType DialogueType { get; set; }
         [field: SerializeField] public bool IsStartingDialogue { get; set; }
         [field: SerializeField] public DSAction Action { get; set; }
+        [field: SerializeField] public ModelDate ModelDate { get; set; }
 
-        public void Initialize(string dialogueName, string text, List<DSDialogueChoiceData> choices, DSDialogueType dialogueType, bool isStartingDialogue, DSAction action)
+        public void Initialize(string dialogueName, string text, List<DSDialogueChoiceData> choices, DSDialogueType dialogueType, bool isStartingDialogue, DSAction action, ModelDate modelDate)
         {
             DialogueName = dialogueName;
             Text = text;
@@ -23,6 +24,7 @@ namespace DS.ScriptableObjects
             DialogueType = dialogueType;
             IsStartingDialogue = isStartingDialogue;
             Action = action;
+            ModelDate = modelDate;
         }
     }
 }

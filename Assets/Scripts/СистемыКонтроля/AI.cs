@@ -15,7 +15,6 @@ public class AI
     [SerializeField] private List<DSDialogueSO>  Buferdialogues = new List<DSDialogueSO>();
 
     
-
     //метод анализирует обстановку вокруг и принимает решения как реагировать
     public void Analyzer()
     {
@@ -44,18 +43,18 @@ public class AI
     }
 
     //старт этапа
-    public void StartStage() => unit.SetAction(stage.Action);
+    public void StartStage() => unit.SetAction(stage.Action, stage.ModelDate.itemData);
 
     //перейти на следующий этап
     public void NextStage()
     {
-        stage = stage.Choices[0].NextDialogue;
-        
-        if(!stage) 
+        if(!stage.Choices[0].NextDialogue) 
         {
             ExitSoltuin();
             return;
         }
+        
+        stage = stage.Choices[0].NextDialogue;
         
         StartStage();
     }

@@ -1,3 +1,5 @@
+
+
 namespace DS.Enumerations
 {
     public enum DSDialogueType
@@ -21,7 +23,5 @@ namespace DS.Enumerations
         CommandMoveToTarget,
         CommandStandStill,
         CommandStartDialogue,
-
     }
-
 }

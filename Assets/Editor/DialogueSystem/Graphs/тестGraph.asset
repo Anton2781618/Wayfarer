@@ -15,43 +15,37 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0442\u0435\u0441\u0442"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: df5c3d48-eae7-4ba4-a376-432969e0b91b
-    <Name>k__BackingField: dc142034-13f8-4eec-8475-ca057ddc74b9
+  - <ID>k__BackingField: b376b8f1-d833-4d84-a6f2-255d663599e4
+    <Name>k__BackingField: 1fd7259c-3e25-44af-b041-3e444434484e
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: b2ce5404-0d8d-4ba3-97a1-c3f2da9772b0
+      <NodeID>k__BackingField: cf19347b-9100-488f-8ed2-7f63dffffbe8
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1248, y: 244}
-    <Action>k__BackingField: 10
-    <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
-  - <ID>k__BackingField: 9d4ca32c-fdfa-43f9-9086-261918656325
-    <Name>k__BackingField: 31e06693-6f50-42af-b7bd-05335ee9b268
-    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: df5c3d48-eae7-4ba4-a376-432969e0b91b
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 768, y: 244}
+    <Position>k__BackingField: {x: 119, y: 295}
     <Action>k__BackingField: 8
+    <ModelDate>k__BackingField:
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
     <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
-  - <ID>k__BackingField: b2ce5404-0d8d-4ba3-97a1-c3f2da9772b0
-    <Name>k__BackingField: 1e262128-2aa2-46a0-9fcc-0c356ff97fd0
+  - <ID>k__BackingField: cf19347b-9100-488f-8ed2-7f63dffffbe8
+    <Name>k__BackingField: 27510981-2d8d-43ac-ac16-f9a2234160bc
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1687, y: 244}
+    <Position>k__BackingField: {x: 660, y: 312}
     <Action>k__BackingField: 7
+    <ModelDate>k__BackingField:
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
     <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - dc142034-13f8-4eec-8475-ca057ddc74b9
-  - 31e06693-6f50-42af-b7bd-05335ee9b268
-  - 1e262128-2aa2-46a0-9fcc-0c356ff97fd0
+  - 1fd7259c-3e25-44af-b041-3e444434484e
+  - 27510981-2d8d-43ac-ac16-f9a2234160bc
   <OldGroupedNodeNames>k__BackingField:
     list: []

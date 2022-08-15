@@ -6,6 +6,7 @@ namespace DS.Utilities
 {
     using DS.Windows;
     using Elements;
+    using UnityEditor.UIElements;
 
     public static class DSElementUtility
     {
@@ -63,6 +64,22 @@ namespace DS.Utilities
             textArea.multiline = true;
 
             return textArea;
+        }
+        public static ObjectField CreateObjectField(UnityEngine.Object value = null, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
+        {
+            ObjectField objectField = new ObjectField()
+            {
+                value = value
+            };
+
+            objectField.objectType = typeof(ItemData);
+
+            if (onValueChanged != null)
+            {
+                objectField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return objectField;
         }
     }
 }

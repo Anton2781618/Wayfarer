@@ -22,6 +22,7 @@ namespace DS.Elements
         public DSDialogueType DialogueType { get; set; }
         public DSGroup Group { get; set; }
         public DSAction Action {get; set;} = DSAction.NotAction;
+        public ModelDate modelDate {get; set;} = new ModelDate();
 
         protected DSGraphView graphView;
         private Color defaultBackgroundColor;

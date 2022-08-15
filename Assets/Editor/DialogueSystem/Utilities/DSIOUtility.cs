@@ -167,6 +167,7 @@ namespace DS.Utilities
                 DialogueType = node.DialogueType,
                 Position = node.GetPosition().position,
                 Action = node.Action,
+                ModelDate = node.modelDate,
                 NodeMainColor = node.choisenColor,
             };
 
@@ -196,7 +197,8 @@ namespace DS.Utilities
                 ConvertNodeChoicesToDialogueChoices(node.Choices),
                 node.DialogueType,
                 node.IsStartingNode(),
-                node.Action
+                node.Action,
+                node.modelDate
             );
 
             createdDialogues.Add(node.ID, dialogue);
@@ -329,8 +331,9 @@ namespace DS.Utilities
                 node.Choices = choices;
                 node.Text = nodeData.Text;
                 node.Action = nodeData.Action;
+                node.modelDate = nodeData.ModelDate;
                 node.choisenColor = nodeData.NodeMainColor;
-
+                
                 node.Draw();
 
                 graphView.AddElement(node);

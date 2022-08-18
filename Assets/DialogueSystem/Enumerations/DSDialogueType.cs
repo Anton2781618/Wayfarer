@@ -23,5 +23,6 @@ namespace DS.Enumerations
         CommandMoveToTarget,
         CommandStandStill,
         CommandStartDialogue,
+        CommandMoveToCoordinates,
     }
 }

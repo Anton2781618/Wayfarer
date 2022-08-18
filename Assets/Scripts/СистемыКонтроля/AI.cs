@@ -43,7 +43,7 @@ public class AI
     }
 
     //старт этапа
-    public void StartStage() => unit.SetAction(stage.Action, stage.ModelDate.itemData);
+    public void StartStage() => unit.SetAction(stage.Action, stage.ModelDate);
 
     //перейти на следующий этап
     public void NextStage()

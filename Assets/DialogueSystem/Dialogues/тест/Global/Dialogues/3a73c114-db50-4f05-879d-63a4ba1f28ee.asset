@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: 21afc751-9b86-4f4b-88b8-97f429c5c976
+  m_Name: 3a73c114-db50-4f05-879d-63a4ba1f28ee
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 21afc751-9b86-4f4b-88b8-97f429c5c976
+  <DialogueName>k__BackingField: 3a73c114-db50-4f05-879d-63a4ba1f28ee
   <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
   <Choices>k__BackingField:
   - <Text>k__BackingField: New Choice
     <NextDialogue>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 2
-  <IsStartingDialogue>k__BackingField: 1
-  <Action>k__BackingField: 7
+  <IsStartingDialogue>k__BackingField: 0
+  <Action>k__BackingField: 8
   <ModelDate>k__BackingField:
-    pos: {x: 0, y: 0, z: 0}
-    itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
+    number: 0
+    pos: {x: 53.68463, y: 3.145, z: 46.768}
+    itemData: {fileID: 0}

@@ -56,6 +56,7 @@ namespace DS.Utilities
 
             return textField;
         }
+        
 
         public static TextField CreateTextArea(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
@@ -80,6 +81,22 @@ namespace DS.Utilities
             }
 
             return objectField;
+        }
+
+        public static FloatField CreateFloatField(float value = 0, string label = null, EventCallback<ChangeEvent<float>> onValueChanged = null)
+        {
+            FloatField floatField = new FloatField()
+            {
+                value = value,
+                label = label
+            };
+
+            if (onValueChanged != null)
+            {
+                floatField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return floatField;
         }
     }
 }

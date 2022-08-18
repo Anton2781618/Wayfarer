@@ -15,22 +15,23 @@ MonoBehaviour:
   <FileName>k__BackingField: DialoguesFileName
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 21afc751-9b86-4f4b-88b8-97f429c5c976
-    <Name>k__BackingField: 21afc751-9b86-4f4b-88b8-97f429c5c976
+  - <ID>k__BackingField: 7d233a10-1bb0-4387-9974-1f27c1772f00
+    <Name>k__BackingField: 7d233a10-1bb0-4387-9974-1f27c1772f00
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 483, y: 197}
+    <Position>k__BackingField: {x: 500, y: 148}
     <Action>k__BackingField: 7
     <ModelDate>k__BackingField:
+      number: 10
       pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
-    <NodeMainColor>k__BackingField: {r: 0, g: 1, b: 0, a: 1}
+      itemData: {fileID: 0}
+    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 21afc751-9b86-4f4b-88b8-97f429c5c976
+  - 7d233a10-1bb0-4387-9974-1f27c1772f00
   <OldGroupedNodeNames>k__BackingField:
     list: []

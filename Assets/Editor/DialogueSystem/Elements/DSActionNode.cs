@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 namespace DS.Elements
 {
+    using System;
     using Data.Save;
     using DS.Enumerations;
     using UnityEditor;
@@ -16,6 +17,8 @@ namespace DS.Elements
     
     public class DSActionNode : DSNode
     {       
+        private delegate string Operation();
+        VisualElement ContainerForTransformation = new VisualElement();
         
         public override void Initialize(string nodeName, DSGraphView dsGraphView, Vector2 position)
         {
@@ -33,7 +36,10 @@ namespace DS.Elements
 
         public override void Draw()
         {
-            if(choisenColor == new Color(0,0,0,0)) choisenColor = Color.green;
+            Operation operation = (Operation)System.Delegate.CreateDelegate(typeof(Operation), this, Action.ToString());
+            operation.Invoke();
+
+            if(choisenColor == new Color(0,0,0,0)) choisenColor = new Color( 205/255.0f, 149/255.0f, 117/255.0f);
             base.Draw();
 
             /* MAIN CONTAINER */
@@ -54,11 +60,8 @@ namespace DS.Elements
             });
 
             addChoiceButton.AddToClassList("ds-node__button");
-            ObjectField addChoiceButtondd = DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue);
-
-            mainContainer.Insert(1, addChoiceButtondd);
-            mainContainer.Insert(1, addChoiceButton);
             
+            mainContainer.Insert(1, addChoiceButton);
 
             /* OUTPUT CONTAINER */
             
@@ -72,30 +75,25 @@ namespace DS.Elements
             /* EXTENSION CONTAINER */
 
             VisualElement customDataContainer = new VisualElement();
+            
 
             Foldout actionTextFoldout = DSElementUtility.CreateFoldout(Action.ToString(), true);
             
             Button[] buttons =
             {                
-                DSElementUtility.CreateButton("Атакавать игрока", ()=> {actionTextFoldout.text = "Атакавать игрока"; Action = DSAction.CommandAttackTheTarget;}),
-                DSElementUtility.CreateButton("Убегать", ()=> {actionTextFoldout.text = "Убегать"; Action = DSAction.CommandRetreat;}),
-                DSElementUtility.CreateButton("Двигаться к цели", ()=> {actionTextFoldout.text = "двигаться к цели"; Action = DSAction.CommandMoveToTarget;}),
+                DSElementUtility.CreateButton("Атакавать игрока", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
+                DSElementUtility.CreateButton("Двигаться к цели", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
+                DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
                 
-                DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> 
-                {
-                    actionTextFoldout.text = "Проверить инвентарь на предмет"; 
-                    Action = DSAction.CheckInventoryForItem; 
-
-                    addChoiceButtondd.objectType = typeof(ItemData);
-                }),
-                DSElementUtility.CreateButton("Проверка информации", ()=> {actionTextFoldout.text = "Проверка информации"; Action = DSAction.CheckingAvailabilityInformation;}),
-                DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = Action.ToString(); Action = DSAction.CommandTrading;}),
-                DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = "Начать диалог"; Action = DSAction.CommandStartDialogue;}),
-                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = "Дать денег"; Action = DSAction.CommandPlayerGiveMoney;}),
+                DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> {actionTextFoldout.text = CheckInventoryForItem();}),
                 
-                DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = "Нет действий"; Action = DSAction.NotAction; Debug.Log(modelDate);}),
+                DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = CommandTrading();}),
+                DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
                 
-                DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = "Выйти из диалога"; Action = DSAction.ExitTheDialog; UpdateStyle(Color.yellow);}),
+                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
+                
+                DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = NotAction();}),                
+                DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = ExitTheDialog(); }),
                 
             };
 
@@ -105,13 +103,18 @@ namespace DS.Elements
             }
             
             customDataContainer.Add(actionTextFoldout);
-
+            // ContainerForTransformation.Add(addChoiceButtondd);
+            
+            extensionContainer.Add(ContainerForTransformation);
             extensionContainer.Add(customDataContainer);
+            
 
             // После добавления пользовательских элементов в extensionContainer вызовите этот метод для того,
             // чтобы они стали видимыми.
             RefreshExpandedState();
         }
+
+        
 
         private void UpdateStyle(Color value)
         {
@@ -167,6 +170,83 @@ namespace DS.Elements
         public override void ResetStyle()
         {
             mainContainer.style.backgroundColor = choisenColor;
+        }
+        
+        
+        private string NotAction()
+        {
+            ContainerForTransformation.Clear();
+            return "Нет действий";
+        }
+        private string CommandAttackTheTarget()
+        {
+            Action = DSAction.CommandAttackTheTarget;
+            ContainerForTransformation.Clear();
+            return "Атакавать игрока";
+        }
+        private string CommandMoveToTarget()
+        {
+            Action = DSAction.CommandMoveToTarget;
+            ContainerForTransformation.Clear();
+            return "Двигаться к цели";
+        }
+        private string CheckInventoryForItem()
+        {
+            Action = DSAction.CheckInventoryForItem;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));
+            return "Проверить инвентарь на предмет";
+        }
+        private string CommandTrading()
+        {
+            Action = DSAction.CommandTrading;
+            
+            ContainerForTransformation.Clear();
+            
+            return "Начать торговлю";
+        }
+
+        private string CommandStartDialogue()
+        {
+            Action = DSAction.CommandStartDialogue;
+            
+            ContainerForTransformation.Clear();
+            
+            return "Начать диалог";
+        }
+        private string CommandPlayerGiveMoney()
+        {
+            Action = DSAction.CommandPlayerGiveMoney;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.number, null, collBack => modelDate.number = collBack.newValue));
+            
+            return "Дать денег";
+        }
+        private string ExitTheDialog()
+        {
+            Action = DSAction.ExitTheDialog;
+            
+            ContainerForTransformation.Clear();
+            
+            UpdateStyle(Color.yellow);
+            
+            return "Выйти из диалога";
+        }
+        private string CommandMoveToCoordinates()
+        {
+            Action = DSAction.CommandMoveToCoordinates;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.x, null, collBack => modelDate.pos.x = collBack.newValue));
+            ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.y, null, collBack => modelDate.pos.y = collBack.newValue));
+            ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.z, null, collBack => modelDate.pos.z = collBack.newValue));
+            
+            return "Двигаться к корординатам";
         }
     }
 }

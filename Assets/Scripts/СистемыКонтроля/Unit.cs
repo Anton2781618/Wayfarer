@@ -17,7 +17,7 @@ public class Unit : AbstractBehavior
     [SerializeField] protected AI aI = new AI();
     [SerializeField] protected DSAction action;
     private Coroutine coroutine;
-    private ItemData CurrentItemData;
+    private ModelDate CurrentModelData;
 
     public override void Init()
     {
@@ -63,9 +63,9 @@ public class Unit : AbstractBehavior
     public States GetUnityState() => state;
 
     //установить действие
-    public int SetAction(DSAction action, ItemData itemData)
+    public int SetAction(DSAction action, ModelDate modelDate)
     {
-        this.CurrentItemData = itemData;
+        this.CurrentModelData = modelDate;
         this.action = action;
         return 0;
     }
@@ -170,7 +170,7 @@ public class Unit : AbstractBehavior
     [ContextMenu("CommandGiveMoney")]
     public int CommandPlayerGiveMoney()
     {
-        chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, CurrentItemData.price);
+        chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, (int)CurrentModelData.number);
         
         SetCompleteCommand();
         
@@ -187,6 +187,16 @@ public class Unit : AbstractBehavior
         FaceToTarget();       
 
         agent.SetDestination(target.transform.position);        
+        
+        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+        
+        coroutine = StartCoroutine(CheckAndSwitchStage());
+        
+        return 0;
+    }
+    public int CommandMoveToCoordinates()
+    {
+        agent.SetDestination(CurrentModelData.pos);        
         
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
         
@@ -214,6 +224,7 @@ public class Unit : AbstractBehavior
 [Serializable]
 public class ModelDate
 {
+    public float number;
     public Vector3 pos;
     public ItemData itemData;
 }

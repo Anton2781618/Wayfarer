@@ -16,5 +16,5 @@ MonoBehaviour:
   <DialogueGroups>k__BackingField:
     list: []
   <UngroupedDialogues>k__BackingField:
-  - {fileID: 11400000, guid: 8913d752e40931c48bde6ef145708dca, type: 2}
-  - {fileID: 11400000, guid: 3186489d854095248ae8d3aedf275bdc, type: 2}
+  - {fileID: 11400000, guid: 794defd34e5302f44ac97625253ce206, type: 2}
+  - {fileID: 11400000, guid: ea5732e04f71987498984cc8b0448521, type: 2}

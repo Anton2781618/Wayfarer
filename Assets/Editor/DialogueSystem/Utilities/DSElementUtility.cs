@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
+using DS.ScriptableObjects;
 
 namespace DS.Utilities
 {
@@ -82,6 +83,22 @@ namespace DS.Utilities
 
             return objectField;
         }
+        public static ObjectField CreateObjectFieldDSDialogueSO(UnityEngine.Object value = null, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
+        {
+            ObjectField objectField = new ObjectField()
+            {
+                value = value
+            };
+
+            objectField.objectType = typeof(DSDialogueContainerSO);
+
+            if (onValueChanged != null)
+            {
+                objectField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return objectField;
+        }
 
         public static FloatField CreateFloatField(float value = 0, string label = null, EventCallback<ChangeEvent<float>> onValueChanged = null)
         {
@@ -89,6 +106,20 @@ namespace DS.Utilities
             {
                 value = value,
                 label = label
+            };
+
+            if (onValueChanged != null)
+            {
+                floatField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return floatField;
+        }
+        public static LayerMaskField CreateLayerMaskField(int value = 0, EventCallback<ChangeEvent<int>> onValueChanged = null)
+        {
+            LayerMaskField floatField = new LayerMaskField()
+            {
+                value = value,
             };
 
             if (onValueChanged != null)

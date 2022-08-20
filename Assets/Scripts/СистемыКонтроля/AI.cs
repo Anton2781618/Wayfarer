@@ -46,15 +46,15 @@ public class AI
     public void StartStage() => unit.SetAction(stage.Action, stage.ModelDate);
 
     //перейти на следующий этап
-    public void NextStage()
+    public void NextStage(int dialogueIndex)
     {
-        if(!stage.Choices[0].NextDialogue) 
+        if(!stage.Choices[dialogueIndex].NextDialogue) 
         {
             ExitSoltuin();
             return;
         }
         
-        stage = stage.Choices[0].NextDialogue;
+        stage = stage.Choices[dialogueIndex].NextDialogue;
         
         StartStage();
     }

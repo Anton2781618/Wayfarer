@@ -1,6 +1,7 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using DS.ScriptableObjects;
 
 
 namespace DS.Elements
@@ -81,18 +82,20 @@ namespace DS.Elements
             
             Button[] buttons =
             {                
-                DSElementUtility.CreateButton("Атакавать игрока", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
-                DSElementUtility.CreateButton("Двигаться к цели", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
+                DSElementUtility.CreateButton("Найти таргет(патруль)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
+                DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
+                DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
+                DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
                 
-                DSElementUtility.CreateButton("Проверить инвентарь на предмет", ()=> {actionTextFoldout.text = CheckInventoryForItem();}),
+                DSElementUtility.CreateButton("Проверить инвентарь таргета на предмет", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
+                DSElementUtility.CreateButton("Передать группе задачу", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
                 
-                DSElementUtility.CreateButton("Начать торговлю", ()=> {actionTextFoldout.text = CommandTrading();}),
-                DSElementUtility.CreateButton("Начать диалог", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
+                DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionTextFoldout.text = CommandTrading();}),
+                DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
                 
-                DSElementUtility.CreateButton("Дать денег", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
+                DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
                 
-                DSElementUtility.CreateButton("Нет действий", ()=> {actionTextFoldout.text = NotAction();}),                
                 DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = ExitTheDialog(); }),
                 
             };
@@ -112,9 +115,7 @@ namespace DS.Elements
             // После добавления пользовательских элементов в extensionContainer вызовите этот метод для того,
             // чтобы они стали видимыми.
             RefreshExpandedState();
-        }
-
-        
+        }        
 
         private void UpdateStyle(Color value)
         {
@@ -170,34 +171,43 @@ namespace DS.Elements
         public override void ResetStyle()
         {
             mainContainer.style.backgroundColor = choisenColor;
-        }
+        }        
         
-        
-        private string NotAction()
-        {
-            ContainerForTransformation.Clear();
-            return "Нет действий";
-        }
         private string CommandAttackTheTarget()
         {
             Action = DSAction.CommandAttackTheTarget;
+            
             ContainerForTransformation.Clear();
+            
             return "Атакавать игрока";
+        }
+        private string CommandFindTheTarget()
+        {
+            Action = DSAction.CommandFindTheTarget;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateLayerMaskField(modelDate.targetMask, x => modelDate.targetMask = (int)x.newValue));
+            
+            return "Найти таргет";
         }
         private string CommandMoveToTarget()
         {
             Action = DSAction.CommandMoveToTarget;
+            
             ContainerForTransformation.Clear();
-            return "Двигаться к цели";
+            
+            return "Двигаться к таргету";
         }
-        private string CheckInventoryForItem()
+        private string CommandCheckTargetInventoryForItem()
         {
-            Action = DSAction.CheckInventoryForItem;
+            Action = DSAction.CommandCheckTargetInventoryForItem;
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));
-            return "Проверить инвентарь на предмет";
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+
+            return "Проверить инвентарь таргета на предмет";
         }
         private string CommandTrading()
         {
@@ -207,12 +217,21 @@ namespace DS.Elements
             
             return "Начать торговлю";
         }
+        private string NotAction()
+        {
+            ContainerForTransformation.Clear();
+
+            return "Нет действий";
+        }
 
         private string CommandStartDialogue()
         {
             Action = DSAction.CommandStartDialogue;
             
             ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldDSDialogueSO(modelDate.dialogue, x => modelDate.dialogue = (DSDialogueContainerSO)x.newValue));
+            
             
             return "Начать диалог";
         }
@@ -224,7 +243,7 @@ namespace DS.Elements
 
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.number, null, collBack => modelDate.number = collBack.newValue));
             
-            return "Дать денег";
+            return "Забрать деньги у таргета";
         }
         private string ExitTheDialog()
         {

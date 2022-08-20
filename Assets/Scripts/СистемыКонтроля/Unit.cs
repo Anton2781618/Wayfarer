@@ -90,15 +90,34 @@ public class Unit : AbstractBehavior
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    public void SetCompleteCommand()
+    public void SetCompleteCommand(int dialogueIndex = 0)
     {
         this.action = DSAction.CommandStandStill;
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
-        aI.NextStage();
+        aI.NextStage(dialogueIndex);
     }
 
+    public override void Use() => CommandStartDialogue();
+
+    #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------
+    public GameObject pre;
+    public Terrain terr;
+    Vector3 apos;
+    [ContextMenu("ddddd")]
+    public int CommandFindTheTarget()
+    {
+        int x = Mathf.CeilToInt(UnityEngine.Random.Range(0, terr.terrainData.bounds.size.x));
+        int z = Mathf.CeilToInt(UnityEngine.Random.Range(0, terr.terrainData.bounds.size.z));
+        float y = terr.terrainData.GetHeight(x,z);
+
+        pre.transform.position = new Vector3(x, y, z);
+        apos = new Vector3(x, y + 1, z);
+
+        action = DSAction.CommandRetreat;
+        return 0;
+    }
     //стоять на месте
     public int CommandStandStill()
     {
@@ -143,6 +162,7 @@ public class Unit : AbstractBehavior
 
     public int CommandRetreat()
     {
+        CommandMoveToCoordinates(apos);
         Debug.Log("Отступаю");
         return 0;
     }
@@ -156,10 +176,10 @@ public class Unit : AbstractBehavior
         return 0;
     }
 
-    public override void Use() => CommandStartDialogue();
-
     private int CommandStartDialogue()
     {
+        dSDialogue.SetDialog(CurrentModelData.dialogue);
+
         dSDialogue.StartDialogue(this);
 
         SetCompleteCommand();
@@ -167,7 +187,6 @@ public class Unit : AbstractBehavior
         return 0;
     }
 
-    [ContextMenu("CommandGiveMoney")]
     public int CommandPlayerGiveMoney()
     {
         chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, (int)CurrentModelData.number);
@@ -194,9 +213,20 @@ public class Unit : AbstractBehavior
         
         return 0;
     }
+    
     public int CommandMoveToCoordinates()
     {
         agent.SetDestination(CurrentModelData.pos);        
+        
+        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+        
+        coroutine = StartCoroutine(CheckAndSwitchStage());
+        
+        return 0;
+    }
+    public int CommandMoveToCoordinates(Vector3 aPos)
+    {
+        agent.SetDestination(aPos);  
         
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
         
@@ -216,9 +246,19 @@ public class Unit : AbstractBehavior
         }
     }
 
+    private int CommandCheckTargetInventoryForItem()
+    {
+        if(target == null) Debug.Log("нет таргета");
+
+        SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
+
+        return 0;
+    }
+
     [ContextMenu("пуск")]
     public void Action2() => aI.StartSolution();
-
+    
+    #endregion
 }
 
 [Serializable]
@@ -227,4 +267,6 @@ public class ModelDate
     public float number;
     public Vector3 pos;
     public ItemData itemData;
+    public DSDialogueContainerSO dialogue;
+    public LayerMask targetMask;
 }

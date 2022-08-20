@@ -15,23 +15,27 @@ MonoBehaviour:
   <FileName>k__BackingField: DialoguesFileName
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 7d233a10-1bb0-4387-9974-1f27c1772f00
-    <Name>k__BackingField: 7d233a10-1bb0-4387-9974-1f27c1772f00
+  - <ID>k__BackingField: 51c02590-bdc7-4e95-a2b5-1098df61d8a8
+    <Name>k__BackingField: 51c02590-bdc7-4e95-a2b5-1098df61d8a8
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 500, y: 148}
-    <Action>k__BackingField: 7
+    <Position>k__BackingField: {x: 653, y: 343}
+    <Action>k__BackingField: 12
     <ModelDate>k__BackingField:
-      number: 10
+      number: 0
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 19
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 7d233a10-1bb0-4387-9974-1f27c1772f00
+  - 51c02590-bdc7-4e95-a2b5-1098df61d8a8
   <OldGroupedNodeNames>k__BackingField:
     list: []

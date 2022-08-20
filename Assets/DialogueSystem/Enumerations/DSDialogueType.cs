@@ -14,7 +14,7 @@ namespace DS.Enumerations
     {        
         CommandAttackTheTarget,
         CommandRetreat,
-        CheckInventoryForItem,
+        CommandCheckTargetInventoryForItem,
         CheckingAvailabilityInformation,
         NotAction,
         ExitTheDialog,
@@ -24,5 +24,6 @@ namespace DS.Enumerations
         CommandStandStill,
         CommandStartDialogue,
         CommandMoveToCoordinates,
+        CommandFindTheTarget,
     }
 }

@@ -16,18 +16,15 @@ MonoBehaviour:
   <DialogueGroups>k__BackingField:
     list: []
   <UngroupedDialogues>k__BackingField:
-  - {fileID: 11400000, guid: 611e30e3c00ea2f42aaa4304a9e11096, type: 2}
-  - {fileID: 11400000, guid: ab485c49949c29549a2bd5e6db1eb5b1, type: 2}
-  - {fileID: 11400000, guid: 1965a4748f7c5bb448458b5fabdd99ca, type: 2}
-  - {fileID: 11400000, guid: 55bce86a8e661964c81f82b5e61e304c, type: 2}
-  - {fileID: 11400000, guid: 71359cc6754acea43a1f07eb54966da7, type: 2}
-  - {fileID: 11400000, guid: 83f6e762ee37f294cad48ebb3cef7b0b, type: 2}
-  - {fileID: 11400000, guid: e2ab5206d5ad92546896c857ead15b9e, type: 2}
-  - {fileID: 11400000, guid: 7dcbac42ef0d9de4b9513ce81ca1dbde, type: 2}
-  - {fileID: 11400000, guid: 031398f4116a46144a7310810c47026f, type: 2}
-  - {fileID: 11400000, guid: 4544b825c084658439a9edb256169f61, type: 2}
-  - {fileID: 11400000, guid: 70772687a9e9f554b9e4dceb14100649, type: 2}
-  - {fileID: 11400000, guid: 18c67e5910b8a9c42bf2478f65107fcc, type: 2}
-  - {fileID: 11400000, guid: 8b88b767fc8979d4392e83ff236d96e2, type: 2}
-  - {fileID: 11400000, guid: e978fc827b9a6a5479106c01ff59dc5c, type: 2}
-  - {fileID: 11400000, guid: 5d53fd2a4428a62449a953d992383041, type: 2}
+  - {fileID: 11400000, guid: e6876b33c30a25444aa7d5f0d8775d78, type: 2}
+  - {fileID: 11400000, guid: b9740f085c8b0ab418671d92b245086f, type: 2}
+  - {fileID: 11400000, guid: 37e9ecabeed28c64b8921b148a8dcbff, type: 2}
+  - {fileID: 11400000, guid: 441d947928a0a2d4c885fd078b9d5d23, type: 2}
+  - {fileID: 11400000, guid: 52ad837ba602fc041be435d89a0ed8f2, type: 2}
+  - {fileID: 11400000, guid: d87cead1781da4c4893325d7bb8243ee, type: 2}
+  - {fileID: 11400000, guid: e4e6d94006abe3a46a7226b5ebdbbe80, type: 2}
+  - {fileID: 11400000, guid: 607a04a7d6744b1408a9209115daadc7, type: 2}
+  - {fileID: 11400000, guid: 7836be5e28b90854ba74f1c9e1e50cf9, type: 2}
+  - {fileID: 11400000, guid: a0b2688d62ec082418acad0cb75ece19, type: 2}
+  - {fileID: 11400000, guid: a903ba4efd94a6d47bd0892f7a89dbd7, type: 2}
+  - {fileID: 11400000, guid: 887458bd91da7b448ba81ee0cb02ef77, type: 2}

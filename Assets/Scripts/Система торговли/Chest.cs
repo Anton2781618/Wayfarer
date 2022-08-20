@@ -23,6 +23,15 @@ public class Chest : MonoBehaviour, ICanUse
         UpdateMoney();
     }
 
+    public int CheckInventoryForItems(ItemData itemData)
+    {
+        foreach (var item in inventoryItems)
+        {
+            if(item.itemData == itemData) return 0;
+        }
+        return 1;
+    }
+
     public void InitChest(ItemGrid chestGrid)
     {
         this.chestGrid = chestGrid;

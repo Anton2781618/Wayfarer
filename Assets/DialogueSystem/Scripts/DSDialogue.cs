@@ -26,6 +26,11 @@ namespace DS
 
         public Unit targetUnit;
 
+        public void SetDialog(DSDialogueContainerSO dialogueContainer)
+        {
+            this.dialogueContainer = dialogueContainer;
+        }
+
         public void StartDialogue(Unit unit)
         {
             targetUnit = unit;            

@@ -29,7 +29,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     [SerializeField] protected Slider MpSlider;   
     [SerializeField] protected States state = States.Патруль;
     
-    protected Animator anim;
+    public Animator anim;
     
     protected NavMeshAgent agent;
     [SerializeField] private Sword sword;

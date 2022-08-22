@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DS;
 using DS.Enumerations;
 using DS.ScriptableObjects;
@@ -15,22 +16,16 @@ public class Unit : AbstractBehavior
     [SerializeField] private DSDialogue dSDialogue;
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
-    [SerializeField] protected DSAction action;
-    private Coroutine coroutine;
+    [SerializeField] protected DSAction currentAction;
     private ModelDate CurrentModelData;
 
     public override void Init()
     {
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
+        StartCoroutine(FindTargetsWithDeley(0.2f));
     }    
 
     private void Update() => aI.Analyzer();
-
-    public override void Die()
-    {
-        base.Die();
-        SowHealthBar (false);
-    }
 
     public override void ShowOutline(bool value)
     {
@@ -52,7 +47,8 @@ public class Unit : AbstractBehavior
         unitCanvas.gameObject.SetActive(value);
     }
 
-    public void RotateCanvas()
+    //поварачивает канвас юнита лицом к игроку
+    private void RotateCanvas()
     {
         if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
         {
@@ -65,61 +61,147 @@ public class Unit : AbstractBehavior
     //установить действие
     public int SetAction(DSAction action, ModelDate modelDate)
     {
-        this.CurrentModelData = modelDate;
-        this.action = action;
+        Debug.Log("устанавливаю задачу " + action);
+        
+        CurrentModelData = modelDate;
+        
+        currentAction = action;
+        
         return 0;
     }
-
-    //метод выполняет текущую задачу
-    public void CurrentAction()
+    //выполнить текущую задачу
+    public void ExecuteCurrentCommand()
     {
         if(unitCanvas.gameObject.activeSelf)RotateCanvas();
 
-        Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, action.ToString());
+        Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, currentAction.ToString());
         operation.Invoke();
     }
 
-    public void SetTarget(ICanUse newTarget) => target = newTarget;
+    public override void Use() => CommandStartDialogue();
+    #region [rgba(908,300,207,0.02)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
-    public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
-
-    private void FaceToTarget()
+    private void MoveToPoint(Vector3 point)
     {
-        Vector3 direction = (target.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        FaceToPoint(point);
+
+        agent.SetDestination(point);     
+
+        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
     }
 
     public void SetCompleteCommand(int dialogueIndex = 0)
     {
-        this.action = DSAction.CommandStandStill;
+        this.currentAction = DSAction.CommandStandStill;
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
         aI.NextStage(dialogueIndex);
     }
 
-    public override void Use() => CommandStartDialogue();
-
-    #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------
-    public GameObject pre;
-    public Terrain terr;
-    Vector3 apos;
-    [ContextMenu("ddddd")]
-    public int CommandFindTheTarget()
+    public override void Die()
     {
-        int x = Mathf.CeilToInt(UnityEngine.Random.Range(0, terr.terrainData.bounds.size.x));
-        int z = Mathf.CeilToInt(UnityEngine.Random.Range(0, terr.terrainData.bounds.size.z));
-        float y = terr.terrainData.GetHeight(x,z);
-
-        pre.transform.position = new Vector3(x, y, z);
-        apos = new Vector3(x, y + 1, z);
-
-        action = DSAction.CommandRetreat;
-        return 0;
+        base.Die();
+        SowHealthBar (false);
     }
+
+    private void FaceToPoint(Vector3 point)
+    {
+        Vector3 direction = (point - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
+
+    public void SetTarget(ICanUse newTarget) => target = newTarget;
+
+    public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
+
+    public float viewRadius;
+    [Range(0, 360)] public float viewAngle;
+
+    public LayerMask targetMask;
+    public LayerMask obstaclMask;
+
+    public List<Transform> visileTargets = new List<Transform>();
+
+    private IEnumerator FindTargetsWithDeley(float delay)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(delay);
+            FirndVisiblaTargets();
+        }
+    }
+
+    private void FirndVisiblaTargets()
+    {
+        visileTargets.Clear();
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        {
+            Transform target = targetsInViewRadius[i].transform;
+            
+            Vector3 dirToTarget = (target.position - transform.position).normalized;
+
+            if(Vector3.Angle(anim.GetBoneTransform(HumanBodyBones.Head).forward, dirToTarget) < viewAngle / 2)
+            {
+                float distToTarget = Vector3.Distance(transform.position, target.position);
+
+                if(!Physics.Raycast(anim.GetBoneTransform(HumanBodyBones.Head).position, dirToTarget, distToTarget, obstaclMask))
+                {
+                    visileTargets.Add(target);
+                }
+            }
+        }
+    }
+
+    public Vector3 DirFromAngle(float angleInDegriees, bool angleIsGlobal)
+    {
+        if(!angleIsGlobal)
+        {
+            angleInDegriees += anim.GetBoneTransform(HumanBodyBones.Head).eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angleInDegriees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegriees * Mathf.Deg2Rad));
+    }
+        
+    #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
+
+
+
+    #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
+    public Terrain currentTerrain;//участок земли
+    private bool isWalken = false;
+    private Vector3 newPint;
+    private int CommandFindTheTarget()
+    {
+        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !isWalken)
+        {
+            isWalken = true;
+            newPint = SetRandomPointInSquare(currentTerrain);
+        }
+        else
+        {
+            isWalken = false;
+            MoveToPoint(newPint);
+        }
+
+        return 0;
+    }    
+
+    private Vector3 SetRandomPointInSquare(Terrain square)
+    {
+        int x = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.x));
+        
+        int z = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.z));
+        
+        float y = currentTerrain.terrainData.GetHeight(x,z);
+
+        return new Vector3(x, y + 1, z);
+    }
+
     //стоять на месте
-    public int CommandStandStill()
+    private int CommandStandStill()
     {
         anim.SetBool("walk", false);
 
@@ -149,12 +231,8 @@ public class Unit : AbstractBehavior
             return 0;
         }
         
-        FaceToTarget();        
-
-        agent.SetDestination(target.transform.position);        
-
-        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
-
+        MoveToPoint(target.transform.position);
+        
         anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
         
         return 0;
@@ -162,12 +240,11 @@ public class Unit : AbstractBehavior
 
     public int CommandRetreat()
     {
-        CommandMoveToCoordinates(apos);
         Debug.Log("Отступаю");
         return 0;
     }
 
-    public int CommandTrading()
+    private int CommandTrading()
     {
         chest.StartTrading();
 
@@ -187,7 +264,7 @@ public class Unit : AbstractBehavior
         return 0;
     }
 
-    public int CommandPlayerGiveMoney()
+    private int CommandPlayerGiveMoney()
     {
         chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, (int)CurrentModelData.number);
         
@@ -196,53 +273,34 @@ public class Unit : AbstractBehavior
         return 0;
     }
 
-    public int CommandMoveToTarget()
+    private int CommandMoveToTarget()
     {
         if(target == null)
         {
             Debug.Log("у NPC не установлен таргет");
         }
 
-        FaceToTarget();       
+        MoveToPoint(target.transform.position);
 
-        agent.SetDestination(target.transform.position);        
-        
-        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
-        
-        coroutine = StartCoroutine(CheckAndSwitchStage());
+        CheckAndSwitchStage();
         
         return 0;
     }
     
-    public int CommandMoveToCoordinates()
+    private int CommandMoveToCoordinates()
     {
-        agent.SetDestination(CurrentModelData.pos);        
+        MoveToPoint(CurrentModelData.pos);
         
-        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
-        
-        coroutine = StartCoroutine(CheckAndSwitchStage());
+        CheckAndSwitchStage();
         
         return 0;
     }
-    public int CommandMoveToCoordinates(Vector3 aPos)
+    
+    private void CheckAndSwitchStage()
     {
-        agent.SetDestination(aPos);  
-        
-        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
-        
-        coroutine = StartCoroutine(CheckAndSwitchStage());
-        
-        return 0;
-    }
-
-    private IEnumerator CheckAndSwitchStage()
-    {
-        yield return null;
-
-        if(agent.remainingDistance < agent.stoppingDistance)
+        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance)
         {
             SetCompleteCommand();
-            StopCoroutine(coroutine);
         }
     }
 
@@ -258,7 +316,7 @@ public class Unit : AbstractBehavior
     [ContextMenu("пуск")]
     public void Action2() => aI.StartSolution();
     
-    #endregion
+    #endregion Комманды для управления NPC КОНЕЦ --------------------------------------------------------------------------------------------------------------------//
 }
 
 [Serializable]

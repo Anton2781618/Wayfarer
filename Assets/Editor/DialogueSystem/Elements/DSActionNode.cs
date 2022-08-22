@@ -84,6 +84,7 @@ namespace DS.Elements
             {                
                 DSElementUtility.CreateButton("Найти таргет(патруль)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
                 DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
+                
                 DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
                 DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),

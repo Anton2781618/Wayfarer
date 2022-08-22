@@ -18,7 +18,7 @@ public class AI
     //метод анализирует обстановку вокруг и принимает решения как реагировать
     public void Analyzer()
     {
-        unit.CurrentAction();
+        unit.ExecuteCurrentCommand();
     }
 
     //старт решения

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: bf2bd14a-d4fe-41aa-b6a4-0f1fdb5b218d
+  m_Name: a1f9b22a-d10a-47b6-8677-92a4156a948a
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: bf2bd14a-d4fe-41aa-b6a4-0f1fdb5b218d
+  <DialogueName>k__BackingField: a1f9b22a-d10a-47b6-8677-92a4156a948a
   <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
   <Choices>k__BackingField:
   - <Text>k__BackingField: New Choice
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 01649a8221769614c975afd28997eb15, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 2
   <IsStartingDialogue>k__BackingField: 0
-  <Action>k__BackingField: 11
+  <Action>k__BackingField: 0
   <ModelDate>k__BackingField:
     number: 0
-    pos: {x: 45.82696, y: 1.4, z: 52.32}
+    pos: {x: 0, y: 0, z: 0}
     itemData: {fileID: 0}
-    dialogue: {fileID: 0}
+    dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
     targetMask:
       serializedVersion: 2
       m_Bits: 0

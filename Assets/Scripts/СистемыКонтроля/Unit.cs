@@ -22,7 +22,7 @@ public class Unit : AbstractBehavior
     public override void Init()
     {
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
-        StartCoroutine(FindTargetsWithDeley(0.2f));
+        aI.Init(this, anim);
     }    
 
     private void Update() => aI.Analyzer();
@@ -45,15 +45,6 @@ public class Unit : AbstractBehavior
             return;
         }
         unitCanvas.gameObject.SetActive(value);
-    }
-
-    //поварачивает канвас юнита лицом к игроку
-    private void RotateCanvas()
-    {
-        if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
-        {
-            unitCanvas.transform.rotation = Camera.main.transform.rotation;
-        }
     }
 
     public States GetUnityState() => state;
@@ -79,6 +70,7 @@ public class Unit : AbstractBehavior
     }
 
     public override void Use() => CommandStartDialogue();
+
     #region [rgba(908,300,207,0.02)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
     private void MoveToPoint(Vector3 point)
@@ -88,6 +80,15 @@ public class Unit : AbstractBehavior
         agent.SetDestination(point);     
 
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+    }
+
+    //поварачивает канвас юнита лицом к игроку
+    private void RotateCanvas()
+    {
+        if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
+        {
+            unitCanvas.transform.rotation = Camera.main.transform.rotation;
+        }
     }
 
     public void SetCompleteCommand(int dialogueIndex = 0)
@@ -115,59 +116,9 @@ public class Unit : AbstractBehavior
     public void SetTarget(ICanUse newTarget) => target = newTarget;
 
     public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
-
-    public float viewRadius;
-    [Range(0, 360)] public float viewAngle;
-
-    public LayerMask targetMask;
-    public LayerMask obstaclMask;
-
-    public List<Transform> visileTargets = new List<Transform>();
-
-    private IEnumerator FindTargetsWithDeley(float delay)
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(delay);
-            FirndVisiblaTargets();
-        }
-    }
-
-    private void FirndVisiblaTargets()
-    {
-        visileTargets.Clear();
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
-        {
-            Transform target = targetsInViewRadius[i].transform;
-            
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
-
-            if(Vector3.Angle(anim.GetBoneTransform(HumanBodyBones.Head).forward, dirToTarget) < viewAngle / 2)
-            {
-                float distToTarget = Vector3.Distance(transform.position, target.position);
-
-                if(!Physics.Raycast(anim.GetBoneTransform(HumanBodyBones.Head).position, dirToTarget, distToTarget, obstaclMask))
-                {
-                    visileTargets.Add(target);
-                }
-            }
-        }
-    }
-
-    public Vector3 DirFromAngle(float angleInDegriees, bool angleIsGlobal)
-    {
-        if(!angleIsGlobal)
-        {
-            angleInDegriees += anim.GetBoneTransform(HumanBodyBones.Head).eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegriees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegriees * Mathf.Deg2Rad));
-    }
+    
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
-
-
 
     #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
     public Terrain currentTerrain;//участок земли
@@ -184,6 +135,13 @@ public class Unit : AbstractBehavior
         {
             isWalken = false;
             MoveToPoint(newPint);
+        }
+
+        if(aI.GetEyes().visileTargets.Count > 0)
+        {
+            target = aI.GetEyes().visileTargets[0].GetComponent<ICanUse>();
+            Debug.Log("найден таргет " + target);
+            SetCompleteCommand();
         }
 
         return 0;

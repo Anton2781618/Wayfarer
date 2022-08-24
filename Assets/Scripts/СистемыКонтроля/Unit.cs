@@ -123,18 +123,63 @@ public class Unit : AbstractBehavior
     #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
     public Terrain currentTerrain;//участок земли
     private bool isWalken = false;
-    private Vector3 newPint;
+    private Vector3 newPintToWalke;
+
+    public GameObject TestPrefab;
+    public List<MapSquare> map = new List<MapSquare>();
+    [ContextMenu("CreateGrid")]
+    public void CreateMapGrid()
+    {
+        float offset = 12.5f;
+        map.Clear();
+
+        for (int x = 0; x < 4; x++)
+        {
+            for (int z = 0; z < 4; z++)
+            {
+                Vector2 pos = new Vector2( currentTerrain.transform.position.x + TestPrefab.transform.localScale.x  * x + offset, currentTerrain.transform.position.z + TestPrefab.transform.localScale.z * z + offset);
+                Vector2 size = new Vector2(25, 25);
+
+                map.Add(new MapSquare(pos, size, Instantiate(TestPrefab)));
+            }
+        }
+    }
+
+    public void CalculPos()
+    {
+        foreach (var pref in map)
+        {
+            if(transform.position.x > pref.pos.x - 12.5f&& 
+            transform.position.x < pref.pos.x + pref.size.x - 12.5f &&
+            transform.position.z > pref.pos.y - 12.5f && 
+            transform.position.z < pref.pos.y + pref.size.y - 12.5f)
+            {
+                Destroy(pref.cubePref);
+                map.Remove(pref);
+                return;
+            }
+        }
+    }
+
     private int CommandFindTheTarget()
     {
         if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !isWalken)
         {
             isWalken = true;
-            newPint = SetRandomPointInSquare(currentTerrain);
+            // newPint = SetRandomPointInSquare(currentTerrain);
+            int x = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.x;
+        
+            int z = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.y;
+            
+            float y = currentTerrain.terrainData.GetHeight(x,z);
+
+            newPintToWalke = new Vector3(x, y, z);
         }
         else
         {
             isWalken = false;
-            MoveToPoint(newPint);
+            MoveToPoint(newPintToWalke);
+            CalculPos();
         }
 
         if(aI.GetEyes().visileTargets.Count > 0)
@@ -285,4 +330,23 @@ public class ModelDate
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
     public LayerMask targetMask;
+}
+
+//класс описывает квадрат распологаемый на карте
+[Serializable]
+public class MapSquare
+{
+    public Vector2 pos;
+    public Vector2 size;
+    public GameObject cubePref;
+
+    public MapSquare(Vector2 pos, Vector2 size, GameObject cubePref)
+    {
+        this.pos = pos;
+        this.size = size;
+
+        cubePref.transform.position = new Vector3(pos.x, -10, pos.y);
+        cubePref.transform.localScale = new Vector3(size.x, 1, size.y);
+        this.cubePref = cubePref;
+    }
 }

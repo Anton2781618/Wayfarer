@@ -149,6 +149,11 @@ public class Eyes
         headTransform = headTrans;
         myTransform = unitTran;
     }
+
+    public void SetTargetMaskForEyes(LayerMask value)
+    {
+        targetMaskForEyes = value;
+    }
     
     public void FirndVisiblaTargets()
     {

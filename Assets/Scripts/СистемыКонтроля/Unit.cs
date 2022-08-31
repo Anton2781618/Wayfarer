@@ -19,6 +19,17 @@ public class Unit : AbstractBehavior
     [SerializeField] protected DSAction currentAction;
     private ModelDate CurrentModelData;
 
+    //двигается ли персонаж сейчас
+    private bool isMoving = false;
+    private bool needCreateMap = true;
+    private Vector3 PintToWalke;
+
+    //участок земли 
+    public Terrain currentTerrain;//!ждет доработки
+    public List<MapSquare> map = new List<MapSquare>();
+    
+
+
     public override void Init()
     {
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
@@ -71,8 +82,9 @@ public class Unit : AbstractBehavior
 
     public override void Use() => CommandStartDialogue();
 
-    #region [rgba(908,300,207,0.02)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
+    #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
+    //двигаться к точке
     private void MoveToPoint(Vector3 point)
     {
         FaceToPoint(point);
@@ -80,6 +92,72 @@ public class Unit : AbstractBehavior
         agent.SetDestination(point);     
 
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+    }
+
+    //создать карту для перемещения
+    public void CreateMap()
+    {
+        float offset = 6.25f;
+
+        map.ForEach(t => Destroy(t.cubePref));
+        map.Clear();
+
+        for (int x = 0; x < 8; x++)
+        {
+            for (int z = 0; z < 8; z++)
+            {
+                Vector2 size = new Vector2(12.5f, 12.5f);
+
+                Vector2 pos = new Vector2 (currentTerrain.transform.position.x + size.x * x + offset, currentTerrain.transform.position.z + size.y * z + offset);
+
+                GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                primitive.transform.localScale = new Vector3(size.x, 0.5f, size.y);
+
+                map.Add(new MapSquare(pos, size, primitive));
+            }
+        }
+    }
+
+    //метод вычисляет в каком квадрате мы находимся и удаляет этот квадрат из карты
+    public void GetMyPosOnMap()
+    {
+        foreach (var pref in map)
+        {
+            if(transform.position.x > pref.pos.x - 6.25f && transform.position.x < pref.pos.x + pref.size.x - 6.25f &&
+            transform.position.z > pref.pos.y - 6.25f && transform.position.z < pref.pos.y + pref.size.y - 6.25f)
+            {
+                Destroy(pref.cubePref);
+
+                map.Remove(pref);
+
+                return;
+            }
+        }
+    }
+
+    // найти случайную точку на квадрате в списку квадратов (на карте)
+    private Vector3 GetNewRandomPointOnMap()
+    {
+        int x = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.x;
+        
+        int z = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.y;
+        
+        float y = currentTerrain.terrainData.GetHeight(x,z);
+
+        return new Vector3(x, y, z);
+    }
+
+    //найти случайную точку на определенном террейне
+    private Vector3 GetRandomPointInSquare(Terrain square)
+    {
+        int x = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.x));
+        
+        int z = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.z));
+        
+        float y = currentTerrain.terrainData.GetHeight(x,z);
+
+        return new Vector3(x, y + 1, z);
     }
 
     //поварачивает канвас юнита лицом к игроку
@@ -93,6 +171,8 @@ public class Unit : AbstractBehavior
 
     public void SetCompleteCommand(int dialogueIndex = 0)
     {
+        needCreateMap = true;
+
         this.currentAction = DSAction.CommandStandStill;
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
@@ -120,87 +200,44 @@ public class Unit : AbstractBehavior
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
 
-    #region [rgba(108,300,207,0.02)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
-    public Terrain currentTerrain;//участок земли
-    private bool isWalken = false;
-    private Vector3 newPintToWalke;
-
-    public GameObject TestPrefab;
-    public List<MapSquare> map = new List<MapSquare>();
-    [ContextMenu("CreateGrid")]
-    public void CreateMapGrid()
-    {
-        float offset = 12.5f;
-        map.Clear();
-
-        for (int x = 0; x < 4; x++)
-        {
-            for (int z = 0; z < 4; z++)
-            {
-                Vector2 pos = new Vector2( currentTerrain.transform.position.x + TestPrefab.transform.localScale.x  * x + offset, currentTerrain.transform.position.z + TestPrefab.transform.localScale.z * z + offset);
-                Vector2 size = new Vector2(25, 25);
-
-                map.Add(new MapSquare(pos, size, Instantiate(TestPrefab)));
-            }
-        }
-    }
-
-    public void CalculPos()
-    {
-        foreach (var pref in map)
-        {
-            if(transform.position.x > pref.pos.x - 12.5f&& 
-            transform.position.x < pref.pos.x + pref.size.x - 12.5f &&
-            transform.position.z > pref.pos.y - 12.5f && 
-            transform.position.z < pref.pos.y + pref.size.y - 12.5f)
-            {
-                Destroy(pref.cubePref);
-                map.Remove(pref);
-                return;
-            }
-        }
-    }
+    #region [rgba(30,106,143, 0.05)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
 
     private int CommandFindTheTarget()
     {
-        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !isWalken)
-        {
-            isWalken = true;
-            // newPint = SetRandomPointInSquare(currentTerrain);
-            int x = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.x;
-        
-            int z = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.y;
-            
-            float y = currentTerrain.terrainData.GetHeight(x,z);
+        Eyes eyes = aI.GetEyes();
 
-            newPintToWalke = new Vector3(x, y, z);
+        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);
+
+        if(needCreateMap)
+        {
+            CreateMap();
+
+            needCreateMap = false;
+        }
+
+        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !isMoving)
+        {
+            isMoving = true;
+
+            PintToWalke = GetNewRandomPointOnMap();
         }
         else
         {
-            isWalken = false;
-            MoveToPoint(newPintToWalke);
-            CalculPos();
+            isMoving = false;
+
+            MoveToPoint(PintToWalke);
+
+            GetMyPosOnMap();
         }
 
         if(aI.GetEyes().visileTargets.Count > 0)
         {
-            target = aI.GetEyes().visileTargets[0].GetComponent<ICanUse>();
+            target = eyes.visileTargets[0].GetComponent<ICanUse>();
             Debug.Log("найден таргет " + target);
             SetCompleteCommand();
         }
 
         return 0;
-    }    
-
-    private Vector3 SetRandomPointInSquare(Terrain square)
-    {
-        int x = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.x));
-        
-        int z = Mathf.CeilToInt(UnityEngine.Random.Range(0, currentTerrain.terrainData.bounds.size.z));
-        
-        float y = currentTerrain.terrainData.GetHeight(x,z);
-
-        return new Vector3(x, y + 1, z);
     }
 
     //стоять на месте

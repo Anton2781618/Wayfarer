@@ -16,9 +16,8 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: e66c9b2f-bb82-4d57-a75e-5f6515babfe2
-    <Name>k__BackingField: e66c9b2f-bb82-4d57-a75e-5f6515babfe2
-    <Text>k__BackingField: "\u042D\u0439 \u0441\u043C\u043E\u0442\u0440\u0438 \u044F
-      \u043D\u0430\u0448\u0435\u043B \u0447\u0442\u043E \u0442\u043E!"
+    <Name>k__BackingField: 927dad8a-4658-432a-8ff5-4fe0566f41f7
+    <Text>k__BackingField: "\u042F \u043D\u0430\u0448\u0435\u043B \u043F\u043B\u0435\u0435\u0440\u0430"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u043A\u043E\u043D\u0435\u0446"
       <NodeID>k__BackingField: 48c7dff9-9609-4816-aaf5-daa6ff3379b8
@@ -36,7 +35,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   - <ID>k__BackingField: 48c7dff9-9609-4816-aaf5-daa6ff3379b8
-    <Name>k__BackingField: 48c7dff9-9609-4816-aaf5-daa6ff3379b8
+    <Name>k__BackingField: 19a1f416-86f4-4c1b-b2e2-965344b0bd20
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -56,7 +55,7 @@ MonoBehaviour:
     <NodeMainColor>k__BackingField: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - e66c9b2f-bb82-4d57-a75e-5f6515babfe2
-  - 48c7dff9-9609-4816-aaf5-daa6ff3379b8
+  - 927dad8a-4658-432a-8ff5-4fe0566f41f7
+  - 19a1f416-86f4-4c1b-b2e2-965344b0bd20
   <OldGroupedNodeNames>k__BackingField:
     list: []

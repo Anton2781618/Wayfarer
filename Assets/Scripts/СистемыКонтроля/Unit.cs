@@ -5,6 +5,7 @@ using DS;
 using DS.Enumerations;
 using DS.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using static ICanTakeDamage;
 using static Initializer;
@@ -89,9 +90,31 @@ public class Unit : AbstractBehavior
     {
         FaceToPoint(point);
 
-        agent.SetDestination(point);     
+        agent.SetDestination(point);    
 
         SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+    }
+
+
+    [ContextMenu("CreatePOints")]
+    public Vector3 CreatePoints(Vector3 point)
+    {
+        NavMeshPath path = new NavMeshPath();
+        NavMeshHit hit;
+        Vector3 result = target.transform.position;
+
+        if (NavMesh.SamplePosition(point, out hit, 5f, NavMesh.AllAreas)) 
+        {
+            result = hit.position;
+        }
+
+        UnityEngine.AI.NavMesh.CalculatePath(transform.position, result, UnityEngine.AI.NavMesh.AllAreas, path);
+
+        for (int i = 0; i < path.corners.Length-1; i++)
+        {
+            Debug.DrawLine(path.corners[i], path.corners[i+1], Color.red, 10f);	
+        }
+        return result;
     }
 
     //создать карту для перемещения
@@ -135,15 +158,20 @@ public class Unit : AbstractBehavior
             }
         }
     }
+    public Transform posGame;
 
     // найти случайную точку на квадрате в списку квадратов (на карте)
     private Vector3 GetNewRandomPointOnMap()
     {
-        int x = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.x;
+        MapSquare square = map[UnityEngine.Random.Range(0, map.Count - 1)];
+
+        int x = (int)square.pos.x;
         
-        int z = (int)map[UnityEngine.Random.Range(0, map.Count - 1)].pos.y;
-        
-        float y = currentTerrain.terrainData.GetHeight(x,z);
+        int z = (int)square.pos.y;
+
+        float y = currentTerrain.SampleHeight(new Vector3(x, 0, z));
+
+        posGame.position = new Vector3(x, y, z);
 
         return new Vector3(x, y, z);
     }
@@ -219,7 +247,7 @@ public class Unit : AbstractBehavior
         {
             isMoving = true;
 
-            PintToWalke = GetNewRandomPointOnMap();
+            PintToWalke = CreatePoints(GetNewRandomPointOnMap());
         }
         else
         {

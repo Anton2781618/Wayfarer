@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 5b4e4300-ed22-4e41-a3d8-6a5d68d853ce
-    <Name>k__BackingField: 98208261-314e-425f-8fa9-0dbfd907d133
+    <Name>k__BackingField: 467c5245-bb5e-4c89-8fc8-0642bb5a1b06
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -32,10 +32,10 @@ MonoBehaviour:
       dialogue: {fileID: 0}
       targetMask:
         serializedVersion: 2
-        m_Bits: 8
+        m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   - <ID>k__BackingField: 3dc16719-c666-4640-a0c7-cec30a34c1ed
-    <Name>k__BackingField: 78d40a2a-6380-4000-bba4-d271ddd055a2
+    <Name>k__BackingField: 551e0d0e-3782-4d97-a024-c595cc908ab2
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -55,7 +55,7 @@ MonoBehaviour:
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 98208261-314e-425f-8fa9-0dbfd907d133
-  - 78d40a2a-6380-4000-bba4-d271ddd055a2
+  - 467c5245-bb5e-4c89-8fc8-0642bb5a1b06
+  - 551e0d0e-3782-4d97-a024-c595cc908ab2
   <OldGroupedNodeNames>k__BackingField:
     list: []

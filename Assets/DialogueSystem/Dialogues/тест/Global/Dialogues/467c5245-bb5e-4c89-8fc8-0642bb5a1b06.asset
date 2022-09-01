@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: 98208261-314e-425f-8fa9-0dbfd907d133
+  m_Name: 467c5245-bb5e-4c89-8fc8-0642bb5a1b06
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 98208261-314e-425f-8fa9-0dbfd907d133
+  <DialogueName>k__BackingField: 467c5245-bb5e-4c89-8fc8-0642bb5a1b06
   <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
   <Choices>k__BackingField:
   - <Text>k__BackingField: New Choice
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: ab7fc5754ae1bfd41a83872f761d24e5, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e25009c6576d9754ab6cca759d267afa, type: 2}
   <DialogueType>k__BackingField: 2
   <IsStartingDialogue>k__BackingField: 1
   <Action>k__BackingField: 12
@@ -27,4 +27,4 @@ MonoBehaviour:
     dialogue: {fileID: 0}
     targetMask:
       serializedVersion: 2
-      m_Bits: 8
+      m_Bits: 0

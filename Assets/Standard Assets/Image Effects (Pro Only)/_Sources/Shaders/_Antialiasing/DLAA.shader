@@ -305,7 +305,6 @@ ENDCG
 SubShader {
 	Pass {
 		ZTest Always Cull Off ZWrite Off
-		Fog { Mode off }
 	
 		CGPROGRAM
 	
@@ -318,7 +317,6 @@ SubShader {
 	
 	Pass {
 		ZTest Always Cull Off ZWrite Off
-		Fog { Mode off }
 	
 		CGPROGRAM
 	
@@ -332,14 +330,12 @@ SubShader {
 
 	Pass {
 		ZTest Always Cull Off ZWrite Off
-		Fog { Mode off }
 	
 		CGPROGRAM
 	
 		#pragma vertex vert
 		#pragma fragment fragThird
 		#pragma target 3.0
-        #pragma exclude_renderers d3d11_9x
 		
 		ENDCG
 	}	

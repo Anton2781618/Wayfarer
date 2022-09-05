@@ -508,7 +508,7 @@
 
 	float4 fragMergeCoc (v2f i) : SV_Target 
 	{	
-		float4 color = tex2D (_FgOverlap, i.uv1.xy); // this is the foreground overlap value
+		float4 color = tex2D (_FgOverlap, i.uv.xy); // this is the foreground overlap value
 		float fgCoc = color.a;
 
 		float d = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv1.xy);
@@ -587,14 +587,12 @@ Subshader
  Pass {
 	  ZTest Always Cull Off ZWrite Off
 	  ColorMask A
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragCaptureCoc
-      #pragma exclude_renderers d3d11_9x flash
       
       ENDCG
   	}
@@ -604,14 +602,12 @@ Subshader
  Pass 
  {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vertBlurPlusMinus
       #pragma fragment fragGaussBlur
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}
@@ -620,14 +616,12 @@ Subshader
 
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vertBlurPlusMinus
       #pragma fragment fragBlurForFgCoc
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}
@@ -638,7 +632,6 @@ Subshader
  Pass 
  {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 	  ColorMask A
 	  BlendOp Max, Max
 	  Blend One One, One One
@@ -648,7 +641,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment AddFgCoc
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}  
@@ -659,7 +651,6 @@ Subshader
  Pass 
  {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 	  ColorMask A
 
       CGPROGRAM
@@ -667,7 +658,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragCaptureForegroundCoc
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -676,14 +666,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurBox
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -692,14 +680,12 @@ Subshader
  
  Pass { 
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment frag4TapBlurForLRSpawn
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -710,14 +696,12 @@ Subshader
 	  ZTest Always Cull Off ZWrite Off
 	  ColorMask RGB
 	  Blend SrcAlpha OneMinusSrcAlpha
-  	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlendInHighRez
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -728,14 +712,12 @@ Subshader
  {
 	  ZTest Always Cull Off ZWrite Off
 	  ColorMask A
-	  Fog { Mode off }       
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragCaptureForegroundCocMask
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}   
@@ -745,14 +727,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurUpsampleCheap
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}   	 	 	  	 	 	  	
@@ -761,14 +741,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragCaptureColorAndSignedCoc
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}   
@@ -777,14 +755,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurInsaneMQ
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -793,14 +769,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurUpsampleCombineMQ
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -808,7 +782,6 @@ Subshader
   	// pass 13
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }
 
 	  ColorMask A 
 
@@ -817,7 +790,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragMergeCoc
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}  
@@ -826,7 +798,6 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }    
 
 	  ColorMask A
 	  BlendOp Max, Max
@@ -837,7 +808,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragCombineCocWithMaskBlur
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -846,14 +816,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBoxDownsample
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}   
@@ -861,14 +829,12 @@ Subshader
  // pass 16
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
      	CGPROGRAM
 
       	#pragma target 3.0
       	#pragma vertex vert
 		#pragma fragment fragVisualize
-		#pragma exclude_renderers d3d11_9x flash
 
       	ENDCG
   	}	
@@ -877,14 +843,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurInsaneHQ
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 
@@ -893,14 +857,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragBlurUpsampleCombineHQ
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}    	
@@ -909,14 +871,12 @@ Subshader
 
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vertBlurPlusMinus
       #pragma fragment fragBlurAlphaWeighted
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}    
@@ -925,14 +885,12 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }      
 
       CGPROGRAM
 
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragAlphaMask
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}
@@ -941,7 +899,6 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }  
 
 	  BlendOp Add, Add
 	  Blend DstAlpha OneMinusDstAlpha, Zero One
@@ -951,7 +908,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vertFlip
       #pragma fragment fragBlurBox
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	}	
@@ -960,7 +916,6 @@ Subshader
  
  Pass {
 	  ZTest Always Cull Off ZWrite Off
-	  Fog { Mode off }  
 
 	  // destination alpha needs to stay intact as we have layed alpha before
 	  BlendOp Add, Add
@@ -971,7 +926,6 @@ Subshader
       #pragma target 3.0
       #pragma vertex vert
       #pragma fragment fragUpsampleWithAlphaMask
-      #pragma exclude_renderers d3d11_9x flash
 
       ENDCG
   	} 	

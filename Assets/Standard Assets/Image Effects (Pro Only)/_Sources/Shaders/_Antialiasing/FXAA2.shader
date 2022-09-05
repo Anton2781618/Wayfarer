@@ -8,7 +8,6 @@ Properties {
 SubShader {
 	Pass {
 		ZTest Always Cull Off ZWrite Off
-		Fog { Mode off }
 
 CGPROGRAM
 
@@ -16,7 +15,6 @@ CGPROGRAM
 #pragma fragment frag
 #include "UnityCG.cginc"
 #pragma target 3.0
-#pragma exclude_renderers d3d11_9x
 
 #define FXAA_HLSL_3 1
 

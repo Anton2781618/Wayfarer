@@ -21,7 +21,7 @@ public class DialogButtonTransfer : MonoBehaviour
     }
     public void SetChoice()
     {
-        ai.SetChoice(indexDialog);
+        ai.StartNextStage(indexDialog);
     }
     
 }

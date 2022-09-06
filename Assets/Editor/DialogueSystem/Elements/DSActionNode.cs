@@ -90,6 +90,7 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
                 
                 DSElementUtility.CreateButton("Проверить инвентарь таргета на предмет", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
+                DSElementUtility.CreateButton("Забрать у таргета предмет", ()=> {actionTextFoldout.text = CommandTakeItemFromTarget();}),
                 DSElementUtility.CreateButton("Передать группе задачу", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
                 
                 DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionTextFoldout.text = CommandTrading();}),
@@ -209,6 +210,16 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
 
             return "Проверить инвентарь таргета на предмет";
+        }
+        private string CommandTakeItemFromTarget()
+        {
+            Action = DSAction.CommandTakeItemFromTarget;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+
+            return "Забрать у таргета предмет";
         }
         private string CommandTrading()
         {

@@ -38,26 +38,30 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     private void Start() 
     {
         target = FindObjectOfType<PLayerController>();
+
         agent = GetComponent<NavMeshAgent>();
+
         anim = GetComponent<Animator>();
+        
         chest = GetComponent<Chest>();
         
         Init();
 
         unitStats.curHP = unitStats.maxHP;
+
         HpSlider.maxValue = unitStats.maxHP;
+
         HpSlider.value = unitStats.maxHP;
     }
 
     public virtual void Init()
     {
-
     }
-
 
     public void TakeDamage(int value)
     {
         unitStats.curHP -= value;
+
         HpSlider.value -= value;
         
         if(unitStats.curHP <= 0)
@@ -70,7 +74,6 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         }
     }
 
-    [ContextMenu("UseMana")]
     public void ManaMinus()
     {
         UseMana(5);
@@ -84,6 +87,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         } 
 
         unitStats.curMana -= value;
+
         MpSlider.value -= value;
 
         if(unitStats.curMana < 0) unitStats.curMana = 0;
@@ -92,6 +96,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     private IEnumerator DieCurutina()
     {
         yield return new WaitForEndOfFrame();
+
         Die();
     }
 
@@ -102,20 +107,15 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         anim.SetBool("die", true);
         
         state = States.Мертв;
+
         this.enabled = false;
 
         Debug.Log(transform.name + " умер");
     }
 
-    public UnitStats GetStats()
-    {
-        return unitStats;
-    }
-    public States GetCurrentUnitState()
-    {
-        return state;
-    }
-    
+    public UnitStats GetStats() => unitStats;
+    public States GetCurrentUnitState() => state;
+
     public void SetHitBoolOFF()
     {
         if(sword == null)
@@ -136,10 +136,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         sword.SetHitBoolOn();
     }
 
-    public ICanUse GetTarget()
-    {
-        return target;
-    }
+    public ICanUse GetTarget() => target;
 
     public void Revive()
     {
@@ -203,24 +200,14 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         MpSlider.value = unitStats.curMana;
     }
 
-    public int GetCurHP()
-    {
-        return unitStats.curHP;
-    }
+    public int GetCurHP() => unitStats.curHP;
 
-    public States getStateNPC()
-    {
-        return state;
-    }
+    public States GetStateNPC() => state;
 
-    public Animator GetAnim()
-    {
-        return anim;
-    }
+    public Animator GetAnim() => anim;
 
     public virtual void SowHealthBar(bool value)
     {
-
     }
 
     //метод переопределяется в классе Unit
@@ -230,6 +217,5 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     public virtual void ShowOutline(bool value)
     {
-        
     }
 }

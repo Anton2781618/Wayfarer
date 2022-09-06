@@ -26,65 +26,65 @@ namespace DS
 
         public Unit targetUnit;
 
-        public void SetDialog(DSDialogueContainerSO dialogueContainer)
-        {
-            this.dialogueContainer = dialogueContainer;
-        }
+        // public void SetDialog(DSDialogueContainerSO dialogueContainer)
+        // {
+        //     this.dialogueContainer = dialogueContainer;
+        // }
 
-        public void StartDialogue(Unit unit)
-        {
-            targetUnit = unit;            
-            dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
+        // public void StartDialogue(Unit unit)
+        // {
+        //     targetUnit = unit;            
+        //     dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
             
-            GameManager.singleton.SwithCameraEnabled(false);
-            GameManager.singleton.SetIsControlingPlayer(false);
+        //     GameManager.singleton.SwithCameraEnabled(false);
+        //     GameManager.singleton.SetIsControlingPlayer(false);
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+        //     Cursor.visible = true;
+        //     Cursor.lockState = CursorLockMode.None;
            
-            foreach (var item in dialogueContainer.UngroupedDialogues)
-            {
-                if(item.IsStartingDialogue)dialogue = item;
-            }
+        //     foreach (var item in dialogueContainer.UngroupedDialogues)
+        //     {
+        //         if(item.IsStartingDialogue)dialogue = item;
+        //     }
             
-            dialogueTransfer.ShowDialogWindow(true);
-            Next();
-        }
+        //     dialogueTransfer.ShowDialogWindow(true);
+        //     Next();
+        // }
 
-        public void Next()
-        {         
-            if(dialogue.DialogueType == DSDialogueType.Action && dialogue.Action == DSAction.ExitTheDialog) 
-            {                    
-                ExitTheDialog();
-                return;
-            }
+        // public void Next()
+        // {         
+        //     if(dialogue.DialogueType == DSDialogueType.Action && dialogue.Action == DSAction.ExitTheDialog) 
+        //     {                    
+        //         ExitTheDialog();
+        //         return;
+        //     }
 
-            if(dialogue.DialogueType == DSDialogueType.Action)
-            {
-                SetChoice(targetUnit.SetAction(dialogue.Action, dialogue.ModelDate));
-            }
-            else
-            {
-                dialogueTransfer.SetDialogText(dialogue.Text);
+        //     if(dialogue.DialogueType == DSDialogueType.Action)
+        //     {
+        //         SetChoice(targetUnit.SetAction(dialogue.Action, dialogue.ModelDate));
+        //     }
+        //     else
+        //     {
+        //         dialogueTransfer.SetDialogText(dialogue.Text);
 
-                dialogueTransfer.ClearButtons();
+        //         dialogueTransfer.ClearButtons();
 
-                // dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
-            }
-        }
+        //         // dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
+        //     }
+        // }
 
-        public void SetChoice(int index)
-        {
-            dialogue = dialogue.Choices[Choice = index].NextDialogue;
-            Next();
-        }
+        // public void SetChoice(int index)
+        // {
+        //     dialogue = dialogue.Choices[Choice = index].NextDialogue;
+        //     Next();
+        // }
 
-        private void ExitTheDialog()
-        {
-            GameManager.singleton.SwithCameraEnabled(true);
-            GameManager.singleton.SetIsControlingPlayer(true);
-            GameManager.singleton.GetDialogueTransfer().ShowDialogWindow(false);
-            GameManager.singleton.CloseAllUiPanels();
-        }        
+        // private void ExitTheDialog()
+        // {
+        //     GameManager.singleton.SwithCameraEnabled(true);
+        //     GameManager.singleton.SetIsControlingPlayer(true);
+        //     GameManager.singleton.GetDialogueTransfer().ShowDialogWindow(false);
+        //     GameManager.singleton.CloseAllUiPanels();
+        // }        
     }
 }

@@ -15,6 +15,7 @@ namespace DS.Enumerations
         CommandAttackTheTarget,
         CommandRetreat,
         CommandCheckTargetInventoryForItem,
+        CommandTakeItemFromTarget,
         CheckingAvailabilityInformation,
         NotAction,
         ExitTheDialog,

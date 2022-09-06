@@ -23,15 +23,6 @@ public class Chest : MonoBehaviour, ICanUse
         UpdateMoney();
     }
 
-    public int CheckInventoryForItems(ItemData itemData)
-    {
-        foreach (var item in inventoryItems)
-        {
-            if(item.itemData == itemData) return 0;
-        }
-        return 1;
-    }
-
     public void InitChest(ItemGrid chestGrid)
     {
         this.chestGrid = chestGrid;
@@ -58,6 +49,7 @@ public class Chest : MonoBehaviour, ICanUse
     public void StartTrading()
     {        
         inventoryController.IsTreid = true;
+
         Use();
     }
 
@@ -69,14 +61,17 @@ public class Chest : MonoBehaviour, ICanUse
     private void OpenChest(bool isPlayerInventory)
     {
         if(!isPlayerInventory)inventoryController.selectedChest = this;
+
         chestGrid.chest = this;
+
         this.TryGetComponent(out chestGrid.abstractBehavior);
         
         ClearItems();
-        StartCoroutine(WaightSec(isPlayerInventory));
+
+        StartCoroutine(WaightSecAndOpenChest(isPlayerInventory));
     }
 
-    private IEnumerator WaightSec(bool isPlayerInventory)
+    private IEnumerator WaightSecAndOpenChest(bool isPlayerInventory)
     {
         yield return null;
 
@@ -104,13 +99,34 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    //добавить предмет в список
+    //получить итем из мнвентаря
+    public InventoryItemInfo GetInventoryItem(ItemData itemData)
+    {
+        foreach (var item in inventoryItems)
+        {
+            if(item.itemData == itemData) return item;
+        }
+
+        return null;
+    }
+
+    //проверяет есть ли в инвентаре такой предмет
+    public int CheckInventoryForItems(ItemData itemData)
+    {
+        foreach (var item in inventoryItems)
+        {
+            if(item.itemData == itemData) return 0;
+        }
+        return 1;
+    }
+
+    //добавить предмет в сундук
     public void AddItemToChest(InventoryItemInfo item)
     {
         inventoryItems.Add(item);
     }
 
-    //метод убирает из списка итемов в инвентаре определенный итем 
+    // метод убирает из списка итемов в инвентаре определенный итем 
     public void RemoveAtChestGrid(InventoryItem item)
     {
         for (int i = 0; i < inventoryItems.Count; i++)
@@ -122,7 +138,19 @@ public class Chest : MonoBehaviour, ICanUse
             }
         }
     }
+    public void RemoveAtChestGrid(InventoryItemInfo item)
+    {
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            if(inventoryItems[i].itemData == item.itemData && inventoryItems[i].Amount == item.Amount)
+            {
+                inventoryItems.RemoveAt(i);
+                return;
+            }
+        }
+    }
 
+    //удалить UI объекты из слоя инвентаря
     private void ClearItems()
     {
         foreach (Transform item in chestGrid.transform)

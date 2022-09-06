@@ -100,9 +100,11 @@ public class InventoryItem : MonoBehaviour, ICanUse
     private void DestructSelf(ItemGrid itemGrid)
     {
         Destroy(gameObject);
+
         itemGrid.chest.RemoveAtChestGrid(this);
 
         GameManager.singleton.SwithContextMenu(false);
+        
         GameManager.singleton.SwithInfoItem(false);
     }
 

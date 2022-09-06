@@ -118,7 +118,6 @@ GameObject:
   - component: {fileID: 2261661633899935387}
   - component: {fileID: 2261661633899935391}
   - component: {fileID: 2261661633899935388}
-  - component: {fileID: 2261661633899935389}
   - component: {fileID: 2261661633899935390}
   m_Layer: 7
   m_Name: NPC_Human
@@ -327,11 +326,28 @@ MonoBehaviour:
   HpSlider: {fileID: 2261661633918178329}
   MpSlider: {fileID: 5876061068355261066}
   state: 2
+  anim: {fileID: 0}
   sword: {fileID: 0}
-  dSDialogue: {fileID: 2261661633899935389}
+  dSDialogue: {fileID: 0}
   unitCanvas: {fileID: 501600340426978261}
   aI:
-    dialogueContainer: {fileID: 0}
+    eyes:
+      viewRadiusEyes: 0
+      viewAngleEyes: 0
+      targetMaskForEyes:
+        serializedVersion: 2
+        m_Bits: 0
+      obstaclMaskForEyes:
+        serializedVersion: 2
+        m_Bits: 0
+      visileTargets: []
+    solutions: []
+    currentSolution: {fileID: 0}
+    stage: {fileID: 0}
+  currentAction: 0
+  currentTerrain: {fileID: 0}
+  map: []
+  posGame: {fileID: 0}
 --- !u!114 &2261661633899935388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,28 +361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestGrid: {fileID: 0}
-  ImageMoney: {fileID: 0}
+  money: 500
   inventoryItems: []
---- !u!114 &2261661633899935389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2261661633899935360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f70cf55b2086fe4e916735c1b64ee09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueContainer: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
-  dialogueGroup: {fileID: 11400000, guid: bc083d05c95610f4e897b8849d8a6cfb, type: 2}
-  dialogue: {fileID: 11400000, guid: 62c11ea6d611e1b4db8d2fba12cc0202, type: 2}
-  groupedDialogues: 0
-  startingDialoguesOnly: 0
-  selectedDialogueGroupIndex: 0
-  selectedDialogueIndex: 0
-  targetUnit: {fileID: 0}
 --- !u!114 &2261661633899935390
 MonoBehaviour:
   m_ObjectHideFlags: 0

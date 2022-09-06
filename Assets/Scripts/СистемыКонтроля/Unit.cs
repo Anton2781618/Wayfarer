@@ -34,6 +34,7 @@ public class Unit : AbstractBehavior
     public override void Init()
     {
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
+
         aI.Init(this, anim);
     }    
 
@@ -44,6 +45,7 @@ public class Unit : AbstractBehavior
         if(state == States.Мертв)
         {
             SowHealthBar(false);    
+
             return;
         }
         SowHealthBar(value);
@@ -54,6 +56,7 @@ public class Unit : AbstractBehavior
         if(unitCanvas == null)
         {
             Debug.Log("у " + transform.name + " не установлен unitCanvas");
+
             return;
         }
         unitCanvas.gameObject.SetActive(value);
@@ -62,15 +65,13 @@ public class Unit : AbstractBehavior
     public States GetUnityState() => state;
 
     //установить действие
-    public int SetAction(DSAction action, ModelDate modelDate)
+    public void SetAction(DSAction action, ModelDate modelDate)
     {
         Debug.Log("устанавливаю задачу " + action);
         
         CurrentModelData = modelDate;
         
         currentAction = action;
-        
-        return 0;
     }
     //выполнить текущую задачу
     public void ExecuteCurrentCommand()
@@ -78,6 +79,7 @@ public class Unit : AbstractBehavior
         if(unitCanvas.gameObject.activeSelf)RotateCanvas();
 
         Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, currentAction.ToString());
+
         operation.Invoke();
     }
 
@@ -100,7 +102,9 @@ public class Unit : AbstractBehavior
     public Vector3 CreatePoints(Vector3 point)
     {
         NavMeshPath path = new NavMeshPath();
+
         NavMeshHit hit;
+
         Vector3 result = target.transform.position;
 
         if (NavMesh.SamplePosition(point, out hit, 5f, NavMesh.AllAreas)) 
@@ -114,6 +118,7 @@ public class Unit : AbstractBehavior
         {
             Debug.DrawLine(path.corners[i], path.corners[i+1], Color.red, 10f);	
         }
+
         return result;
     }
 
@@ -205,7 +210,7 @@ public class Unit : AbstractBehavior
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
-        aI.NextStage(dialogueIndex);
+        aI.StartNextStage(dialogueIndex);
     }
 
     public override void Die()
@@ -217,7 +222,9 @@ public class Unit : AbstractBehavior
     private void FaceToPoint(Vector3 point)
     {
         Vector3 direction = (point - transform.position).normalized;
+
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
@@ -289,7 +296,7 @@ public class Unit : AbstractBehavior
 
             return 0;
         }
-
+        
         AbstractBehavior buferTarget = target as AbstractBehavior;
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
@@ -325,12 +332,7 @@ public class Unit : AbstractBehavior
 
     private int CommandStartDialogue()
     {
-        // dSDialogue.SetDialog(CurrentModelData.dialogue);
-
-        // dSDialogue.StartDialogue(this);
-        aI.SetDialog(CurrentModelData.dialogue);
-
-        // aI.StartDialogue();
+        aI.StartDialogue(CurrentModelData.dialogue);
 
         SetCompleteCommand();
 
@@ -381,11 +383,26 @@ public class Unit : AbstractBehavior
     {
         if(target == null) Debug.Log("нет таргета");
 
-        int searchResult = target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
+        SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
 
-        SetCompleteCommand(searchResult);
+        return 0;
+    }
 
-        return searchResult;
+    private int CommandTakeItemFromTarget()
+    {
+        if(target == null) Debug.Log("нет таргета");
+
+        Chest targetChest = target.transform.GetComponent<Chest>();
+
+        InventoryItemInfo item = targetChest.GetInventoryItem(CurrentModelData.itemData);
+
+        targetChest.RemoveAtChestGrid(item);
+        
+        chest.AddItemToChest(item);
+
+        SetCompleteCommand();
+
+        return 0;
     }
 
     [ContextMenu("пуск")]

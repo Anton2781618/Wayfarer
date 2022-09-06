@@ -14,14 +14,14 @@ using static Initializer;
 public class Unit : AbstractBehavior
 {
     private delegate int Operation();
-    [SerializeField] private DSDialogue dSDialogue;
+    [SerializeField] private DS.AI dSDialogue;
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
     [SerializeField] protected DSAction currentAction;
     private ModelDate CurrentModelData;
 
     //двигается ли персонаж сейчас
-    private bool isMoving = false;
+    private bool needMoving = false;
     private bool needCreateMap = true;
     private Vector3 PintToWalke;
 
@@ -243,25 +243,27 @@ public class Unit : AbstractBehavior
             needCreateMap = false;
         }
 
-        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !isMoving)
+        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !needMoving)
         {
-            isMoving = true;
-
             PintToWalke = CreatePoints(GetNewRandomPointOnMap());
+
+            needMoving = true;
         }
         else
         {
-            isMoving = false;
-
             MoveToPoint(PintToWalke);
 
             GetMyPosOnMap();
+
+            needMoving = false;
         }
 
         if(aI.GetEyes().visileTargets.Count > 0)
         {
             target = eyes.visileTargets[0].GetComponent<ICanUse>();
+            
             Debug.Log("найден таргет " + target);
+            
             SetCompleteCommand();
         }
 
@@ -323,9 +325,12 @@ public class Unit : AbstractBehavior
 
     private int CommandStartDialogue()
     {
-        dSDialogue.SetDialog(CurrentModelData.dialogue);
+        // dSDialogue.SetDialog(CurrentModelData.dialogue);
 
-        dSDialogue.StartDialogue(this);
+        // dSDialogue.StartDialogue(this);
+        aI.SetDialog(CurrentModelData.dialogue);
+
+        // aI.StartDialogue();
 
         SetCompleteCommand();
 
@@ -376,9 +381,11 @@ public class Unit : AbstractBehavior
     {
         if(target == null) Debug.Log("нет таргета");
 
-        SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
+        int searchResult = target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
 
-        return 0;
+        SetCompleteCommand(searchResult);
+
+        return searchResult;
     }
 
     [ContextMenu("пуск")]

@@ -6,7 +6,7 @@ namespace DS.Inspectors
     using Utilities;
     using ScriptableObjects;
 
-    [CustomEditor(typeof(DSDialogue))]
+    [CustomEditor(typeof(AI))]
     public class DSInspector : Editor
     {
         /* Dialogue Scriptable Objects */

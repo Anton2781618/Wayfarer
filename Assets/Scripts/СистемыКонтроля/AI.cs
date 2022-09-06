@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DS.Data;
+using DS.Enumerations;
 using DS.ScriptableObjects;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class AI
         eyes.FirndVisiblaTargets();
     }
 
+#region [rgba(30,106,143, 0.05)] Управление событиями -------------------------------------------------------------------------------------------------------//
     //старт решения
     public void StartSolution()
     {
@@ -59,9 +61,15 @@ public class AI
             ExitSoltuin();
             return;
         }
-        
+
+        if(stage.Choices[dialogueIndex].NextDialogue.DialogueType == DSDialogueType.MultipleChoice)
+        {
+            StartDialogue();
+            return;
+        }
+
         stage = stage.Choices[dialogueIndex].NextDialogue;
-        
+
         StartStage();
     }
 
@@ -130,7 +138,84 @@ public class AI
         TestAction();
     }
 
-    
+    #endregion Управление событиями КОНЕЦ --------------------------------------------------------------------------------------------------------------------//
+
+#region [rgba(30,106,143, 0.05)] Управление диалогом --------------------------------------------------------------------------------------------------------//
+
+        public int Choice {get; set;} = 0;
+        private UIDialogueTransfer dialogueTransfer;
+
+        public void SetDialog(DSDialogueContainerSO dialogueContainer)
+        {
+            currentSolution = dialogueContainer;
+        }
+
+        public void SetChoice(int index)
+        {
+            stage = stage.Choices[Choice = index].NextDialogue;
+            Next();
+        }
+
+        public void StartDialogue()
+        {
+            dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
+            
+            GameManager.singleton.SwithCameraEnabled(false);
+
+            GameManager.singleton.SetIsControlingPlayer(false);
+
+            Cursor.visible = true;
+            
+            Cursor.lockState = CursorLockMode.None;
+           
+            foreach (var item in currentSolution.UngroupedDialogues)
+            {
+                if(item.IsStartingDialogue)stage = item;
+            }
+            
+            dialogueTransfer.ShowDialogWindow(true);
+            
+            Next();
+        }
+
+        public void Next()
+        {      
+            if(!stage || !stage.Choices[Choice].NextDialogue) 
+            {
+                ExitTheDialog();
+                return;
+            }   
+            // if(stage.DialogueType == DSDialogueType.Action && stage.Action == DSAction.ExitTheDialog) 
+            // {                    
+            //     ExitTheDialog();
+            //     return;
+            // }
+
+            if(stage.DialogueType == DSDialogueType.Action)
+            {
+                SetChoice(unit.SetAction(stage.Action, stage.ModelDate));
+            }
+            else
+            {
+                Debug.Log("qpweq2123231232");
+                dialogueTransfer.SetDialogText(stage.Text);
+
+                dialogueTransfer.ClearButtons();
+
+                stage.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
+            }
+        }
+
+        private void ExitTheDialog()
+        {
+            Debug.Log("Выхожу из диалога");
+            GameManager.singleton.SwithCameraEnabled(true);
+            GameManager.singleton.SetIsControlingPlayer(true);
+            GameManager.singleton.GetDialogueTransfer().ShowDialogWindow(false);
+            GameManager.singleton.CloseAllUiPanels();
+        }        
+
+#endregion Управление диалогом КОНЕЦ ------------------------------------------------------------------------------------------------------------------------//
 }
 
 [Serializable]

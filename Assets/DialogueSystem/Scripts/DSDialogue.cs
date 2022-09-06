@@ -6,7 +6,7 @@ namespace DS
     using DS.Enumerations;
     using ScriptableObjects;
 
-    public class DSDialogue : MonoBehaviour
+    public class AI : MonoBehaviour
     {
         /* Диалоговые Scriptable Objects */
         [SerializeField] private DSDialogueContainerSO dialogueContainer;
@@ -69,7 +69,7 @@ namespace DS
 
                 dialogueTransfer.ClearButtons();
 
-                dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
+                // dialogue.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
             }
         }
 

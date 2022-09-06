@@ -7,21 +7,21 @@ public class DialogButtonTransfer : MonoBehaviour
     [SerializeField] private Text textButt;
     private PlayerQuest playerQuest;
     [SerializeField] private int indexDialog;
-    private DSDialogue Dialogue;
+    private AI ai;
 
     private void Start() 
     {
         playerQuest = FindObjectOfType<PlayerQuest>();
     }
-    public void Init(string textMess, int index, DSDialogue dSDialogue)
+    public void Init(string textMess, int index, AI ai)
     {
         textButt.text = textMess;
         indexDialog = index;
-        Dialogue = dSDialogue;
+        this.ai = ai;
     }
     public void SetChoice()
     {
-        Dialogue.SetChoice(indexDialog);
+        ai.SetChoice(indexDialog);
     }
     
 }

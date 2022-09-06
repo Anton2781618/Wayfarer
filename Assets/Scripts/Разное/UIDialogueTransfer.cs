@@ -22,14 +22,16 @@ public class UIDialogueTransfer : MonoBehaviour
         dialogText.text = value;
     }
 
-    public void CreateButtonsAnswers(string value, DSDialogue dSDialogue)
+    public void CreateButtonsAnswers(string value, AI ai)
     {
         DialogButtonTransfer buffer = Instantiate(questButt, dialogWindow.transform);
-        buffer.Init(value, index, dSDialogue);
+        
+        buffer.Init(value, index, ai);
 
         questButtons.Add(buffer);
 
         buffer.gameObject.SetActive(true);
+        
         buffer.transform.position += new Vector3(0,-40 * index + 20,0);
 
         index ++;
@@ -38,7 +40,9 @@ public class UIDialogueTransfer : MonoBehaviour
     public void ClearButtons()
     {        
         questButtons.ForEach(t => Destroy(t.gameObject));
+        
         questButtons.Clear();
+        
         index = 0;
     }
 }

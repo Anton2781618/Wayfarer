@@ -33,7 +33,7 @@ public class Chest : MonoBehaviour, ICanUse
         outline.enabled = value;
     }  
 
-    public void Use()
+    public void Use(AbstractBehavior applicant)
     {
         OpenChest(false);
         inventoryController.GetPlayerChest().OpenPlayerInventory();
@@ -46,11 +46,11 @@ public class Chest : MonoBehaviour, ICanUse
         chestGrid.moneyText.text = money.ToString();
     }
 
-    public void StartTrading()
+    public void StartTrading(AbstractBehavior applicant)
     {        
         inventoryController.IsTreid = true;
 
-        Use();
+        Use(applicant);
     }
 
     public void OpenPlayerInventory()

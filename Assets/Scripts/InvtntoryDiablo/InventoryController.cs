@@ -138,12 +138,6 @@ public class InventoryController : MonoBehaviour
         grid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
-    //поднять предмет с земли и заснуть его в представления инвентанря
-    public void PickedUpItem(ItemData itemData, ItemGrid grid, int amount)
-    {
-        playerChest.AddItemToChest(new InventoryItemInfo(itemData, amount));
-    }
-
     //создать физически итем и установить его на сетку 
     public void CreateAndInsertItem(ItemData itemData, ItemGrid grid, int amount)
     {

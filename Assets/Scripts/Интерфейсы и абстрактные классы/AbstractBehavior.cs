@@ -19,6 +19,8 @@ public class UnitStats
     public int curMana = 5;
 
     public int experienceForKilling = 50; 
+
+    public float hunger = 100;
 }
 
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
@@ -211,7 +213,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     }
 
     //метод переопределяется в классе Unit
-    public virtual void Use()
+    public virtual void Use(AbstractBehavior applicant)
     {
     }
 

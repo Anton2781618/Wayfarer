@@ -13,7 +13,7 @@ using static Initializer;
 
 public class Unit : AbstractBehavior
 {
-    private delegate int Operation();
+    private delegate void Operation();
     [SerializeField] private DS.AI dSDialogue;
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
@@ -83,7 +83,7 @@ public class Unit : AbstractBehavior
         operation.Invoke();
     }
 
-    public override void Use() => CommandStartDialogue();
+    public override void Use(AbstractBehavior applicant) => CommandStartDialogue();
 
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
@@ -228,6 +228,24 @@ public class Unit : AbstractBehavior
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
+    private bool FindTarget()
+    {
+        Eyes eyes = aI.GetEyes();
+
+        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);
+
+        if(aI.GetEyes().visileTargets.Count > 0)
+        {
+            target = eyes.visileTargets[0].GetComponent<ICanUse>();
+            
+            Debug.Log("найден таргет " + target);
+            
+            return true;
+        }
+
+        return false;
+    }
+
     public void SetTarget(ICanUse newTarget) => target = newTarget;
 
     public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
@@ -237,12 +255,8 @@ public class Unit : AbstractBehavior
 
     #region [rgba(30,106,143, 0.05)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
 
-    private int CommandFindTheTarget()
+    private void CommandFindTheTarget()
     {
-        Eyes eyes = aI.GetEyes();
-
-        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);
-
         if(needCreateMap)
         {
             CreateMap();
@@ -265,36 +279,30 @@ public class Unit : AbstractBehavior
             needMoving = false;
         }
 
-        if(aI.GetEyes().visileTargets.Count > 0)
-        {
-            target = eyes.visileTargets[0].GetComponent<ICanUse>();
-            
-            Debug.Log("найден таргет " + target);
-            
-            SetCompleteCommand();
-        }
+        if(FindTarget()) SetCompleteCommand();
+    }
 
-        return 0;
+    private void CommandHoldPositionFindTheTarget()
+    {
+        if(FindTarget()) SetCompleteCommand();
     }
 
     //стоять на месте
-    private int CommandStandStill()
+    private void CommandStandStill()
     {
         anim.SetBool("walk", false);
 
         agent.SetDestination(this.transform.position);
-        
-        return 0;
     }
 
     //метод команда атакавать таргет (привязана к системе диалогов)
-    public int CommandAttackTheTarget()
+    public void CommandAttackTheTarget()
     {
         if(target == null)
         {
             Debug.Log("У " + transform.name + " не установлен таргет");
 
-            return 0;
+            return;
         }
         
         AbstractBehavior buferTarget = target as AbstractBehavior;
@@ -305,50 +313,44 @@ public class Unit : AbstractBehavior
             
             SetCompleteCommand();
             
-            return 0;
+            return;
         }
         
         MoveToPoint(target.transform.position);
         
         anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
-        
-        return 0;
+
+        //закрыть окно диалога
+        if(GameManager.singleton.GetDialogueTransfer().isActiveAndEnabled) aI.CloseDialogueAndExitSoltuin();
     }
 
-    public int CommandRetreat()
+    public void CommandRetreat()
     {
         Debug.Log("Отступаю");
-        return 0;
     }
 
-    private int CommandTrading()
+    private void CommandTrading()
     {
-        chest.StartTrading();
+        chest.StartTrading(this);
 
         SetCompleteCommand();
-        
-        return 0;
     }
 
-    private int CommandStartDialogue()
+    private void CommandStartDialogue()
     {
         aI.StartDialogue(CurrentModelData.dialogue);
 
         SetCompleteCommand();
-
-        return 0;
     }
 
-    private int CommandPlayerGiveMoney()
+    private void CommandPlayerGiveMoney()
     {
         chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, (int)CurrentModelData.number);
         
         SetCompleteCommand();
-        
-        return 0;
     }
 
-    private int CommandMoveToTarget()
+    private void CommandMoveToTarget()
     {
         if(target == null)
         {
@@ -358,17 +360,13 @@ public class Unit : AbstractBehavior
         MoveToPoint(target.transform.position);
 
         CheckAndSwitchStage();
-        
-        return 0;
     }
     
-    private int CommandMoveToCoordinates()
+    private void CommandMoveToCoordinates()
     {
         MoveToPoint(CurrentModelData.pos);
         
         CheckAndSwitchStage();
-        
-        return 0;
     }
     
     private void CheckAndSwitchStage()
@@ -379,16 +377,14 @@ public class Unit : AbstractBehavior
         }
     }
 
-    private int CommandCheckTargetInventoryForItem()
+    private void CommandCheckTargetInventoryForItem()
     {
         if(target == null) Debug.Log("нет таргета");
 
         SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
-
-        return 0;
     }
 
-    private int CommandTakeItemFromTarget()
+    private void CommandTakeItemFromTarget()
     {
         if(target == null) Debug.Log("нет таргета");
 
@@ -401,8 +397,13 @@ public class Unit : AbstractBehavior
         chest.AddItemToChest(item);
 
         SetCompleteCommand();
+    }
 
-        return 0;
+    private void CommandPickUpItem()
+    {
+        if(target == null) Debug.Log("нет таргета");
+        target.Use(this);
+        SetCompleteCommand();
     }
 
     [ContextMenu("пуск")]

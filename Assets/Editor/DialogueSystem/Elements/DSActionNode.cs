@@ -83,7 +83,7 @@ namespace DS.Elements
             Button[] buttons =
             {                
                 DSElementUtility.CreateButton("Найти таргет(патруль)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
-                DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
+                DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionTextFoldout.text = CommandHoldPositionFindTheTarget();}),
                 
                 DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
                 DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
@@ -97,8 +97,9 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
                 
                 DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
+                DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionTextFoldout.text = CommandPickUpItem();}),
                 
-                DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = ExitTheDialog(); }),
+                // DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = ExitTheDialog(); }),
                 
             };
 
@@ -191,7 +192,17 @@ namespace DS.Elements
 
             ContainerForTransformation.Add(DSElementUtility.CreateLayerMaskField(modelDate.targetMask, x => modelDate.targetMask = (int)x.newValue));
             
-            return "Найти таргет";
+            return "Найти таргет(патруль)";
+        }
+        private string CommandHoldPositionFindTheTarget()
+        {
+            Action = DSAction.CommandHoldPositionFindTheTarget;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateLayerMaskField(modelDate.targetMask, x => modelDate.targetMask = (int)x.newValue));
+            
+            return "Найти таргет(стоять)";
         }
         private string CommandMoveToTarget()
         {
@@ -256,6 +267,14 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.number, null, collBack => modelDate.number = collBack.newValue));
             
             return "Забрать деньги у таргета";
+        }
+        private string CommandPickUpItem()
+        {
+            Action = DSAction.CommandPickUpItem;
+            
+            ContainerForTransformation.Clear();
+            
+            return "Поднять таргет (предмет)";
         }
         private string ExitTheDialog()
         {

@@ -92,7 +92,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
         rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90f : 0f);
     }
 
-    public void Use()
+    public void Use(AbstractBehavior applicant)
     {
         delegatesDict[itemData.itemType].Invoke();
     }

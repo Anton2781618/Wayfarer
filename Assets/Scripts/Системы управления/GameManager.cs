@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 
     public void CommandTakeTarget()
     {
-        targetItemForHelp.GetComponent<ItemOnstreet>().TakeItem(inventoryController);
+        targetItemForHelp.GetComponent<ItemOnstreet>().TakeItem(pLayerController.chest);
         targetItemForHelp = null;
         Debug.Log("takeTarget");
     }

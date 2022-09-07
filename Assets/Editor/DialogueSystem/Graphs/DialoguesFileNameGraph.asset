@@ -16,12 +16,12 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 9c0018fc-703b-4f15-b542-56901b4736b5
-    <Name>k__BackingField: 9c0018fc-703b-4f15-b542-56901b4736b5
+    <Name>k__BackingField: 1d2b806d-21e9-4758-aabb-7f96ee938a9a
     <Text>k__BackingField: "\u042D\u0439 \u0434\u0430\u0432\u0430\u0439 \u043F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u043C
       \u0435\u0441\u0442\u044C \u043B\u0438 \u0443 \u0442\u0435\u0431\u044F \u0417\u0435\u043B\u044C\u0435
       \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F!"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: "\u0414\u0430\u043B\u0435\u0435"
       <NodeID>k__BackingField: 7c4b0c04-9199-4d0a-8129-7c9ec6cdb238
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   - <ID>k__BackingField: 7c4b0c04-9199-4d0a-8129-7c9ec6cdb238
-    <Name>k__BackingField: 7c4b0c04-9199-4d0a-8129-7c9ec6cdb238
+    <Name>k__BackingField: af340358-af39-4e4a-9424-1d3f4dfd77cd
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -58,7 +58,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   - <ID>k__BackingField: 1d8651a0-3f5a-4c7f-b307-963406c6ba66
-    <Name>k__BackingField: 1d8651a0-3f5a-4c7f-b307-963406c6ba66
+    <Name>k__BackingField: 8e25e552-cc31-444a-ab00-37ca32696a2e
     <Text>k__BackingField: "\u041E! \u0417\u0435\u043B\u044C\u0435 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F!
       \u041E\u0442\u0434\u0430\u0439!"
     <Choices>k__BackingField:
@@ -80,7 +80,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   - <ID>k__BackingField: c70d6144-e9c5-4f28-bef5-9e5f995a79e9
-    <Name>k__BackingField: c70d6144-e9c5-4f28-bef5-9e5f995a79e9
+    <Name>k__BackingField: ceca7f2d-bb7a-4dfc-809d-b20a5f273d28
     <Text>k__BackingField: "\u0411\u043B\u0438\u0438\u0438\u043D! \u041D\u0435\u0442
       \u043D\u0438 \u0447\u0435\u0433\u043E! \u0418\u0434\u0438 \u0434\u0430\u0432\u0430\u0439!"
     <Choices>k__BackingField:
@@ -100,7 +100,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   - <ID>k__BackingField: aaecbbee-8c65-4e4b-95ce-9c8a762eb272
-    <Name>k__BackingField: aaecbbee-8c65-4e4b-95ce-9c8a762eb272
+    <Name>k__BackingField: bdabb768-52c4-416f-9785-b17a717c23dc
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -119,7 +119,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   - <ID>k__BackingField: ea4185fd-f5a7-497a-8121-283f081c9798
-    <Name>k__BackingField: ea4185fd-f5a7-497a-8121-283f081c9798
+    <Name>k__BackingField: cccf8cf2-b24d-4b8c-8cc3-8daf68bf4382
     <Text>k__BackingField: "\u041D\u0443 \u0434\u0435\u0440\u0436\u0438\u0441\u044C!"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0411\u043E\u0439"
@@ -138,7 +138,7 @@ MonoBehaviour:
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   - <ID>k__BackingField: d669a7ff-4ed1-415f-a0c9-70c3b2cbf4df
-    <Name>k__BackingField: d669a7ff-4ed1-415f-a0c9-70c3b2cbf4df
+    <Name>k__BackingField: f1a40a84-4fd8-4d8a-a0e1-cff0a9426cbe
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
@@ -158,12 +158,12 @@ MonoBehaviour:
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 9c0018fc-703b-4f15-b542-56901b4736b5
-  - 7c4b0c04-9199-4d0a-8129-7c9ec6cdb238
-  - 1d8651a0-3f5a-4c7f-b307-963406c6ba66
-  - c70d6144-e9c5-4f28-bef5-9e5f995a79e9
-  - aaecbbee-8c65-4e4b-95ce-9c8a762eb272
-  - ea4185fd-f5a7-497a-8121-283f081c9798
-  - d669a7ff-4ed1-415f-a0c9-70c3b2cbf4df
+  - 1d2b806d-21e9-4758-aabb-7f96ee938a9a
+  - af340358-af39-4e4a-9424-1d3f4dfd77cd
+  - 8e25e552-cc31-444a-ab00-37ca32696a2e
+  - ceca7f2d-bb7a-4dfc-809d-b20a5f273d28
+  - bdabb768-52c4-416f-9785-b17a717c23dc
+  - cccf8cf2-b24d-4b8c-8cc3-8daf68bf4382
+  - f1a40a84-4fd8-4d8a-a0e1-cff0a9426cbe
   <OldGroupedNodeNames>k__BackingField:
     list: []

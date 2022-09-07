@@ -20,16 +20,15 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
         outline.enabled = value;
     }
 
-    //подобрать предмет с улицы
-    public void TakeItem(InventoryController inventoryController )
+    public void TakeItem(Chest chest)
     {       
-        inventoryController.PickedUpItem(itemData, inventoryController.GetPlayerChest().GetChestGrid(), Amount);
+        chest.AddItemToChest(new InventoryItemInfo(itemData, Amount));
         Destroy(gameObject);
     }
 
-    public void Use()
+    public void Use(AbstractBehavior applicant)
     {
         ShowOutline(false);
-        TakeItem(GameManager.singleton.GetComponent<InventoryController>());
+        TakeItem(applicant.chest);
     }
 }

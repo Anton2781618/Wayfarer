@@ -21,10 +21,12 @@ namespace DS.Enumerations
         ExitTheDialog,
         CommandTrading,
         CommandPlayerGiveMoney,
+        CommandPickUpItem,
         CommandMoveToTarget,
         CommandStandStill,
         CommandStartDialogue,
         CommandMoveToCoordinates,
         CommandFindTheTarget,
+        CommandHoldPositionFindTheTarget,
     }
 }

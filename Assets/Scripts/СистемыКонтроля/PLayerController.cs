@@ -118,7 +118,7 @@ public class PLayerController : AbstractBehavior
 
         if(Input.GetKeyDown(KeyCode.E) && target != null)
         {
-            target.Use();
+            target.Use(this);
             target = null;
         }       
     }

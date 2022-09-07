@@ -36,6 +36,6 @@ public class ItemContextMenu : MonoBehaviour
 
     public void UseItem()
     {
-        targetItem.Use();
+        targetItem.Use(player.GetComponent<PLayerController>());
     }
 }

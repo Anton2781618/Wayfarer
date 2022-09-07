@@ -17,7 +17,7 @@ public class UIDialogueTransfer : MonoBehaviour
         dialogWindow.SetActive(value);
     }
 
-    public void SetDialogText(string value)
+    public void SetDialogueText(string value)
     {
         dialogText.text = value;
     }

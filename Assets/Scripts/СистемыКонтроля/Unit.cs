@@ -90,7 +90,7 @@ public class Unit : AbstractBehavior
     //двигаться к точке
     private void MoveToPoint(Vector3 point)
     {
-        FaceToPoint(point);
+        // FaceToPoint(point);
 
         agent.SetDestination(point);    
 
@@ -105,7 +105,7 @@ public class Unit : AbstractBehavior
 
         NavMeshHit hit;
 
-        Vector3 result = target.transform.position;
+        Vector3 result = transform.position;
 
         if (NavMesh.SamplePosition(point, out hit, 5f, NavMesh.AllAreas)) 
         {
@@ -138,11 +138,12 @@ public class Unit : AbstractBehavior
 
                 Vector2 pos = new Vector2 (currentTerrain.transform.position.x + size.x * x + offset, currentTerrain.transform.position.z + size.y * z + offset);
 
-                GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                // GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-                primitive.transform.localScale = new Vector3(size.x, 0.5f, size.y);
+                // primitive.transform.localScale = new Vector3(size.x, 0.5f, size.y);
 
-                map.Add(new MapSquare(pos, size, primitive));
+                // map.Add(new MapSquare(pos, size, primitive));
+                map.Add(new MapSquare(pos, size));
             }
         }
     }
@@ -232,12 +233,30 @@ public class Unit : AbstractBehavior
     {
         Eyes eyes = aI.GetEyes();
 
-        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);
+        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);         
 
-        if(aI.GetEyes().visileTargets.Count > 0)
+        if(eyes.visileTargets.Count > 0)
         {
-            target = eyes.visileTargets[0].GetComponent<ICanUse>();
+            foreach (var item in eyes.visileTargets)
+            {
+                if(!eyes.SetTargetToMamry(item))
+                {
+                    eyes.mamryTargets.Add(item);
+                }
+            }
+        }
+
+        if(eyes.mamryTargets.Count > 0)
+        {
+            if(eyes.mamryTargets[0] == null)
+            {
+                eyes.mamryTargets.RemoveAt(0);
+
+                return false;
+            } 
             
+            target = eyes.mamryTargets[0].GetComponent<ICanUse>();
+
             Debug.Log("найден таргет " + target);
             
             return true;
@@ -254,7 +273,7 @@ public class Unit : AbstractBehavior
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
 
     #region [rgba(30,106,143, 0.05)] Комманды для управления NPC -------------------------------------------------------------------------------------------------------//
-
+    
     private void CommandFindTheTarget()
     {
         if(needCreateMap)
@@ -278,8 +297,28 @@ public class Unit : AbstractBehavior
 
             needMoving = false;
         }
-
+        
         if(FindTarget()) SetCompleteCommand();
+    }
+
+    private void TestTime()
+    {
+        System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+     
+        stopWatch.Start();
+
+        // FindTarget();
+        System.Threading.Thread.Sleep(100);
+
+        stopWatch.Stop();
+
+        // Get the elapsed time as a TimeSpan value.
+        TimeSpan ts = stopWatch.Elapsed;
+
+        // Format and display the TimeSpan value.
+        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
+
+        Debug.Log("RunTime " + elapsedTime);
     }
 
     private void CommandHoldPositionFindTheTarget()
@@ -402,7 +441,9 @@ public class Unit : AbstractBehavior
     private void CommandPickUpItem()
     {
         if(target == null) Debug.Log("нет таргета");
+
         target.Use(this);
+
         SetCompleteCommand();
     }
 
@@ -438,5 +479,10 @@ public class MapSquare
         cubePref.transform.position = new Vector3(pos.x, -10, pos.y);
         cubePref.transform.localScale = new Vector3(size.x, 1, size.y);
         this.cubePref = cubePref;
+    }
+    public MapSquare(Vector2 pos, Vector2 size)
+    {
+        this.pos = pos;
+        this.size = size;
     }
 }

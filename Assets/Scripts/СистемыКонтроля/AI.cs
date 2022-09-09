@@ -13,8 +13,9 @@ public class AI
     [SerializeField] private DSDialogueContainerSO[] solutions;
     [SerializeField] private DSDialogueContainerSO currentSolution;
     [SerializeField] private DSDialogueContainerSO hungerSolution;
-    public DSDialogueSO stage;
+    private DSDialogueSO stage;
     bool newDialogue = false;
+    bool isSolutionActive = false;
 
     public void Init(Unit unit, Animator anim)
     {
@@ -26,7 +27,7 @@ public class AI
     //метод анализирует обстановку вокруг и принимает решения как реагировать
     public void Analyzer()
     {
-        // StatsConsumption();
+        StatsConsumption();
 
         unit.ExecuteCurrentCommand();
 
@@ -36,13 +37,17 @@ public class AI
     //метод расходует статы типа голод, сон итп 
     private void StatsConsumption()
     {
-        Debug.Log(Mathf.Round(unit.unitStats.hunger));
+        // Debug.Log(Mathf.Round(unit.unitStats.hunger));
         
         unit.unitStats.hunger -= Time.deltaTime;
 
-        if(unit.unitStats.hunger < 80)
+        if(unit.unitStats.hunger < 95 && !isSolutionActive)
         {
+
+            isSolutionActive = true;
+
             currentSolution = hungerSolution;
+
             StartSolution();
         }
     }
@@ -85,6 +90,8 @@ public class AI
         if(!stage || !stage.Choices[choiceIndex].NextDialogue) 
         {
             Debug.Log("Решение выполнено!");
+            
+            isSolutionActive = false;
 
             CloseDialogueAndExitSoltuin();
 
@@ -165,6 +172,7 @@ public class Eyes
     [SerializeField] private LayerMask targetMaskForEyes;
     [SerializeField] private LayerMask obstaclMaskForEyes;
     public List<Transform> visileTargets = new List<Transform>();
+    public List<Transform> mamryTargets = new List<Transform>();
 
     public void Init(Transform headTrans, Transform unitTran)
     {
@@ -179,9 +187,9 @@ public class Eyes
     }
     
     public void FirndVisiblaTargets()
-    {
-        
+    {        
         visileTargets.Clear();
+
         Collider[] targetsInViewRadius = Physics.OverlapSphere(headTransform.position, viewRadiusEyes, targetMaskForEyes);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -199,12 +207,23 @@ public class Eyes
                     visileTargets.Add(newTarget);
                 }
             }
-        }
+        }        
 
         foreach (var tar in visileTargets)
         {
             Debug.DrawLine(headTransform.position, tar.position, Color.red);
         }
+    }
+
+    //запомнить о существовании объекта
+    public bool SetTargetToMamry(Transform visileTarget)
+    {
+        for (int i = 0; i < mamryTargets.Count; i++)
+        {
+            if(visileTarget == mamryTargets[i]) return true;
+        }                
+
+        return false;
     }
 
     public Vector3 DirFromAngle(float angleInDegriees, bool angleIsGlobal)
@@ -213,6 +232,7 @@ public class Eyes
         {
             angleInDegriees += headTransform.eulerAngles.y;
         }
+        
         return new Vector3(Mathf.Sin(angleInDegriees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegriees * Mathf.Deg2Rad));
     }
 }

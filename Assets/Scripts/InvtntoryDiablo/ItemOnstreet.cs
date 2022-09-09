@@ -23,12 +23,18 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
     public void TakeItem(Chest chest)
     {       
         chest.AddItemToChest(new InventoryItemInfo(itemData, Amount));
-        Destroy(gameObject);
+
+        Destroy(this.gameObject);
     }
 
     public void Use(AbstractBehavior applicant)
     {
         ShowOutline(false);
         TakeItem(applicant.chest);
+    }
+
+    private void Dest()
+    {
+        Destroy(this.gameObject);
     }
 }

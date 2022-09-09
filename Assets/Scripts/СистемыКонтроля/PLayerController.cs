@@ -32,9 +32,10 @@ public class PLayerController : AbstractBehavior
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
     }
 
-    void Update()
+    private void Update()
     {
         Gravity();
+
         if (Time.frameCount % 40 == 0)
         {
             ForwardCheckOversphere();
@@ -48,7 +49,7 @@ public class PLayerController : AbstractBehavior
         {
             MovePlayer(0,0);
         }
-    }
+    }   
 
     private void Controller()
     {
@@ -122,45 +123,53 @@ public class PLayerController : AbstractBehavior
             target = null;
         }       
     }
-
+    
     //метод пускает сферу вперед и проверяет что в радиусе по маске
     private void ForwardCheckOversphere()
-    {   
-        float curDist = 4;     
+    {
+        if(target != null)
+        {
+            try 
+            {
+                target.ShowOutline(false);    
+            }       
+            catch (MissingReferenceException){}
+        }
+
+        target = null;
+        
+        float distanceToHit = 4;     
         
         frontCheckObject.rotation = Camera.main.transform.rotation;
         
         RaycastHit[] hits = Physics.SphereCastAll(frontCheckObject.transform.position, 0.5f, frontCheckObject.forward, 4, forwardMask, QueryTriggerInteraction.UseGlobal);
+        
         if(hits.Length > 0)
         {
-            RaycastHit bufHit = hits[0];
+            RaycastHit hitObject = hits[0];
 
             foreach (RaycastHit hit in hits)
             {
-                curDist = hit.distance;
-                Vector3 centr = frontCheckObject.transform.position + frontCheckObject.forward * curDist;
+                distanceToHit = hit.distance;
+                
+                Vector3 centr = frontCheckObject.transform.position + frontCheckObject.forward * distanceToHit;
 
-                if(Vector3.Distance(centr, hit.transform.position) < Vector3.Distance(centr, bufHit.transform.position))
+                if(Vector3.Distance(centr, hit.transform.position) < Vector3.Distance(centr, hitObject.transform.position))
                 {
-                    bufHit = hit;
+                    hitObject = hit;
                 }
             }            
-            
-            if(target != null) target.ShowOutline(false);
-            target = bufHit.transform.GetComponent<ICanUse>();
+
+            target = hitObject.transform.GetComponent<ICanUse>();
+ 
             target.ShowOutline(true);
         }
-        else
-        {
-            if(target != null) target.ShowOutline(false);
-            target = null;
-        }
     }
-
 
     private void MovePlayer(float x, float y)
     {
         anim.SetFloat("vertical", y, 0.1f, Time.deltaTime);
+
         anim.SetFloat("horizontal", x, 0.1f, Time.deltaTime);
 
         if(y != 0 && GameManager.singleton.cameraControll.enabled|| x != 0 && GameManager.singleton.cameraControll.enabled)RotationPlayer();
@@ -169,12 +178,14 @@ public class PLayerController : AbstractBehavior
     {
         float angle = 
         Mathf.SmoothDampAngle(transform.eulerAngles.y, GameManager.singleton.cameraControll.transform.eulerAngles.y, ref smoothVel, 0.1f);
+
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     private void Gravity()
     {
         isGrounded = Physics.CheckSphere(groundCheckObject.position,0.4f, groundMask);
+
         if(isGrounded && velocity.y < 0)
         {
             velocity.y = -2;
@@ -182,11 +193,13 @@ public class PLayerController : AbstractBehavior
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 velocity.y = Mathf.Sqrt(1.6f * -1 * -9.18f);
+
                 anim.SetTrigger("jump");
             }
         }
 
         velocity.y += -9.18f * Time.deltaTime; 
+
         controller.Move(velocity * Time.deltaTime);
     }    
 }

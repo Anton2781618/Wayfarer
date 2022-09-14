@@ -21,6 +21,7 @@ public class UnitStats
     public int experienceForKilling = 50; 
 
     public float hunger = 100;
+    public float sleep = 100;
 }
 
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
@@ -54,6 +55,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         HpSlider.maxValue = unitStats.maxHP;
 
         HpSlider.value = unitStats.maxHP;
+
     }
 
     public virtual void Init()
@@ -164,6 +166,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     private IEnumerator WaihtRevive()
     {
         bool end = false;
+        
         while (!end)
         {
             yield return new WaitForEndOfFrame();
@@ -172,7 +175,9 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
             {
                 continue;  
             }   
+
             if(agent)agent.enabled = true;  
+
             end = true; 
         }
     }
@@ -182,11 +187,14 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         if((value + unitStats.curHP) > unitStats.maxHP)
         {
             unitStats.curHP = unitStats.maxHP;
+
             HpSlider.value = unitStats.curHP;
+
             return;
         }
 
         unitStats.curHP += value;
+
         HpSlider.value = unitStats.curHP;
     }
 

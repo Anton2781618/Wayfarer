@@ -21,7 +21,14 @@ public class DialogButtonTransfer : MonoBehaviour
     }
     public void SetChoice()
     {
-        ai.StartNextStage(indexDialog);
-    }
-    
+        if(!ai.stage)
+        {
+            ai.CloseDialogueAndExitSoltuin();
+            ai.StartNextStage(indexDialog);
+        }
+        else
+        {
+            ai.StartNextStage(indexDialog);
+        }
+    }    
 }

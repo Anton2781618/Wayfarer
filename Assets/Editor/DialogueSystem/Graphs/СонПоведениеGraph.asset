@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202a3095b7477a4091d56344f0af6b3, type: 3}
+  m_Name: "\u0421\u043E\u043D\u041F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u0435Graph"
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: "\u0421\u043E\u043D\u041F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u0435"
+  <Groups>k__BackingField: []
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: 5facd9c5-6a41-45ba-8607-3b8b5ffa82ad
+    <Name>k__BackingField: 5abbb22a-d712-44ea-9462-0d71dfa32c4e
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 472778a1-e221-494d-b446-85fd36d47ea2
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 828, y: 235}
+    <Action>k__BackingField: 15
+    <ModelDate>k__BackingField:
+      number: 0
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 8
+    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
+  - <ID>k__BackingField: 472778a1-e221-494d-b446-85fd36d47ea2
+    <Name>k__BackingField: a8c0ce11-59ed-45b2-8739-520df61d3e66
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 1262, y: 235}
+    <Action>k__BackingField: 12
+    <ModelDate>k__BackingField:
+      number: 0
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
+  <OldGroupNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - 5abbb22a-d712-44ea-9462-0d71dfa32c4e
+  - a8c0ce11-59ed-45b2-8739-520df61d3e66
+  <OldGroupedNodeNames>k__BackingField:
+    list: []

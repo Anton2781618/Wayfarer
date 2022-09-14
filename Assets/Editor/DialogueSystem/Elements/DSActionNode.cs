@@ -89,9 +89,10 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
                 
-                DSElementUtility.CreateButton("Проверить инвентарь таргета на предмет", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
+                DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
+                DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (свой)", ()=> {actionTextFoldout.text = CommandCheckSelfInventoryForItem();}),
                 DSElementUtility.CreateButton("Забрать у таргета предмет", ()=> {actionTextFoldout.text = CommandTakeItemFromTarget();}),
-                DSElementUtility.CreateButton("Передать группе задачу", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
+                DSElementUtility.CreateButton("Использовать предмет из своего инвентаря (по типу)", ()=> {actionTextFoldout.text = CommandUseSelfInventoryItem();}),
                 
                 DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionTextFoldout.text = CommandTrading();}),
                 DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
@@ -220,7 +221,17 @@ namespace DS.Elements
             
             ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
 
-            return "Проверить инвентарь таргета на предмет";
+            return "Проверить инвентарь на предмет (тагрет)";
+        }
+        private string CommandCheckSelfInventoryForItem()
+        {
+            Action = DSAction.CommandCheckSelfInventoryForItem;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+
+            return "Проверить свой инвентарь на предмет (свой)";
         }
         private string CommandTakeItemFromTarget()
         {
@@ -231,6 +242,16 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
 
             return "Забрать у таргета предмет";
+        }
+        private string CommandUseSelfInventoryItem()
+        {
+            Action = DSAction.CommandUseSelfInventoryItem;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));
+
+            return "Использовать предмет из своего инвентаря (по типу)";
         }
         private string CommandTrading()
         {

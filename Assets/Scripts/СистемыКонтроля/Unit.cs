@@ -13,8 +13,8 @@ using static Initializer;
 
 public class Unit : AbstractBehavior
 {
+    public List<SolutionInfo> solutions;
     private delegate void Operation();
-    [SerializeField] private DS.AI dSDialogue;
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] protected AI aI = new AI();
     [SerializeField] protected DSAction currentAction;
@@ -33,6 +33,8 @@ public class Unit : AbstractBehavior
 
     public override void Init()
     {
+        base.Init();
+        
         chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
         aI.Init(this, anim);
@@ -73,6 +75,7 @@ public class Unit : AbstractBehavior
         
         currentAction = action;
     }
+
     //выполнить текущую задачу
     public void ExecuteCurrentCommand()
     {
@@ -339,12 +342,14 @@ public class Unit : AbstractBehavior
     {
         if(target == null)
         {
-            Debug.Log("У " + transform.name + " не установлен таргет");
+            Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
+            
+            SetCompleteCommand();
 
             return;
         }
         
-        AbstractBehavior buferTarget = target as AbstractBehavior;
+        AbstractBehavior buferTarget = (AbstractBehavior)target;
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
@@ -358,9 +363,6 @@ public class Unit : AbstractBehavior
         MoveToPoint(target.transform.position);
         
         anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
-
-        //закрыть окно диалога
-        if(GameManager.singleton.GetDialogueTransfer().isActiveAndEnabled) aI.CloseDialogueAndExitSoltuin();
     }
 
     public void CommandRetreat()
@@ -422,6 +424,22 @@ public class Unit : AbstractBehavior
 
         SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
     }
+    
+    private void CommandCheckSelfInventoryForItem()
+    {
+        SetCompleteCommand(chest.CheckInventoryForItems(CurrentModelData.itemData));
+    }
+
+    private void CommandUseSelfInventoryItem()
+    {
+        InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemData.itemType);
+
+        item.Use(this);
+
+        chest.RemoveAtChestGrid(item);
+
+        SetCompleteCommand();
+    }
 
     private void CommandTakeItemFromTarget()
     {
@@ -449,6 +467,8 @@ public class Unit : AbstractBehavior
 
     [ContextMenu("пуск")]
     public void Action2() => aI.StartSolution();
+    [ContextMenu("пускaaaa")]
+    public void Action3() => aI.AnalyzeImportanceSolutions();
     
     #endregion Комманды для управления NPC КОНЕЦ --------------------------------------------------------------------------------------------------------------------//
 }
@@ -485,4 +505,13 @@ public class MapSquare
         this.pos = pos;
         this.size = size;
     }
+}
+
+[Serializable]
+public class SolutionInfo
+{
+    //важность решения
+    public float importance = 0;
+    
+    public DSDialogueContainerSO solution;
 }

@@ -10,12 +10,15 @@ public class AI
     private Unit unit;
     private UIDialogueTransfer dialogueTransfer;
     [SerializeField] private Eyes eyes = new Eyes();
-    [SerializeField] private DSDialogueContainerSO[] solutions;
     [SerializeField] private DSDialogueContainerSO currentSolution;
-    [SerializeField] private DSDialogueContainerSO hungerSolution;
-    private DSDialogueSO stage;
+    [SerializeField] private SolutionInfo hungerSolution;
+    [SerializeField] private SolutionInfo sleepSolution;
+    public DSDialogueSO stage{get; private set;}
     bool newDialogue = false;
     bool isSolutionActive = false;
+    public bool brain = true;
+    public bool eye = true;
+    public bool sort = true;
 
     public void Init(Unit unit, Animator anim)
     {
@@ -27,29 +30,73 @@ public class AI
     //метод анализирует обстановку вокруг и принимает решения как реагировать
     public void Analyzer()
     {
-        StatsConsumption();
+        if(brain)StatsConsumption();
+        if(sort)AnalyzeImportanceSolutions();
 
         unit.ExecuteCurrentCommand();
 
-        eyes.FirndVisiblaTargets();
+        if(eye)eyes.FirndVisiblaTargets();
     }
 
     //метод расходует статы типа голод, сон итп 
     private void StatsConsumption()
     {
-        // Debug.Log(Mathf.Round(unit.unitStats.hunger));
+        if(unit.unitStats.hunger > 0) unit.unitStats.hunger -= 0.009f;
         
-        unit.unitStats.hunger -= Time.deltaTime;
+        if(unit.unitStats.sleep > 0) unit.unitStats.sleep -= Time.deltaTime;
 
-        if(unit.unitStats.hunger < 95 && !isSolutionActive)
+        SetSolution(hungerSolution, unit.unitStats.hunger, 1);
+
+        SetSolution(sleepSolution, unit.unitStats.sleep, 2);
+
+        if(!isSolutionActive)
         {
+            // isSolutionActive = true;
 
-            isSolutionActive = true;
+            if(unit.solutions[0].solution != currentSolution)
+            {
+                currentSolution = unit.solutions[0].solution;
 
-            currentSolution = hungerSolution;
-
-            StartSolution();
+                StartSolution(); 
+            }
         }
+    }
+
+    private void SetSolution(SolutionInfo solution, float haracteistica, int moificator = 2)
+    {
+        if(haracteistica < 95)
+        {
+            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
+
+            if(solution.importance < 100) solution.importance += Time.deltaTime / moificator;
+        }
+        else
+        {
+            solution.importance = 0;
+
+            if(unit.solutions.Contains(solution)) unit.solutions.Remove(solution);
+        }
+    }
+
+    //метод анализирует важность решений и сортирует список по важности
+    public void AnalyzeImportanceSolutions()
+    {
+        unit.solutions.Sort(SortByImportance);
+    }
+
+    private int SortByImportance(SolutionInfo a, SolutionInfo b)
+    {
+        if(a.importance < b.importance)
+        {
+            return 1;
+        }
+        else
+        if (a.importance > b.importance)
+        {
+            return -1;
+        }
+
+        return 0;
     }
 
     public Eyes GetEyes() => eyes;   
@@ -75,30 +122,25 @@ public class AI
     //Этот метод выбирает решение которое ИИ примит
     public void СhooseSolution()
     {
-        currentSolution = solutions[0];
+        // currentSolution = solutions[0].solution;
 
         stage = currentSolution.UngroupedDialogues[0];
     }
 
     //старт этапа
     public void StartNextActionStage() => unit.SetAction(stage.Action, stage.ModelDate);
-    
+
     //перейти на следующий этап
     public void StartNextStage(int choiceIndex)
-    {
-        
-        if(!stage || !stage.Choices[choiceIndex].NextDialogue) 
+    {      
+        if(!stage) 
         {
             Debug.Log("Решение выполнено!");
             
             isSolutionActive = false;
 
-            CloseDialogueAndExitSoltuin();
-
             return;
-        }        
-
-        if(!newDialogue)stage = stage.Choices[choiceIndex].NextDialogue;
+        }
         
         if(stage.DialogueType == DSDialogueType.Action)
         {
@@ -108,7 +150,10 @@ public class AI
         {
             StartNextDialogueStage();
         }
+
+        if(!newDialogue) stage = stage.Choices[choiceIndex].NextDialogue;
     }
+
  
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)
@@ -150,6 +195,8 @@ public class AI
 
     public void CloseDialogueAndExitSoltuin()
     {
+        Debug.Log("Конец диалога");
+        
         GameManager.singleton.SwithCameraEnabled(true);
 
         GameManager.singleton.SetIsControlingPlayer(true);

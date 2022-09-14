@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: 0ff4ec30-1c55-4482-ba4d-01744e44cdb0
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: 0ff4ec30-1c55-4482-ba4d-01744e44cdb0
+  <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: New Choice
+    <NextDialogue>k__BackingField: {fileID: 0}
+  <DialogueType>k__BackingField: 2
+  <IsStartingDialogue>k__BackingField: 1
+  <Action>k__BackingField: 16
+  <ModelDate>k__BackingField:
+    number: 0
+    pos: {x: 0, y: 0, z: 0}
+    itemData: {fileID: 11400000, guid: bbe7e61a65d267046ab26c6c5f73138e, type: 2}
+    dialogue: {fileID: 0}
+    targetMask:
+      serializedVersion: 2
+      m_Bits: 0

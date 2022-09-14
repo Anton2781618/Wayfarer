@@ -15,15 +15,15 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0422\u0435\u0441\u0442"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 963ce763-a453-4f97-9382-e5724c32894e
-    <Name>k__BackingField: 86e5ce96-3eeb-4734-ba41-9f76fc469714
+  - <ID>k__BackingField: d278a311-f106-46cc-94d5-291cf9da02da
+    <Name>k__BackingField: 1c32134a-7ed7-4cd8-a3e1-8f6dc51016c2
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 4cc677a9-505d-40c9-8ad4-c9607b9e9708
+      <NodeID>k__BackingField: 4fc07f95-604a-4832-ab6a-4ea760a7d7b0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 347, y: 175}
+    <Position>k__BackingField: {x: 1112, y: 275}
     <Action>k__BackingField: 15
     <ModelDate>k__BackingField:
       number: 0
@@ -34,28 +34,28 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 8
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
-  - <ID>k__BackingField: 4cc677a9-505d-40c9-8ad4-c9607b9e9708
-    <Name>k__BackingField: 85707781-2c6d-44b3-95f2-089564f68d07
+  - <ID>k__BackingField: 4fc07f95-604a-4832-ab6a-4ea760a7d7b0
+    <Name>k__BackingField: 9337cb76-8832-414b-996d-117fd6134043
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 831, y: 175}
+    <Position>k__BackingField: {x: 1557, y: 303}
     <Action>k__BackingField: 12
     <ModelDate>k__BackingField:
       number: 0
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
-      dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
+      dialogue: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
       targetMask:
         serializedVersion: 2
         m_Bits: 0
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 86e5ce96-3eeb-4734-ba41-9f76fc469714
-  - 85707781-2c6d-44b3-95f2-089564f68d07
+  - 1c32134a-7ed7-4cd8-a3e1-8f6dc51016c2
+  - 9337cb76-8832-414b-996d-117fd6134043
   <OldGroupedNodeNames>k__BackingField:
     list: []

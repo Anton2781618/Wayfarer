@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using CartoonHeroes;
+using static ItemData;
 
 //класс является представлением места для хранения предметов (сундук или инвентарь игрока или торговца)
 public class Chest : MonoBehaviour, ICanUse
@@ -77,7 +78,7 @@ public class Chest : MonoBehaviour, ICanUse
 
         inventoryController.SelectedItemGrid = chestGrid;
         
-        InsertItems();
+        InsertAllInventoryItems();
         
         inventoryController.SelectedItemGrid = null;
 
@@ -89,11 +90,13 @@ public class Chest : MonoBehaviour, ICanUse
     public void UpdateChestItems()
     {
         inventoryItems.Clear();
+
         foreach (Transform item in chestGrid.transform)
         {
             if(item.gameObject.layer == 5)
             {
                 InventoryItem buferItem = item.transform.GetComponent<InventoryItem>();
+        
                 inventoryItems.Add(new InventoryItemInfo(buferItem.itemData, buferItem.Amount));
             }
         }
@@ -117,7 +120,19 @@ public class Chest : MonoBehaviour, ICanUse
         {
             if(item.itemData == itemData) return 0;
         }
+
         return 1;
+    }
+
+    //взять любой предмет инвентаря по типу предмета 
+    public InventoryItemInfo GetInventoryForItemType(ItemType itemType)
+    {
+        foreach (var item in inventoryItems)
+        {
+            if(item.itemData.itemType == itemType) return item;
+        }
+
+        return null;
     }
 
     //добавить предмет в сундук
@@ -134,6 +149,7 @@ public class Chest : MonoBehaviour, ICanUse
             if(inventoryItems[i].itemData == item.itemData && inventoryItems[i].Amount == item.Amount)
             {
                 inventoryItems.RemoveAt(i);
+
                 return;
             }
         }
@@ -159,7 +175,8 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    private void InsertItems()
+    //взять итемы из списка и создать физически
+    private void InsertAllInventoryItems()
     {
         foreach (InventoryItemInfo item in inventoryItems)
         {
@@ -194,5 +211,18 @@ public class InventoryItemInfo
     {
         this.itemData = itemData;
         Amount = amount;
+    }
+
+    public void Use(AbstractBehavior applicant)
+    {
+        InventoryItem test = new InventoryItem();
+
+        test.itemData = itemData;
+        
+        test.Amount = Amount;
+
+        test.InitDict();
+        
+        test.Use(applicant);
     }
 }

@@ -246,7 +246,9 @@ public class InventoryController : MonoBehaviour
     private void LeftMouseButtonPress()
     {
         Vector2Int titleGridPosition = GetTitleGridPosition();
+        
         GameManager.singleton.SwithContextMenu(false);
+        
         GameManager.singleton.SwithInfoItem(false);
         
         if (selectedItem == null)
@@ -259,6 +261,7 @@ public class InventoryController : MonoBehaviour
         }
 
         if(selectedChest) selectedChest.UpdateChestItems();
+
         playerChest.UpdateChestItems();
     }
 

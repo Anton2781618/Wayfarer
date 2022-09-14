@@ -28,5 +28,7 @@ namespace DS.Enumerations
         CommandMoveToCoordinates,
         CommandFindTheTarget,
         CommandHoldPositionFindTheTarget,
+        CommandUseSelfInventoryItem,
+        CommandCheckSelfInventoryForItem,
     }
 }

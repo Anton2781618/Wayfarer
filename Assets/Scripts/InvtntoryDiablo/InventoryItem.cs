@@ -12,11 +12,17 @@ public class InventoryItem : MonoBehaviour, ICanUse
     public int Amount = 0;
     public RectTransform rectItemHighLight;
     public Text amauntText;
-
     public delegate void MyDelegate();
     private Dictionary<ItemType,MyDelegate> delegatesDict = new Dictionary<ItemType, MyDelegate>();
 
+    private AbstractBehavior applicant;
+
     private void Start() 
+    {
+        InitDict();
+    }
+
+    public void InitDict() 
     {
         delegatesDict.Add(ItemType.Шлем, UseHelmet);
         delegatesDict.Add(ItemType.Броня, UseArmor);
@@ -31,10 +37,13 @@ public class InventoryItem : MonoBehaviour, ICanUse
         delegatesDict.Add(ItemType.Зелье_здоровья, UseHealthPotion);
         delegatesDict.Add(ItemType.Зелье_маны, UseManaPotion);
         delegatesDict.Add(ItemType.Золотые_монеты, UseMoney);
+        delegatesDict.Add(ItemType.Еда, UseFood);
     }
 
-   public int HEIGHT
-   {
+    
+
+    public int HEIGHT
+    {
        get
        {
            if(rotated == false)
@@ -43,7 +52,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
            }
            return itemData.width;
        }
-   }
+    }
 
    public int WIDTH
    {
@@ -69,13 +78,19 @@ public class InventoryItem : MonoBehaviour, ICanUse
         GetComponent<Image>().sprite = itemData.itemIcon; 
 
         Vector2 size = new Vector2();
+
         size.x = itemData.width * ItemGrid.titleSizeWidth;
+
         size.y = itemData.height * ItemGrid.titleSizeHeight;
+
         GetComponent<RectTransform>().sizeDelta = size;
+
         rectItemHighLight.sizeDelta = size;
 
         amauntText.gameObject.SetActive(!itemData.isSingle);
+
         amauntText.GetComponent<RectTransform>().sizeDelta = size;
+
         UpdateAmountItem();
     }
 
@@ -89,16 +104,21 @@ public class InventoryItem : MonoBehaviour, ICanUse
         rotated = !rotated;
 
         RectTransform rectTransform = GetComponent<RectTransform>();
+
         rectTransform.rotation = Quaternion.Euler(0, 0, rotated ? 90f : 0f);
     }
 
     public void Use(AbstractBehavior applicant)
     {
+        this.applicant = applicant;
+
         delegatesDict[itemData.itemType].Invoke();
     }
 
     private void DestructSelf(ItemGrid itemGrid)
     {
+        if(this == null) return;
+        
         Destroy(gameObject);
 
         itemGrid.chest.RemoveAtChestGrid(this);
@@ -165,6 +185,16 @@ public class InventoryItem : MonoBehaviour, ICanUse
         Debug.Log("Ожерелье");
     }
 
+    //еда
+    private void UseFood()
+    {
+        Debug.Log("использована еда");
+
+        applicant.unitStats.hunger += Amount;
+
+        DestructSelf(applicant.chest.GetChestGrid());
+    }
+
     //Наплечники
     private void UseShoulder()
     {
@@ -173,19 +203,21 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
     private void UseHealthPotion()
     {
-        ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
-        buferGrid.abstractBehavior.Healing(Amount);
+        applicant.Healing(Amount);
 
-        DestructSelf(buferGrid);
+        DestructSelf(applicant.chest.GetChestGrid());
+
         Debug.Log("Использовал Зелье здоровья");
     }
 
     private void UseManaPotion()
     {
         ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
+
         buferGrid.abstractBehavior.RestoreMana(Amount);
 
         DestructSelf(buferGrid);
+
         Debug.Log("Использовал Зелье Маны");
     }
 
@@ -193,7 +225,9 @@ public class InventoryItem : MonoBehaviour, ICanUse
     private void UseMoney()
     {
         ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
+
         buferGrid.chest.money += Amount;
+
         buferGrid.chest.UpdateMoney();
         
         DestructSelf(buferGrid);

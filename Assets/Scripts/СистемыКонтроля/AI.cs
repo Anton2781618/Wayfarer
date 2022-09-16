@@ -19,6 +19,7 @@ public class AI
     public bool brain = true;
     public bool eye = true;
     public bool sort = true;
+    public bool command = true;
 
     public void Init(Unit unit, Animator anim)
     {
@@ -31,9 +32,10 @@ public class AI
     public void Analyzer()
     {
         if(brain)StatsConsumption();
+        
         if(sort)AnalyzeImportanceSolutions();
 
-        unit.ExecuteCurrentCommand();
+        if(command)unit.ExecuteCurrentCommand();
 
         if(eye)eyes.FirndVisiblaTargets();
     }
@@ -41,13 +43,13 @@ public class AI
     //метод расходует статы типа голод, сон итп 
     private void StatsConsumption()
     {
-        if(unit.unitStats.hunger > 0) unit.unitStats.hunger -= 0.009f;
+        if(unit.unitStats.hunger > 0) unit.unitStats.hunger -= Time.deltaTime;
         
         if(unit.unitStats.sleep > 0) unit.unitStats.sleep -= Time.deltaTime;
 
-        SetSolution(hungerSolution, unit.unitStats.hunger, 1);
+        SetSolutionInList(hungerSolution, unit.unitStats.hunger, 1);
 
-        SetSolution(sleepSolution, unit.unitStats.sleep, 2);
+        SetSolutionInList(sleepSolution, unit.unitStats.sleep, 2);
 
         if(!isSolutionActive)
         {
@@ -62,7 +64,7 @@ public class AI
         }
     }
 
-    private void SetSolution(SolutionInfo solution, float haracteistica, int moificator = 2)
+    private void SetSolutionInList(SolutionInfo solution, float haracteistica, int moificator = 2)
     {
         if(haracteistica < 95)
         {
@@ -112,36 +114,18 @@ public class AI
             {   
                 stage = item;
 
-                StartNextActionStage();
+                StartStage();
 
                 return;
             }
         }
     }  
     
-    //Этот метод выбирает решение которое ИИ примит
-    public void СhooseSolution()
-    {
-        // currentSolution = solutions[0].solution;
-
-        stage = currentSolution.UngroupedDialogues[0];
-    }
-
     //старт этапа
     public void StartNextActionStage() => unit.SetAction(stage.Action, stage.ModelDate);
 
-    //перейти на следующий этап
-    public void StartNextStage(int choiceIndex)
-    {      
-        if(!stage) 
-        {
-            Debug.Log("Решение выполнено!");
-            
-            isSolutionActive = false;
-
-            return;
-        }
-        
+    private void StartStage()
+    {
         if(stage.DialogueType == DSDialogueType.Action)
         {
             StartNextActionStage();
@@ -150,10 +134,24 @@ public class AI
         {
             StartNextDialogueStage();
         }
-
-        if(!newDialogue) stage = stage.Choices[choiceIndex].NextDialogue;
     }
 
+    //перейти на следующий этап
+    public void NextStage(int choiceIndex)
+    {   
+        if(!newDialogue) stage = stage.Choices[choiceIndex].NextDialogue;
+
+        if(stage == null) 
+        {
+            Debug.Log("Решение выполнено!");
+            
+            isSolutionActive = false;
+
+            return;
+        }
+
+        StartStage();
+    }
  
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)

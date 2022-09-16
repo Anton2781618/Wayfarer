@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ICanTakeDamage;
 
+
+
 public class Sword : MonoBehaviour
 {
     [SerializeField] private int damage = 50; 
@@ -44,4 +46,14 @@ public class Sword : MonoBehaviour
     {
         hit = true;
     }
+
+    public int Jopa()
+    {
+        return 0;
+    }
 }
+
+
+
+
+

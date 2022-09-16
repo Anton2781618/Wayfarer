@@ -228,4 +228,9 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     public virtual void ShowOutline(bool value)
     {
     }
+
+    public virtual void ShowTest()
+    {
+        Debug.Log("базовый");
+    }
 }

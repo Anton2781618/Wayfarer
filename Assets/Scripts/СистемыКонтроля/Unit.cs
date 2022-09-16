@@ -93,15 +93,29 @@ public class Unit : AbstractBehavior
     //двигаться к точке
     private void MoveToPoint(Vector3 point)
     {
-        // FaceToPoint(point);
+        NavMeshPath path = new NavMeshPath();
+        
+        NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, path);
 
-        agent.SetDestination(point);    
+        for (int i = 0; i < path.corners.Length - 1; i++)
+        {
+            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        }
 
-        SetAnimationRun(agent.remainingDistance > agent.stoppingDistance);
+        // agent.SetDestination(point);
+        
+        if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
+
+        SetAnimationWalk(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1);
+        // SetAnimationWalk(agent.remainingDistance > agent.stoppingDistance);
     }
 
-
-    [ContextMenu("CreatePOints")]
+    [ContextMenu("Тест")]
+    public override void ShowTest()
+    {
+        string a;
+    }
+    
     public Vector3 CreatePoints(Vector3 point)
     {
         NavMeshPath path = new NavMeshPath();
@@ -110,7 +124,7 @@ public class Unit : AbstractBehavior
 
         Vector3 result = transform.position;
 
-        if (NavMesh.SamplePosition(point, out hit, 5f, NavMesh.AllAreas)) 
+        if (NavMesh.SamplePosition(point, out hit, 10f, NavMesh.AllAreas)) 
         {
             result = hit.position;
         }
@@ -214,7 +228,7 @@ public class Unit : AbstractBehavior
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
-        aI.StartNextStage(dialogueIndex);
+        aI.NextStage(dialogueIndex);
     }
 
     public override void Die()
@@ -251,12 +265,12 @@ public class Unit : AbstractBehavior
 
         if(eyes.mamryTargets.Count > 0)
         {
-            if(eyes.mamryTargets[0] == null)
+            if(eyes.mamryTargets[0] == null || (CurrentModelData.targetMask.value & (1 << eyes.mamryTargets[0].gameObject.layer)) == 0)
             {
                 eyes.mamryTargets.RemoveAt(0);
 
                 return false;
-            } 
+            }
             
             target = eyes.mamryTargets[0].GetComponent<ICanUse>();
 
@@ -270,7 +284,7 @@ public class Unit : AbstractBehavior
 
     public void SetTarget(ICanUse newTarget) => target = newTarget;
 
-    public void SetAnimationRun(bool value) => anim.SetBool("walk", value);
+    public void SetAnimationWalk(bool value) => anim.SetBool("walk", value);
     
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
@@ -321,7 +335,7 @@ public class Unit : AbstractBehavior
         // Format and display the TimeSpan value.
         string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
 
-        Debug.Log("RunTime " + elapsedTime);
+        Debug.Log("Ticks " + ts.Ticks);
     }
 
     private void CommandHoldPositionFindTheTarget()
@@ -334,7 +348,7 @@ public class Unit : AbstractBehavior
     {
         anim.SetBool("walk", false);
 
-        agent.SetDestination(this.transform.position);
+        // agent.SetDestination(this.transform.position);
     }
 
     //метод команда атакавать таргет (привязана к системе диалогов)
@@ -349,7 +363,7 @@ public class Unit : AbstractBehavior
             return;
         }
         
-        AbstractBehavior buferTarget = (AbstractBehavior)target;
+        AbstractBehavior buferTarget = target as AbstractBehavior;
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
@@ -362,7 +376,7 @@ public class Unit : AbstractBehavior
         
         MoveToPoint(target.transform.position);
         
-        anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
+        // anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
     }
 
     public void CommandRetreat()

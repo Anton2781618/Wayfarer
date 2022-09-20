@@ -90,32 +90,35 @@ public class Unit : AbstractBehavior
 
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
-    //двигаться к точке
-    private void MoveToPoint(Vector3 point)
+    //двигаться к точке, пересчитывая путь
+    private NavMeshPath MoveToPoint(Vector3 point)
     {
         NavMeshPath path = new NavMeshPath();
-        
-        NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, path);
+
+        NavMeshHit hit;
+
+        Vector3 result = transform.position;
+
+        if (NavMesh.SamplePosition(point, out hit, 10f, NavMesh.AllAreas)) 
+        {
+            result = hit.position;
+        }
+
+        NavMesh.CalculatePath(transform.position, result, UnityEngine.AI.NavMesh.AllAreas, path);
 
         for (int i = 0; i < path.corners.Length - 1; i++)
         {
             Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
         }
-
-        // agent.SetDestination(point);
         
         if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
 
-        SetAnimationWalk(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1);
-        // SetAnimationWalk(agent.remainingDistance > agent.stoppingDistance);
+        SetAnimationWalk(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
+
+        return path;
     }
 
-    [ContextMenu("Тест")]
-    public override void ShowTest()
-    {
-        string a;
-    }
-    
+    //создать случайную точку в выбранном квадрате
     public Vector3 CreatePoints(Vector3 point)
     {
         NavMeshPath path = new NavMeshPath();
@@ -129,7 +132,7 @@ public class Unit : AbstractBehavior
             result = hit.position;
         }
 
-        UnityEngine.AI.NavMesh.CalculatePath(transform.position, result, UnityEngine.AI.NavMesh.AllAreas, path);
+        NavMesh.CalculatePath(transform.position, result, UnityEngine.AI.NavMesh.AllAreas, path);
 
         for (int i = 0; i < path.corners.Length-1; i++)
         {
@@ -285,6 +288,7 @@ public class Unit : AbstractBehavior
     public void SetTarget(ICanUse newTarget) => target = newTarget;
 
     public void SetAnimationWalk(bool value) => anim.SetBool("walk", value);
+    public void SetAnimationGetToWork(bool value) => anim.SetBool("Work", value);
     
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
@@ -376,7 +380,33 @@ public class Unit : AbstractBehavior
         
         MoveToPoint(target.transform.position);
         
-        // anim.SetBool("Hit", agent.remainingDistance <= agent.stoppingDistance && target != null);
+        anim.SetBool("Hit", target != null && Vector3.Distance(transform.position, target.transform.position) < 1.5f);
+    }
+
+    //метод запускает рабочий/производственный цикл
+    private void CommandGetToWork()
+    {
+        IWorkplace newTarget = CurrentModelData.objectOnScen.GetComponent<IWorkplace>();
+
+        if(newTarget.WorkIsFinish)
+        {
+            SetAnimationGetToWork(true);
+
+            newTarget.Use();
+        }
+        else
+        {
+            SetAnimationGetToWork(false);
+
+            SetCompleteCommand();
+        }
+        
+    }
+
+    private void CommandSleep()
+    {
+        unitStats.sleep = 1000;
+        SetCompleteCommand();
     }
 
     public void CommandRetreat()
@@ -412,21 +442,24 @@ public class Unit : AbstractBehavior
             Debug.Log("у NPC не установлен таргет");
         }
 
-        MoveToPoint(target.transform.position);
+        
 
-        CheckAndSwitchStage();
+        CheckAndSwitchStage(MoveToPoint(target.transform.position));
     }
     
     private void CommandMoveToCoordinates()
     {
-        MoveToPoint(CurrentModelData.pos);
-        
-        CheckAndSwitchStage();
+        CheckAndSwitchStage(MoveToPoint(CurrentModelData.pos));
+    }
+
+    private void CommandMoveToGameObject()
+    {
+        CheckAndSwitchStage(MoveToPoint(CurrentModelData.objectOnScen.transform.position));
     }
     
-    private void CheckAndSwitchStage()
+    private void CheckAndSwitchStage(NavMeshPath path)
     {
-        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance)
+        if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f)
         {
             SetCompleteCommand();
         }
@@ -481,8 +514,6 @@ public class Unit : AbstractBehavior
 
     [ContextMenu("пуск")]
     public void Action2() => aI.StartSolution();
-    [ContextMenu("пускaaaa")]
-    public void Action3() => aI.AnalyzeImportanceSolutions();
     
     #endregion Комманды для управления NPC КОНЕЦ --------------------------------------------------------------------------------------------------------------------//
 }
@@ -495,6 +526,7 @@ public class ModelDate
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
     public LayerMask targetMask;
+    public GameObject objectOnScen;
 }
 
 //класс описывает квадрат распологаемый на карте

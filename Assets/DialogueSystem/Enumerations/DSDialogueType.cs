@@ -30,5 +30,8 @@ namespace DS.Enumerations
         CommandHoldPositionFindTheTarget,
         CommandUseSelfInventoryItem,
         CommandCheckSelfInventoryForItem,
+        CommandGetToWork,
+        CommandSleep,
+        CommandMoveToGameObject,
     }
 }

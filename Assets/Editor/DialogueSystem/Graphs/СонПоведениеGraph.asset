@@ -16,15 +16,15 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 5facd9c5-6a41-45ba-8607-3b8b5ffa82ad
-    <Name>k__BackingField: 7d99af32-c1ee-45cf-8221-24b4d07f115c
+    <Name>k__BackingField: 29c4cbea-dd1f-4601-9442-3b49171264a6
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 472778a1-e221-494d-b446-85fd36d47ea2
+      <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
     <Position>k__BackingField: {x: 828, y: 235}
-    <Action>k__BackingField: 15
+    <Action>k__BackingField: 19
     <ModelDate>k__BackingField:
       number: 0
       pos: {x: 0, y: 0, z: 0}
@@ -33,29 +33,10 @@ MonoBehaviour:
       targetMask:
         serializedVersion: 2
         m_Bits: 8
-    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
-  - <ID>k__BackingField: 472778a1-e221-494d-b446-85fd36d47ea2
-    <Name>k__BackingField: d945ae82-70ad-40e6-a61a-8daf1e050563
-    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1262, y: 235}
-    <Action>k__BackingField: 0
-    <ModelDate>k__BackingField:
-      number: 0
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
+      objectOnScen: {fileID: 0}
     <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 7d99af32-c1ee-45cf-8221-24b4d07f115c
-  - d945ae82-70ad-40e6-a61a-8daf1e050563
+  - 29c4cbea-dd1f-4601-9442-3b49171264a6
   <OldGroupedNodeNames>k__BackingField:
     list: []

@@ -99,6 +99,22 @@ namespace DS.Utilities
 
             return objectField;
         }
+        public static ObjectField  CreateObjectFieldGameObject(UnityEngine.Object value = null, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
+        {
+            ObjectField objectField = new ObjectField()
+            {
+                value = value
+            };
+
+            objectField.objectType = typeof(UnityEngine.GameObject);
+
+            if (onValueChanged != null)
+            {
+                objectField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return objectField;
+        }
 
         public static FloatField CreateFloatField(float value = 0, string label = null, EventCallback<ChangeEvent<float>> onValueChanged = null)
         {

@@ -122,17 +122,17 @@ public class AI
     }  
     
     //старт этапа
-    public void StartNextActionStage() => unit.SetAction(stage.Action, stage.ModelDate);
+    public void StartActionStage() => unit.SetAction(stage.Action, stage.ModelDate);
 
     private void StartStage()
     {
         if(stage.DialogueType == DSDialogueType.Action)
         {
-            StartNextActionStage();
+            StartActionStage();
         }
         else
         {
-            StartNextDialogueStage();
+            StartDialogueStage();
         }
     }
 
@@ -178,7 +178,7 @@ public class AI
         newDialogue = true;
     }
 
-    public void StartNextDialogueStage()
+    public void StartDialogueStage()
     {
         Debug.Log("создаю кнопки");
 

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using DS.ScriptableObjects;
 
-
 namespace DS.Elements
 {
     using System;
@@ -15,11 +14,11 @@ namespace DS.Elements
     using Utilities;
     using Windows;
 
-    
     public class DSActionNode : DSNode
     {       
         private delegate string Operation();
         VisualElement ContainerForTransformation = new VisualElement();
+        
         
         public override void Initialize(string nodeName, DSGraphView dsGraphView, Vector2 position)
         {
@@ -88,6 +87,7 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
                 DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
+                DSElementUtility.CreateButton("Двигаться к Объекту", ()=> {actionTextFoldout.text = CommandMoveToGameObject();}),
                 
                 DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
                 DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (свой)", ()=> {actionTextFoldout.text = CommandCheckSelfInventoryForItem();}),
@@ -96,6 +96,8 @@ namespace DS.Elements
                 
                 DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionTextFoldout.text = CommandTrading();}),
                 DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
+                DSElementUtility.CreateButton("Приступить к работе", ()=> {actionTextFoldout.text = CommandGetToWork();}),
+                DSElementUtility.CreateButton("Выспаться", ()=> {actionTextFoldout.text = CommandSleep();}),
                 
                 DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
                 DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionTextFoldout.text = CommandPickUpItem();}),
@@ -175,7 +177,9 @@ namespace DS.Elements
         public override void ResetStyle()
         {
             mainContainer.style.backgroundColor = choisenColor;
-        }        
+        }
+
+
         
         private string CommandAttackTheTarget()
         {
@@ -279,6 +283,25 @@ namespace DS.Elements
             
             return "Начать диалог";
         }
+
+        private string CommandGetToWork()
+        {
+            Action = DSAction.CommandGetToWork;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldGameObject(modelDate.objectOnScen, x => modelDate.objectOnScen = (UnityEngine.GameObject)x.newValue));
+            
+            return "Приступить к работе";
+        }
+        private string CommandSleep()
+        {
+            Action = DSAction.CommandSleep;
+            
+            ContainerForTransformation.Clear();
+            
+            return "Выспаться";
+        }
         private string CommandPlayerGiveMoney()
         {
             Action = DSAction.CommandPlayerGiveMoney;
@@ -318,6 +341,16 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.z, null, collBack => modelDate.pos.z = collBack.newValue));
             
             return "Двигаться к корординатам";
+        }
+        private string CommandMoveToGameObject()
+        {
+            Action = DSAction.CommandMoveToGameObject;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldGameObject(modelDate.objectOnScen, x => modelDate.objectOnScen = (UnityEngine.GameObject)x.newValue));
+            
+            return "Двигаться к Объекту";
         }
     }
 }

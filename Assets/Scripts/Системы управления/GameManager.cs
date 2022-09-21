@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
     {
         if(!CheckTarget())return;
 
-        targetHumanForHelp.TakeDamage(targetHumanForHelp.GetCurHP());
+        targetHumanForHelp.TakeDamage(pLayerController, targetHumanForHelp.GetCurHP());
     }
 
     public void RestartScene(string value)

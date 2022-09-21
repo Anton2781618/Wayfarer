@@ -51,7 +51,14 @@ public class Unit : AbstractBehavior
             return;
         }
         SowHealthBar(value);
-    }    
+    }
+
+    public override void TakeDamage(AbstractBehavior enemy, int value)
+    {
+        base.TakeDamage(enemy, value);
+
+        aI.SetAttackSolution();
+    }
 
     public override void SowHealthBar(bool value)
     {
@@ -252,6 +259,8 @@ public class Unit : AbstractBehavior
     private bool FindTarget()
     {
         Eyes eyes = aI.GetEyes();
+        Mamry mamry = aI.GetMamry();
+        
 
         eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);         
 
@@ -261,21 +270,21 @@ public class Unit : AbstractBehavior
             {
                 if(!eyes.SetTargetToMamry(item))
                 {
-                    eyes.mamryTargets.Add(item);
+                    mamry.mamryTargets.Add(item);
                 }
             }
         }
 
-        if(eyes.mamryTargets.Count > 0)
+        if(mamry.mamryTargets.Count > 0)
         {
-            if(eyes.mamryTargets[0] == null || (CurrentModelData.targetMask.value & (1 << eyes.mamryTargets[0].gameObject.layer)) == 0)
+            if(mamry.mamryTargets[0] == null || (CurrentModelData.targetMask.value & (1 << mamry.mamryTargets[0].gameObject.layer)) == 0)
             {
-                eyes.mamryTargets.RemoveAt(0);
+                mamry.mamryTargets.RemoveAt(0);
 
                 return false;
             }
             
-            target = eyes.mamryTargets[0].GetComponent<ICanUse>();
+            target = mamry.mamryTargets[0].GetComponent<ICanUse>();
 
             Debug.Log("найден таргет " + target);
             
@@ -361,6 +370,8 @@ public class Unit : AbstractBehavior
         if(target == null)
         {
             Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
+
+            aI.RemoveAttackSolution();
             
             SetCompleteCommand();
 
@@ -372,6 +383,8 @@ public class Unit : AbstractBehavior
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
             state = States.Патруль;
+
+            aI.RemoveAttackSolution();
             
             SetCompleteCommand();
             
@@ -380,13 +393,13 @@ public class Unit : AbstractBehavior
         
         MoveToPoint(target.transform.position);
         
-        anim.SetBool("Hit", target != null && Vector3.Distance(transform.position, target.transform.position) < 1.5f);
+        anim.SetTrigger("Hit");
     }
 
     //метод запускает рабочий/производственный цикл
     private void CommandGetToWork()
     {
-        IWorkplace newTarget = CurrentModelData.objectOnScen.GetComponent<IWorkplace>();
+        IWorkplace newTarget = aI.GetMamry().workplace;
 
         if(newTarget.WorkIsFinish)
         {
@@ -400,7 +413,6 @@ public class Unit : AbstractBehavior
 
             SetCompleteCommand();
         }
-        
     }
 
     private void CommandSleep()
@@ -442,8 +454,6 @@ public class Unit : AbstractBehavior
             Debug.Log("у NPC не установлен таргет");
         }
 
-        
-
         CheckAndSwitchStage(MoveToPoint(target.transform.position));
     }
     
@@ -452,9 +462,9 @@ public class Unit : AbstractBehavior
         CheckAndSwitchStage(MoveToPoint(CurrentModelData.pos));
     }
 
-    private void CommandMoveToGameObject()
+    private void CommandMoveToWork()
     {
-        CheckAndSwitchStage(MoveToPoint(CurrentModelData.objectOnScen.transform.position));
+        CheckAndSwitchStage(MoveToPoint(aI.GetMamry().workplace.workPoint.position));
     }
     
     private void CheckAndSwitchStage(NavMeshPath path)
@@ -526,7 +536,7 @@ public class ModelDate
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
     public LayerMask targetMask;
-    public GameObject objectOnScen;
+    public Transform objectOnScen;
 }
 
 //класс описывает квадрат распологаемый на карте

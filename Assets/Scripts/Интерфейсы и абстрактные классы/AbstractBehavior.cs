@@ -62,8 +62,10 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     {
     }
 
-    public void TakeDamage(int value)
+    public virtual void TakeDamage(AbstractBehavior enemy, int value)
     {
+        target = enemy;
+
         unitStats.curHP -= value;
 
         HpSlider.value -= value;

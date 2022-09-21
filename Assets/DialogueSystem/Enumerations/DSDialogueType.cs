@@ -32,6 +32,6 @@ namespace DS.Enumerations
         CommandCheckSelfInventoryForItem,
         CommandGetToWork,
         CommandSleep,
-        CommandMoveToGameObject,
+        CommandMoveToWork,
     }
 }

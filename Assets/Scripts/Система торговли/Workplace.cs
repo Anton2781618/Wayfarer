@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Workplace : MonoBehaviour, IWorkplace
 {
+    //точка позиция работы
+    public Transform workPoint;
     public bool WorkIsFinish {get; private set;} = true;
     
     private float workTime = 60;

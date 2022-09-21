@@ -87,7 +87,7 @@ namespace DS.Elements
                 DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
                 DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
                 DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
-                DSElementUtility.CreateButton("Двигаться к Объекту", ()=> {actionTextFoldout.text = CommandMoveToGameObject();}),
+                DSElementUtility.CreateButton("Двигаться к Объекту", ()=> {actionTextFoldout.text = CommandMoveToWork();}),
                 
                 DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
                 DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (свой)", ()=> {actionTextFoldout.text = CommandCheckSelfInventoryForItem();}),
@@ -290,10 +290,9 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldGameObject(modelDate.objectOnScen, x => modelDate.objectOnScen = (UnityEngine.GameObject)x.newValue));
-            
             return "Приступить к работе";
         }
+
         private string CommandSleep()
         {
             Action = DSAction.CommandSleep;
@@ -302,6 +301,7 @@ namespace DS.Elements
             
             return "Выспаться";
         }
+        
         private string CommandPlayerGiveMoney()
         {
             Action = DSAction.CommandPlayerGiveMoney;
@@ -342,15 +342,13 @@ namespace DS.Elements
             
             return "Двигаться к корординатам";
         }
-        private string CommandMoveToGameObject()
+        private string CommandMoveToWork()
         {
-            Action = DSAction.CommandMoveToGameObject;
+            Action = DSAction.CommandMoveToWork;
             
             ContainerForTransformation.Clear();
-
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldGameObject(modelDate.objectOnScen, x => modelDate.objectOnScen = (UnityEngine.GameObject)x.newValue));
             
-            return "Двигаться к Объекту";
+            return "Двигаться к на работу";
         }
     }
 }

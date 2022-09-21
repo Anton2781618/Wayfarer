@@ -10,8 +10,10 @@ public class AI
     private Unit unit;
     private UIDialogueTransfer dialogueTransfer;
     [SerializeField] private Eyes eyes = new Eyes();
+    [SerializeField] private Mamry mamry = new Mamry();
     [SerializeField] private DSDialogueContainerSO currentSolution;
     [SerializeField] private SolutionInfo hungerSolution;
+    [SerializeField] private SolutionInfo AttackSolution;
     [SerializeField] private SolutionInfo sleepSolution;
     public DSDialogueSO stage{get; private set;}
     bool newDialogue = false;
@@ -25,7 +27,7 @@ public class AI
     {
         this.unit = unit;
 
-        this.eyes.Init(anim.GetBoneTransform(HumanBodyBones.Head), unit.transform);
+        this.eyes.Init(mamry, anim.GetBoneTransform(HumanBodyBones.Head), unit.transform);
     }
 
     //метод анализирует обстановку вокруг и принимает решения как реагировать
@@ -38,6 +40,15 @@ public class AI
         if(command)unit.ExecuteCurrentCommand();
 
         if(eye)eyes.FirndVisiblaTargets();
+    }
+
+    public void SetAttackSolution()
+    {        
+        SetSolutionInList(AttackSolution, 100, 0);
+    }
+    public void RemoveAttackSolution()
+    {        
+        unit.solutions.Remove(AttackSolution);
     }
 
     //метод расходует статы типа голод, сон итп 
@@ -66,7 +77,14 @@ public class AI
 
     private void SetSolutionInList(SolutionInfo solution, float haracteistica, int moificator = 2)
     {
-        if(haracteistica < 95)
+        if(solution == AttackSolution)
+        {
+            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
+         
+            return;
+        }
+
+        if(haracteistica < 95 )
         {
             if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
 
@@ -102,6 +120,7 @@ public class AI
     }
 
     public Eyes GetEyes() => eyes;   
+    public Mamry GetMamry() => mamry;   
 
     #region [rgba(30,106,143, 0.05)] Управление событиями и диалогами -------------------------------------------------------------------------------------------------------//
     
@@ -210,6 +229,7 @@ public class AI
 [Serializable]
 public class Eyes
 {
+    private Mamry mamry;
     private Transform headTransform;
     private Transform myTransform;
     [SerializeField] private float viewRadiusEyes;
@@ -217,10 +237,12 @@ public class Eyes
     [SerializeField] private LayerMask targetMaskForEyes;
     [SerializeField] private LayerMask obstaclMaskForEyes;
     public List<Transform> visileTargets = new List<Transform>();
-    public List<Transform> mamryTargets = new List<Transform>();
+    
 
-    public void Init(Transform headTrans, Transform unitTran)
+    public void Init(Mamry mamry, Transform headTrans, Transform unitTran)
     {
+        this.mamry = mamry;
+
         headTransform = headTrans;
 
         myTransform = unitTran;
@@ -263,9 +285,9 @@ public class Eyes
     //запомнить о существовании объекта
     public bool SetTargetToMamry(Transform visileTarget)
     {
-        for (int i = 0; i < mamryTargets.Count; i++)
+        for (int i = 0; i < mamry.mamryTargets.Count; i++)
         {
-            if(visileTarget == mamryTargets[i]) return true;
+            if(visileTarget == mamry.mamryTargets[i]) return true;
         }                
 
         return false;
@@ -280,4 +302,11 @@ public class Eyes
         
         return new Vector3(Mathf.Sin(angleInDegriees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegriees * Mathf.Deg2Rad));
     }
+}
+
+[Serializable]
+public class Mamry
+{
+    public Workplace workplace;
+    public List<Transform> mamryTargets = new List<Transform>();
 }

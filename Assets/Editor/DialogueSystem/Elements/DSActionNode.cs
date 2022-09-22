@@ -39,35 +39,36 @@ namespace DS.Elements
             Operation operation = (Operation)System.Delegate.CreateDelegate(typeof(Operation), this, Action.ToString());
             operation.Invoke();
 
-            if(choisenColor == new Color(0,0,0,0)) choisenColor = new Color( 205/255.0f, 149/255.0f, 117/255.0f);
+            if(choisenColor == new Color(0,0,0,0)) choisenColor = new Color( 253/255.0f, 228/255.0f, 139/255.0f);
+
             base.Draw();
 
             /* MAIN CONTAINER */
             
 
-            Button addChoiceButton = DSElementUtility.CreateButton("Add Choice", () =>
-            {
-                DSChoiceSaveData choiceData = new DSChoiceSaveData()
-                {
-                    Text = "New Choice"
-                };
+            // Button addChoiceButton = DSElementUtility.CreateButton("Add Choice", () =>
+            // {
+            //     DSChoiceSaveData choiceData = new DSChoiceSaveData()
+            //     {
+            //         Text = "New Choice"
+            //     };
                 
-                Choices.Add(choiceData);
+            //     Choices.Add(choiceData);
 
-                Port choicePort = CreateChoicePort(choiceData);
+            //     Port choicePort = CreateChoicePort(choiceData);
 
-                outputContainer.Add(choicePort);
-            });
+            //     outputContainer.Add(choicePort);
+            // });
 
-            addChoiceButton.AddToClassList("ds-node__button");
+            // addChoiceButton.AddToClassList("ds-node__button");
             
-            mainContainer.Insert(1, addChoiceButton);
+            // mainContainer.Insert(1, addChoiceButton);
 
             /* OUTPUT CONTAINER */
             
             foreach (DSChoiceSaveData choice in Choices)
             {
-                Port choicePort = CreateChoicePort(choice);
+                Port choicePort = CreateChoicePort(choice, false);
 
                 outputContainer.Add(choicePort);
             }
@@ -75,45 +76,41 @@ namespace DS.Elements
             /* EXTENSION CONTAINER */
 
             VisualElement customDataContainer = new VisualElement();
-            
+            Foldout actionChoicesContainer = DSElementUtility.CreateFoldout(Action.ToString(), true);
 
-            Foldout actionTextFoldout = DSElementUtility.CreateFoldout(Action.ToString(), true);
-            
-            Button[] buttons =
-            {                
-                DSElementUtility.CreateButton("Найти таргет(патруль)", ()=> { actionTextFoldout.text = CommandFindTheTarget();}),
-                DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionTextFoldout.text = CommandHoldPositionFindTheTarget();}),
-                
-                DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionTextFoldout.text = CommandAttackTheTarget();}),
-                DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionTextFoldout.text = CommandMoveToTarget();}),
-                DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionTextFoldout.text = CommandMoveToCoordinates();}),
-                DSElementUtility.CreateButton("Двигаться к Объекту", ()=> {actionTextFoldout.text = CommandMoveToWork();}),
-                
-                DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionTextFoldout.text = CommandCheckTargetInventoryForItem();}),
-                DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (свой)", ()=> {actionTextFoldout.text = CommandCheckSelfInventoryForItem();}),
-                DSElementUtility.CreateButton("Забрать у таргета предмет", ()=> {actionTextFoldout.text = CommandTakeItemFromTarget();}),
-                DSElementUtility.CreateButton("Использовать предмет из своего инвентаря (по типу)", ()=> {actionTextFoldout.text = CommandUseSelfInventoryItem();}),
-                
-                DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionTextFoldout.text = CommandTrading();}),
-                DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionTextFoldout.text = CommandStartDialogue();}),
-                DSElementUtility.CreateButton("Приступить к работе", ()=> {actionTextFoldout.text = CommandGetToWork();}),
-                DSElementUtility.CreateButton("Выспаться", ()=> {actionTextFoldout.text = CommandSleep();}),
-                
-                DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionTextFoldout.text = CommandPlayerGiveMoney();}),
-                DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionTextFoldout.text = CommandPickUpItem();}),
-                
-                // DSElementUtility.CreateButton("Выйти из диалога", ()=> {actionTextFoldout.text = ExitTheDialog(); }),
-                
-            };
+            Foldout findСategory = DSElementUtility.CreateFoldout("Найти", true);
+            Foldout AttackСategory = DSElementUtility.CreateFoldout("Атака", true);
+            Foldout MoveСategory = DSElementUtility.CreateFoldout("Двигаться", true);
+            Foldout inventoryСategory = DSElementUtility.CreateFoldout("Инвентарь", true);
+            Foldout actionsСategory = DSElementUtility.CreateFoldout("Действия", true);
 
-            foreach (var action in buttons)
-            {
-                actionTextFoldout.Add(action);
-            }
+            findСategory.Add(DSElementUtility.CreateButton("Найти таргет(патруль)", ()=> { actionChoicesContainer.text = CommandFindTheTarget();}));
+            findСategory.Add(DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionChoicesContainer.text = CommandHoldPositionFindTheTarget();}));
+            AttackСategory.Add(DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionChoicesContainer.text = CommandAttackTheTarget();}));
+
+            MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionChoicesContainer.text = CommandMoveToTarget();}));
+            MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionChoicesContainer.text = CommandMoveToCoordinates();}));
+            MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к на работу", ()=> {actionChoicesContainer.text = CommandMoveToWork();}));
+
+            inventoryСategory.Add(DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionChoicesContainer.text = CommandCheckTargetInventoryForItem();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Проверить инвентарь на предмет (свой)", ()=> {actionChoicesContainer.text = CommandCheckSelfInventoryForItem();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Забрать из инвентаря таргета предмет", ()=> {actionChoicesContainer.text = CommandTakeItemFromTarget();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Использовать предмет из своего инвентаря (по типу)", ()=> {actionChoicesContainer.text = CommandUseSelfInventoryItem();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionChoicesContainer.text = CommandPlayerGiveMoney();}));
+
+            actionsСategory.Add(DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionChoicesContainer.text = CommandTrading();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Начать диалог с таргетом", ()=> {actionChoicesContainer.text = CommandStartDialogue();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Приступить к работе", ()=> {actionChoicesContainer.text = CommandGetToWork();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Выспаться", ()=> {actionChoicesContainer.text = CommandSleep();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionChoicesContainer.text = CommandPickUpItem();}));
             
-            customDataContainer.Add(actionTextFoldout);
-            // ContainerForTransformation.Add(addChoiceButtondd);
+            actionChoicesContainer.Add(findСategory);
+            actionChoicesContainer.Add(AttackСategory);
+            actionChoicesContainer.Add(MoveСategory);
+            actionChoicesContainer.Add(inventoryСategory);
+            actionChoicesContainer.Add(actionsСategory);
             
+            customDataContainer.Add(actionChoicesContainer);
             extensionContainer.Add(ContainerForTransformation);
             extensionContainer.Add(customDataContainer);
             
@@ -126,10 +123,11 @@ namespace DS.Elements
         private void UpdateStyle(Color value)
         {
             mainContainer.style.backgroundColor = value;
+
             choisenColor = value;
         }
 
-        private Port CreateChoicePort(object userData)
+        private Port CreateChoicePort(object userData, bool needDeletButton = true)
         {
             //создаем контейнер с портом
             Port choicePort = this.CreatePort();
@@ -138,24 +136,29 @@ namespace DS.Elements
 
             DSChoiceSaveData choiceData = (DSChoiceSaveData) userData;
 
-            Button deleteChoiceButton = DSElementUtility.CreateButton("X", () =>
+            if(needDeletButton)
             {
-                if (Choices.Count == 1)
+                Button deleteChoiceButton = DSElementUtility.CreateButton("X", () =>
                 {
-                    return;
-                }
+                    if (Choices.Count == 1)
+                    {
+                        return;
+                    }
 
-                if (choicePort.connected)
-                {
-                    graphView.DeleteElements(choicePort.connections);
-                }
+                    if (choicePort.connected)
+                    {
+                        graphView.DeleteElements(choicePort.connections);
+                    }
 
-                Choices.Remove(choiceData);
+                    Choices.Remove(choiceData);
 
-                graphView.RemoveElement(choicePort);
-            });
+                    graphView.RemoveElement(choicePort);
+                });
 
-            deleteChoiceButton.AddToClassList("ds-node__button");
+                deleteChoiceButton.AddToClassList("ds-node__button");
+
+                choicePort.Add(deleteChoiceButton);
+            }
 
             TextField choiceTextField = DSElementUtility.CreateTextField(choiceData.Text, null, callback =>
             {
@@ -169,7 +172,6 @@ namespace DS.Elements
             );
 
             choicePort.Add(choiceTextField);
-            choicePort.Add(deleteChoiceButton);
 
             return choicePort;
         }
@@ -177,6 +179,57 @@ namespace DS.Elements
         public override void ResetStyle()
         {
             mainContainer.style.backgroundColor = choisenColor;
+        }
+
+        private Port lastPort;
+        private void AddPort()
+        {
+            DSChoiceSaveData choiceData = new DSChoiceSaveData()
+            {
+                Text = "New Choice"
+            };
+            
+            Choices.Add(choiceData);
+
+            lastPort = CreateChoicePort(choiceData, false);
+
+            outputContainer.Add(lastPort);
+        }
+
+        private void DeleteLastPort()
+        {            
+            if (lastPort.connected)
+            {
+                graphView.DeleteElements(lastPort.connections);
+            }
+
+            Choices.RemoveAt(Choices.Count - 1);
+
+            graphView.RemoveElement(lastPort);
+        }
+
+
+        private void InsertPorts(int value)
+        {
+            Choices.Clear();
+            outputContainer.Clear();
+
+            DSChoiceSaveData choiceData = new DSChoiceSaveData()
+            {
+                Text = "Новый выбор"
+            };
+
+            for (int i = 0; i < value; i++)
+            {
+                Choices.Add(choiceData);    
+            }
+            
+            foreach (DSChoiceSaveData choice in Choices)
+            {
+                Port choicePort = CreateChoicePort(choice, false);
+
+                outputContainer.Add(choicePort);
+            }
         }
 
 
@@ -233,7 +286,14 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));  
+
+            Debug.Log(Choices.Count);
+
+            if(Choices.Count < 2)
+            {
+                AddPort();
+            }
 
             return "Проверить свой инвентарь на предмет (свой)";
         }
@@ -243,9 +303,14 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue)); 
 
-            return "Забрать у таргета предмет";
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+
+            return "Забрать из инвентаря таргета предмет";
         }
         private string CommandUseSelfInventoryItem()
         {
@@ -319,16 +384,6 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
             
             return "Поднять таргет (предмет)";
-        }
-        private string ExitTheDialog()
-        {
-            Action = DSAction.ExitTheDialog;
-            
-            ContainerForTransformation.Clear();
-            
-            UpdateStyle(Color.yellow);
-            
-            return "Выйти из диалога";
         }
         private string CommandMoveToCoordinates()
         {

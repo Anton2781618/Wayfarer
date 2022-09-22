@@ -454,20 +454,20 @@ public class Unit : AbstractBehavior
             Debug.Log("у NPC не установлен таргет");
         }
 
-        CheckAndSwitchStage(MoveToPoint(target.transform.position));
+        CheckDistanceAndSwitchStage(MoveToPoint(target.transform.position));
     }
     
     private void CommandMoveToCoordinates()
     {
-        CheckAndSwitchStage(MoveToPoint(CurrentModelData.pos));
+        CheckDistanceAndSwitchStage(MoveToPoint(CurrentModelData.pos));
     }
 
     private void CommandMoveToWork()
     {
-        CheckAndSwitchStage(MoveToPoint(aI.GetMamry().workplace.workPoint.position));
+        CheckDistanceAndSwitchStage(MoveToPoint(aI.GetMamry().workplace.workPoint.position));
     }
     
-    private void CheckAndSwitchStage(NavMeshPath path)
+    private void CheckDistanceAndSwitchStage(NavMeshPath path)
     {
         if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f)
         {

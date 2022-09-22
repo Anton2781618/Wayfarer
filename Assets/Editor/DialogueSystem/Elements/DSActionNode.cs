@@ -181,9 +181,11 @@ namespace DS.Elements
             mainContainer.style.backgroundColor = choisenColor;
         }
 
-        private Port lastPort;
+        
         private void AddPort()
         {
+            Port lastPort;
+            
             DSChoiceSaveData choiceData = new DSChoiceSaveData()
             {
                 Text = "New Choice"
@@ -198,6 +200,8 @@ namespace DS.Elements
 
         private void DeleteLastPort()
         {            
+            Port lastPort = (Port) outputContainer.ElementAt(outputContainer.childCount - 1);
+
             if (lastPort.connected)
             {
                 graphView.DeleteElements(lastPort.connections);
@@ -239,6 +243,11 @@ namespace DS.Elements
             Action = DSAction.CommandAttackTheTarget;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Атакавать игрока";
         }
@@ -249,6 +258,11 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
 
             ContainerForTransformation.Add(DSElementUtility.CreateLayerMaskField(modelDate.targetMask, x => modelDate.targetMask = (int)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Найти таргет(патруль)";
         }
@@ -259,6 +273,11 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
 
             ContainerForTransformation.Add(DSElementUtility.CreateLayerMaskField(modelDate.targetMask, x => modelDate.targetMask = (int)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Найти таргет(стоять)";
         }
@@ -267,6 +286,11 @@ namespace DS.Elements
             Action = DSAction.CommandMoveToTarget;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Двигаться к таргету";
         }
@@ -276,7 +300,12 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));           
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));  
+
+            if(Choices.Count < 2)
+            {
+                AddPort();
+            }   
 
             return "Проверить инвентарь на предмет (тагрет)";
         }
@@ -287,8 +316,6 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
             
             ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));  
-
-            Debug.Log(Choices.Count);
 
             if(Choices.Count < 2)
             {
@@ -320,6 +347,11 @@ namespace DS.Elements
             
             ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));
 
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+
             return "Использовать предмет из своего инвентаря (по типу)";
         }
         private string CommandTrading()
@@ -327,6 +359,11 @@ namespace DS.Elements
             Action = DSAction.CommandTrading;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Начать торговлю";
         }
@@ -344,8 +381,12 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
 
             ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldDSDialogueSO(modelDate.dialogue, x => modelDate.dialogue = (DSDialogueContainerSO)x.newValue));
-            
-            
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+
             return "Начать диалог";
         }
 
@@ -354,6 +395,11 @@ namespace DS.Elements
             Action = DSAction.CommandGetToWork;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Приступить к работе";
         }
@@ -363,6 +409,11 @@ namespace DS.Elements
             Action = DSAction.CommandSleep;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Выспаться";
         }
@@ -374,6 +425,11 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
 
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.number, null, collBack => modelDate.number = collBack.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Забрать деньги у таргета";
         }
@@ -382,6 +438,11 @@ namespace DS.Elements
             Action = DSAction.CommandPickUpItem;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Поднять таргет (предмет)";
         }
@@ -394,6 +455,11 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.x, null, collBack => modelDate.pos.x = collBack.newValue));
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.y, null, collBack => modelDate.pos.y = collBack.newValue));
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.z, null, collBack => modelDate.pos.z = collBack.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Двигаться к корординатам";
         }
@@ -402,6 +468,11 @@ namespace DS.Elements
             Action = DSAction.CommandMoveToWork;
             
             ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
             
             return "Двигаться к на работу";
         }

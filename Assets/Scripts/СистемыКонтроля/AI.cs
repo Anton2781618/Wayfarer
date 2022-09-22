@@ -33,18 +33,21 @@ public class AI
     //метод анализирует обстановку вокруг и принимает решения как реагировать
     public void Analyzer()
     {
-        if(brain)StatsConsumption();
+        if (Time.frameCount % 40 == 0)
+        {
+            if(brain)StatsConsumption();
         
-        if(sort)AnalyzeImportanceSolutions();
+            if(sort)AnalyzeImportanceSolutions();
+
+            if(eye)eyes.FirndVisiblaTargets();
+        }
 
         if(command)unit.ExecuteCurrentCommand();
-
-        if(eye)eyes.FirndVisiblaTargets();
     }
 
     public void SetAttackSolution()
     {        
-        SetSolutionInList(AttackSolution, 100, 0);
+        SetSolutionInList(AttackSolution, 100);
     }
     public void RemoveAttackSolution()
     {        
@@ -54,13 +57,13 @@ public class AI
     //метод расходует статы типа голод, сон итп 
     private void StatsConsumption()
     {
-        if(unit.unitStats.hunger > 0) unit.unitStats.hunger -= Time.deltaTime;
+        if(unit.unitStats.hunger > 0) unit.unitStats.hunger --;
         
-        if(unit.unitStats.sleep > 0) unit.unitStats.sleep -= Time.deltaTime;
+        if(unit.unitStats.sleep > 0) unit.unitStats.sleep --;
 
-        SetSolutionInList(hungerSolution, unit.unitStats.hunger, 1);
+        SetSolutionInList(hungerSolution, unit.unitStats.hunger);
 
-        SetSolutionInList(sleepSolution, unit.unitStats.sleep, 2);
+        SetSolutionInList(sleepSolution, unit.unitStats.sleep);
 
         if(!isSolutionActive)
         {
@@ -75,7 +78,7 @@ public class AI
         }
     }
 
-    private void SetSolutionInList(SolutionInfo solution, float haracteistica, int moificator = 2)
+    private void SetSolutionInList(SolutionInfo solution, float haracteistica)
     {
         if(solution == AttackSolution)
         {
@@ -88,7 +91,7 @@ public class AI
         {
             if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
 
-            if(solution.importance < 100) solution.importance += Time.deltaTime / moificator;
+            if(solution.importance < 100) solution.importance ++;
         }
         else
         {

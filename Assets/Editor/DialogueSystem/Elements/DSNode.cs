@@ -113,7 +113,7 @@ namespace DS.Elements
 
             /* INPUT CONTAINER */
 
-            Port inputPort = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
+            Port inputPort = this.CreatePort("Соединение", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
             
             inputContainer.Add(inputPort);
         }

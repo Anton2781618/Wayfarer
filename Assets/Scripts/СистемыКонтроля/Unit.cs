@@ -28,8 +28,6 @@ public class Unit : AbstractBehavior
     //участок земли 
     public Terrain currentTerrain;//!ждет доработки
     public List<MapSquare> map = new List<MapSquare>();
-    
-
 
     public override void Init()
     {

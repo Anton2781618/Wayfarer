@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: 2e2615e3-4735-44d9-b5ed-31282f207bb7
+  m_Name: 2cdcc855-4fd8-49eb-91a0-3327d79f581f
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 2e2615e3-4735-44d9-b5ed-31282f207bb7
+  <DialogueName>k__BackingField: 2cdcc855-4fd8-49eb-91a0-3327d79f581f
   <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
   <Choices>k__BackingField:
   - <Text>k__BackingField: New Choice

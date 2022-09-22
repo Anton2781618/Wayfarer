@@ -20,8 +20,8 @@ public class UnitStats
 
     public int experienceForKilling = 50; 
 
-    public float hunger = 100;
-    public float sleep = 100;
+    public int hunger = 100;
+    public int sleep = 100;
 }
 
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse

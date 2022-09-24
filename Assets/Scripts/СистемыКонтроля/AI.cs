@@ -15,9 +15,10 @@ public class AI
     [SerializeField] private SolutionInfo hungerSolution;
     [SerializeField] private SolutionInfo AttackSolution;
     [SerializeField] private SolutionInfo sleepSolution;
+    [SerializeField] private SolutionInfo healingSolution;
     public DSDialogueSO stage{get; private set;}
     bool newDialogue = false;
-    bool isSolutionActive = false;
+    public bool isSolutionActive = false;
     public bool brain = true;
     public bool eye = true;
     public bool sort = true;
@@ -49,6 +50,10 @@ public class AI
     {        
         SetSolutionInList(AttackSolution, 100);
     }
+    public void SethealingSolution()
+    {        
+        SetSolutionInList(healingSolution, 90);
+    }
     public void RemoveAttackSolution()
     {        
         unit.solutions.Remove(AttackSolution);
@@ -67,14 +72,14 @@ public class AI
 
         if(!isSolutionActive)
         {
-            // isSolutionActive = true;
+            isSolutionActive = true;
 
             if(unit.solutions[0].solution != currentSolution)
             {
                 currentSolution = unit.solutions[0].solution;
-
-                StartSolution(); 
             }
+            
+            StartSolution(); 
         }
     }
 
@@ -87,7 +92,19 @@ public class AI
             return;
         }
 
-        if(haracteistica < 95 )
+        if(solution == healingSolution)
+        {
+            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
+
+            if(unit.unitStats.curHP >= unit.unitStats.maxHP)
+            {
+                if(unit.solutions.Contains(solution)) unit.solutions.Remove(solution);
+            }
+         
+            return;
+        }
+
+        if(haracteistica < 80 )
         {
             if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
 

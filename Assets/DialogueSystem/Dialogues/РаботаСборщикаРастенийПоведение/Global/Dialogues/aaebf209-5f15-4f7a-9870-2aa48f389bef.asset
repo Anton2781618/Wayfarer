@@ -28,4 +28,5 @@ MonoBehaviour:
     targetMask:
       serializedVersion: 2
       m_Bits: 0
+    itemType: 0
     objectOnScen: {fileID: 0}

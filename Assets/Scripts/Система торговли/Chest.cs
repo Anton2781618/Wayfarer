@@ -129,7 +129,7 @@ public class Chest : MonoBehaviour, ICanUse
     {
         foreach (var item in inventoryItems)
         {
-            if(item.itemData.itemType == itemType) return item;
+            if(itemType.HasFlag(item.itemData.itemType)) return item;
         }
 
         return null;

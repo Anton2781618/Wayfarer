@@ -32,7 +32,6 @@ namespace DS.Utilities
             return foldout;
         }
 
-        // public static Port CreatePort(this DSNode node, string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
         public static Port CreatePort(this DSNode node, string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
         {
             Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
@@ -121,6 +120,18 @@ namespace DS.Utilities
             {
                 value = value,
             };
+
+            if (onValueChanged != null)
+            {
+                floatField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return floatField;
+        }
+        
+        public static EnumFlagsField CreateItemTypeField(Enum value, EventCallback<ChangeEvent<Enum>> onValueChanged = null)
+        {
+            EnumFlagsField floatField = new EnumFlagsField(value);
 
             if (onValueChanged != null)
             {

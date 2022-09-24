@@ -15,11 +15,12 @@ MonoBehaviour:
   title: "\u0417\u0435\u043B\u044C\u0435 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
   description: "\u0412\u043E\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442
     \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u043E\u0435 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
-  amaunt: 0
   price: 50
   width: 1
   height: 2
   itemIcon: {fileID: 21300000, guid: 2f941c21bbff90542ae526b96d29820f, type: 3}
   prefab: {fileID: 5975218461323820059, guid: 80f249297c72fa8448ea9f395aead474, type: 3}
+  prefabForPutOn: {fileID: 0}
   itemType: 1024
+  pos: {x: 0, y: 0, z: 0}
   isSingle: 1

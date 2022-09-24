@@ -55,7 +55,8 @@ public class Unit : AbstractBehavior
     {
         base.TakeDamage(enemy, value);
 
-        aI.SetAttackSolution();
+        // aI.SetAttackSolution();
+        aI.SethealingSolution();
     }
 
     public override void SowHealthBar(bool value)
@@ -487,8 +488,8 @@ public class Unit : AbstractBehavior
 
     private void CommandUseSelfInventoryItem()
     {
-        InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemData.itemType);
-
+        InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemType);
+        Debug.Log(item.itemData.title + " " + item.itemData.itemType);
         item.Use(this);
 
         chest.RemoveAtChestGrid(item);
@@ -534,8 +535,12 @@ public class ModelDate
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
     public LayerMask targetMask;
+    public ItemData.ItemType itemType;
     public Transform objectOnScen;
 }
+
+
+
 
 //класс описывает квадрат распологаемый на карте
 [Serializable]

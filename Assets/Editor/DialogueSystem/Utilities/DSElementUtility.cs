@@ -129,9 +129,20 @@ namespace DS.Utilities
             return floatField;
         }
         
-        public static EnumFlagsField CreateItemTypeField(Enum value, EventCallback<ChangeEvent<Enum>> onValueChanged = null)
+        public static EnumFlagsField CreateItemTypeFlagsField(Enum value, EventCallback<ChangeEvent<Enum>> onValueChanged = null)
         {
             EnumFlagsField floatField = new EnumFlagsField(value);
+
+            if (onValueChanged != null)
+            {
+                floatField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return floatField;
+        }
+        public static EnumField CreateItemTypeField(Enum value, EventCallback<ChangeEvent<Enum>> onValueChanged = null)
+        {
+            EnumField floatField = new EnumField(value);
 
             if (onValueChanged != null)
             {

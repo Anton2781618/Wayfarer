@@ -15,15 +15,15 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0410\u0442\u0430\u043A\u0430\u041F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u0435"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: e5f16e65-7688-4c85-bcb9-6108eb7072fb
-    <Name>k__BackingField: e5f16e65-7688-4c85-bcb9-6108eb7072fb
+  - <ID>k__BackingField: eca9ad56-f0f6-4b84-b4be-492fab71cac1
+    <Name>k__BackingField: eca9ad56-f0f6-4b84-b4be-492fab71cac1
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 537, y: 382}
+    <Position>k__BackingField: {x: 641, y: 431}
     <Action>k__BackingField: 0
     <ModelDate>k__BackingField:
       number: 0
@@ -33,10 +33,11 @@ MonoBehaviour:
       targetMask:
         serializedVersion: 2
         m_Bits: 0
+      itemType: 0
       objectOnScen: {fileID: 0}
-    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - e5f16e65-7688-4c85-bcb9-6108eb7072fb
+  - eca9ad56-f0f6-4b84-b4be-492fab71cac1
   <OldGroupedNodeNames>k__BackingField:
     list: []

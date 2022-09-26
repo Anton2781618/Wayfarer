@@ -15,28 +15,29 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0421\u043E\u043D\u041F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u0435"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 5facd9c5-6a41-45ba-8607-3b8b5ffa82ad
-    <Name>k__BackingField: 29c4cbea-dd1f-4601-9442-3b49171264a6
+  - <ID>k__BackingField: e2ff1f97-bb73-4128-bb83-90401ff3b855
+    <Name>k__BackingField: e2ff1f97-bb73-4128-bb83-90401ff3b855
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 828, y: 235}
-    <Action>k__BackingField: 19
+    <Position>k__BackingField: {x: 687, y: 324}
+    <Action>k__BackingField: 20
     <ModelDate>k__BackingField:
       number: 0
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
-      dialogue: {fileID: 11400000, guid: cc15417f1efad564d8a32ea658415fec, type: 2}
+      dialogue: {fileID: 0}
       targetMask:
         serializedVersion: 2
-        m_Bits: 8
+        m_Bits: 0
+      itemType: 0
       objectOnScen: {fileID: 0}
-    <NodeMainColor>k__BackingField: {r: 0.8039216, g: 0.58431375, b: 0.45882353, a: 1}
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 29c4cbea-dd1f-4601-9442-3b49171264a6
+  - e2ff1f97-bb73-4128-bb83-90401ff3b855
   <OldGroupedNodeNames>k__BackingField:
     list: []

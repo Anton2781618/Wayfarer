@@ -72,14 +72,16 @@ public class AI
 
         if(!isSolutionActive)
         {
-            isSolutionActive = true;
+            // isSolutionActive = true;
 
             if(unit.solutions[0].solution != currentSolution)
             {
                 currentSolution = unit.solutions[0].solution;
+
+                 StartSolution(); 
             }
             
-            StartSolution(); 
+           
         }
     }
 

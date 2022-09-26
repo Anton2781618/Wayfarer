@@ -14,7 +14,8 @@ namespace DS.Elements
     public class DSActionNode : DSNode
     {       
         private delegate string Operation();
-        VisualElement ContainerForTransformation = new VisualElement();
+        private VisualElement ContainerForTransformation = new VisualElement();
+        
         
         public override void Initialize(string nodeName, DSGraphView dsGraphView, Vector2 position)
         {
@@ -33,7 +34,6 @@ namespace DS.Elements
         public override void Draw()
         {
             Operation operation = (Operation)System.Delegate.CreateDelegate(typeof(Operation), this, Action.ToString());
-            operation.Invoke();
 
             if(choisenColor == new Color(0,0,0,0)) choisenColor = new Color( 253/255.0f, 228/255.0f, 139/255.0f);
 
@@ -54,6 +54,8 @@ namespace DS.Elements
 
             VisualElement customDataContainer = new VisualElement();
             Foldout actionChoicesContainer = DSElementUtility.CreateFoldout(Action.ToString(), true);
+            
+            actionChoicesContainer.text = operation.Invoke();
 
             Foldout findСategory = DSElementUtility.CreateFoldout("Найти", true);
             Foldout MoveСategory = DSElementUtility.CreateFoldout("Двигаться", true);
@@ -70,7 +72,7 @@ namespace DS.Elements
             inventoryСategory.Add(DSElementUtility.CreateButton("Проверить инвентарь на предмет (тагрет)", ()=> {actionChoicesContainer.text = CommandCheckTargetInventoryForItem();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Проверить инвентарь на предмет (свой)", ()=> {actionChoicesContainer.text = CommandCheckSelfInventoryForItem();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Забрать из инвентаря таргета предмет", ()=> {actionChoicesContainer.text = CommandTakeItemFromTarget();}));
-            inventoryСategory.Add(DSElementUtility.CreateButton("Проверить инвентарь на предмет (свой) (по типу)", ()=> {actionChoicesContainer.text = CommandUseSelfInventoryItem();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (по типу)", ()=> {actionChoicesContainer.text = CommandCheckSelfInventoryForItemType();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Использовать предмет из своего инвентаря (по типу)", ()=> {actionChoicesContainer.text = CommandUseSelfInventoryItem();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionChoicesContainer.text = CommandPlayerGiveMoney();}));
 
@@ -80,6 +82,7 @@ namespace DS.Elements
             actionsСategory.Add(DSElementUtility.CreateButton("Приступить к работе", ()=> {actionChoicesContainer.text = CommandGetToWork();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Выспаться", ()=> {actionChoicesContainer.text = CommandSleep();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionChoicesContainer.text = CommandPickUpItem();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с атрибутом", ()=> {actionChoicesContainer.text = CommandPerformOperationWithAttribute();}));
             
             actionChoicesContainer.Add(findСategory);
             actionChoicesContainer.Add(MoveСategory);
@@ -225,7 +228,7 @@ namespace DS.Elements
                 DeleteLastPort();          
             }
             
-            return "Атакавать игрока";
+            return "Атакавать таргет";
         }
         private string CommandFindTheTarget()
         {
@@ -321,14 +324,29 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
             
-            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.itemType, x => modelDate.itemType = (ItemData.ItemType)x.newValue));
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeFlagsField(modelDate.itemType, x => modelDate.itemType = (ItemData.ItemType)x.newValue));
 
             if(Choices.Count > 1)
             {
                 DeleteLastPort();          
             }
 
-            return "Использовать любой предмет из своего инвентаря (по типу)";
+            return "Использовать предмет из своего инвентаря (по типу)";
+        }
+        private string CommandCheckSelfInventoryForItemType()
+        {
+            Action = DSAction.CommandCheckSelfInventoryForItemType;
+            
+            ContainerForTransformation.Clear();
+            
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeFlagsField(modelDate.itemType, x => modelDate.itemType = (ItemData.ItemType)x.newValue));
+
+            if(Choices.Count < 2)
+            {
+                AddPort();
+            }
+
+            return "Проверить свой инвентарь на предмет (по типу)";
         }
         private string CommandTrading()
         {
@@ -421,6 +439,25 @@ namespace DS.Elements
             }
             
             return "Поднять таргет (предмет)";
+        }
+        private string CommandPerformOperationWithAttribute()
+        {
+            Action = DSAction.CommandPerformOperationWithAttribute;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.unitAtribut, x => modelDate.unitAtribut = (UnitAtribut)x.newValue));
+
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.unitOperation, x => modelDate.unitOperation = (UnitOperation)x.newValue));
+
+            ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.number, null, collBack => modelDate.number = collBack.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Провести операцию с атрибутом";
         }
         private string CommandMoveToCoordinates()
         {

@@ -123,6 +123,16 @@ public class Chest : MonoBehaviour, ICanUse
 
         return 1;
     }
+    //проверяет есть ли в инвентаре такой предмет
+    public int CheckInventoryForItemsType(ItemType itemType)
+    {
+        foreach (var item in inventoryItems)
+        {
+            if(itemType.HasFlag(item.itemData.itemType)) return 0;
+        }
+
+        return 1;
+    }
 
     //взять любой предмет инвентаря по типу предмета 
     public InventoryItemInfo GetInventoryForItemType(ItemType itemType)

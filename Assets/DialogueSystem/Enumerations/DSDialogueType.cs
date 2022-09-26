@@ -9,6 +9,17 @@ namespace DS.Enumerations
         Action
     }
 
+    public enum UnitAtribut
+    {
+        Здоровье,
+        Мана
+    }     
+    public enum UnitOperation
+    {
+        Прибавить,
+        Вычисть
+    }
+
     //енумератор действий 
     public enum DSAction 
     {        
@@ -29,9 +40,11 @@ namespace DS.Enumerations
         CommandFindTheTarget,
         CommandHoldPositionFindTheTarget,
         CommandUseSelfInventoryItem,
+        CommandCheckSelfInventoryForItemType,
         CommandCheckSelfInventoryForItem,
         CommandGetToWork,
         CommandSleep,
         CommandMoveToWork,
+        CommandPerformOperationWithAttribute,
     }
 }

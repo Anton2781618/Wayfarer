@@ -55,8 +55,8 @@ public class Unit : AbstractBehavior
     {
         base.TakeDamage(enemy, value);
 
-        // aI.SetAttackSolution();
-        aI.SethealingSolution();
+        aI.SetAttackSolution();
+        // aI.SethealingSolution();
     }
 
     public override void SowHealthBar(bool value)
@@ -485,11 +485,15 @@ public class Unit : AbstractBehavior
     {
         SetCompleteCommand(chest.CheckInventoryForItems(CurrentModelData.itemData));
     }
+    private void CommandCheckSelfInventoryForItemType()
+    {
+        SetCompleteCommand(chest.CheckInventoryForItemsType(CurrentModelData.itemType));
+    }
 
     private void CommandUseSelfInventoryItem()
     {
         InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemType);
-        Debug.Log(item.itemData.title + " " + item.itemData.itemType);
+        
         item.Use(this);
 
         chest.RemoveAtChestGrid(item);
@@ -520,9 +524,37 @@ public class Unit : AbstractBehavior
 
         SetCompleteCommand();
     }
+    
 
     [ContextMenu("пуск")]
-    public void Action2() => aI.StartSolution();
+    public void Action2()
+    {
+        UnitAtribut info = UnitAtribut.Мана;
+
+        info = info switch
+        {
+            UnitAtribut.Здоровье => Calculate(ref unitStats.curHP, UnitOperation.Прибавить),
+
+            UnitAtribut.Мана => Calculate(ref unitStats.curMana, UnitOperation.Прибавить),
+            
+            UnitAtribut => throw new ArgumentException("Передан недопустимый аргумент")
+        };
+
+        UnitAtribut Calculate(ref int atribut, UnitOperation operation)
+        {
+            atribut = operation switch
+            {
+                UnitOperation.Прибавить => atribut + 1,
+            
+                UnitOperation.Вычисть => atribut - 1,
+            
+                UnitOperation => throw new ArgumentException("Передан недопустимый аргумент")
+            };
+
+            return UnitAtribut.Здоровье;
+        }
+    }
+    
     
     #endregion Комманды для управления NPC КОНЕЦ --------------------------------------------------------------------------------------------------------------------//
 }
@@ -537,6 +569,8 @@ public class ModelDate
     public LayerMask targetMask;
     public ItemData.ItemType itemType;
     public Transform objectOnScen;
+    public UnitAtribut unitAtribut;
+    public UnitOperation unitOperation;
 }
 
 

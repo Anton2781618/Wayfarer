@@ -11,6 +11,9 @@ public abstract class AINode : ScriptableObject
 
     public State state = State.Running;
     public bool started = false;
+    public string guid;
+
+    public Vector2 position;
 
     public State Update() 
     {
@@ -30,9 +33,7 @@ public abstract class AINode : ScriptableObject
 
         return state;
     }
-
-
-
+    
     protected abstract void OnStart();
     protected abstract void OnStop();
     protected abstract State OnUpdate();

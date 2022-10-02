@@ -1,3 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/NodeGraph/AITree/BehaviourTreeEditor/BehaviourTreeEditor.uss?fileID=7433441132597879392&amp;guid=2cfce66774db0ed499db2e661b175d65&amp;type=3#BehaviourTreeEditor" />
+    <uie:Toolbar>
+        <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true">
+            <ui:Label tabindex="-1" text="Настройки" display-tooltip-when-elided="true" />
+        </uie:ToolbarMenu>
+    </uie:Toolbar>
+    <SplitView fixed-pane-initial-dimension="300">
+        <ui:VisualElement name="Left-Panel" style="width: 427px;">
+            <ui:Label tabindex="-1" text="Инспектор" display-tooltip-when-elided="true" style="background-color: rgb(40, 40, 40);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right-Panel" style="width: 659px;">
+            <BehaviourTreeView focusable="true" style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Дерево" display-tooltip-when-elided="true" style="background-color: rgb(40, 40, 40); -unity-text-align: upper-left;" />
+            </BehaviourTreeView>
+        </ui:VisualElement>
+    </SplitView>
 </ui:UXML>

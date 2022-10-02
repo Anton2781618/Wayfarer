@@ -44,4 +44,64 @@ public class BehaviourTree : ScriptableObject
         AssetDatabase.RemoveObjectFromAsset(node);
         AssetDatabase.SaveAssets();
     }
+
+    //метод добавляет ребро в ноде
+    public void AddChild(AINode parent, AINode child)
+    {
+        AIDecoratorNode decorator = parent as AIDecoratorNode;
+        
+        if(decorator)
+        {
+            decorator.child = child;
+        }
+
+        AICompositNode composit = parent as AICompositNode;
+        
+        if(composit)
+        {
+            composit.children.Add(child);
+        }
+    }
+
+    //метод уберает ребро в ноде
+    public void RemoveChild(AINode parent, AINode child)
+    {
+        AIDecoratorNode decorator = parent as AIDecoratorNode;
+        
+        if(decorator)
+        {
+            decorator.child = null;
+        }
+
+        AICompositNode composit = parent as AICompositNode;
+        
+        if(composit)
+        {
+            composit.children.Remove(child);
+        }
+    }
+
+    // метод возвращяет ребра ноды 
+    public List<AINode> GetChildren(AINode parent)
+    {
+        List<AINode> children = new List<AINode>();
+        
+        AIDecoratorNode decorator = parent as AIDecoratorNode;
+        
+        if(decorator)
+        {
+            children.Add(decorator.child);
+        }
+
+        AICompositNode composit = parent as AICompositNode;
+        
+        if(composit)
+        {
+            return composit.children;
+        }
+
+        return children;
+    }
+
+    
 }

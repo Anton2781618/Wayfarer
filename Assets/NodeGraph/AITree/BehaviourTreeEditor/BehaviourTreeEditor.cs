@@ -8,7 +8,7 @@ public class BehaviourTreeEditor : EditorWindow
     private BehaviourTreeView treeView;
     private InspectorView InspectorView;
 
-    [MenuItem("Window/DS/AITree")]
+    [MenuItem("Window/DS/Редактор ИИ")]
     public static void OpenWindow()
     {
         BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
@@ -24,11 +24,16 @@ public class BehaviourTreeEditor : EditorWindow
         var labelFromUXML = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/NodeGraph/AITree/BehaviourTreeEditor/BehaviourTreeEditor.uxml");
         labelFromUXML.CloneTree(root);
 
+        // тут мы подключаетм файл стилей 
         StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NodeGraph/AITree/BehaviourTreeEditor/BehaviourTreeEditor.uss");
         root.styleSheets.Add(styleSheet); 
 
         treeView = root.Q<BehaviourTreeView>();
         InspectorView = root.Q<InspectorView>();
+
+        treeView.OnNodeSelected = OnNodeSelectedChanged;
+
+        OnSelectionChange();
     }
 
     //это зарезервированный метод, запускается при выборе любого объекта в инспектаре
@@ -40,5 +45,11 @@ public class BehaviourTreeEditor : EditorWindow
         {
             treeView.PopulateView(tree);
         }
+    }
+
+    private void OnNodeSelectedChanged(AINodeView node)
+    {
+        Debug.Log(node);
+        InspectorView.UpdateSelection(node);
     }
 }

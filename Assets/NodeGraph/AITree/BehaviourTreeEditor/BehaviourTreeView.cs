@@ -41,6 +41,15 @@ public class BehaviourTreeView : GraphView
 
         graphViewChanged += OnGraphViewChanged;
 
+        if(tree.rootNode == null)
+        {
+            tree.rootNode = tree.CreateNode(typeof(AIRootNode)) as AIRootNode;
+
+            EditorUtility.SetDirty(tree);
+            
+            AssetDatabase.SaveAssets();
+        }
+
         //создаем ноды
         tree.nodes.ForEach(n => CreateNodeView(n));
 

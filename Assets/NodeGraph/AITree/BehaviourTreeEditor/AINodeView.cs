@@ -38,6 +38,11 @@ public class AINodeView : Node
         {
             input = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
+        else
+        if(node is AIRootNode)
+        {
+
+        }
 
         if(input != null)
         {
@@ -58,6 +63,11 @@ public class AINodeView : Node
         }
         else
         if(node is AIDecoratorNode)
+        {
+            output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+        }
+        else
+        if(node is AIRootNode)
         {
             output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
         }

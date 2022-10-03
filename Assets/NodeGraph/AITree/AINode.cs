@@ -9,11 +9,10 @@ public abstract class AINode : ScriptableObject
         Success
     }
 
-    public State state = State.Running;
-    public bool started = false;
-    public string guid;
-
-    public Vector2 position;
+    [HideInInspector] public State state = State.Running;
+    [HideInInspector] public bool started = false;
+    [HideInInspector] public string guid;
+    [HideInInspector] public Vector2 position;
 
     public State Update() 
     {
@@ -32,6 +31,11 @@ public abstract class AINode : ScriptableObject
         }
 
         return state;
+    }
+
+    public virtual AINode Clone()
+    {
+        return Instantiate(this);
     }
     
     protected abstract void OnStart();

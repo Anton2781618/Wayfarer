@@ -21,6 +21,7 @@ public class BehaviourTree : ScriptableObject
         return treeState;
     }
 
+    //метод создает ноду
     public AINode CreateNode(System.Type type)
     {
         AINode node = ScriptableObject.CreateInstance(type) as AINode;
@@ -38,6 +39,7 @@ public class BehaviourTree : ScriptableObject
         return node;
     }
 
+    //метод удаляет ноду
     public void DeleteNode(AINode node)
     {
         nodes.Remove(node);
@@ -53,6 +55,13 @@ public class BehaviourTree : ScriptableObject
         if(decorator)
         {
             decorator.child = child;
+        }
+
+        AIRootNode rootnode = parent as AIRootNode;
+        
+        if(rootnode)
+        {
+            rootnode.child = child;
         }
 
         AICompositNode composit = parent as AICompositNode;
@@ -73,6 +82,13 @@ public class BehaviourTree : ScriptableObject
             decorator.child = null;
         }
 
+        AIRootNode rootNode = parent as AIRootNode;
+        
+        if(rootNode)
+        {
+            rootNode.child = null;
+        }
+
         AICompositNode composit = parent as AICompositNode;
         
         if(composit)
@@ -88,9 +104,16 @@ public class BehaviourTree : ScriptableObject
         
         AIDecoratorNode decorator = parent as AIDecoratorNode;
         
-        if(decorator)
+        if(decorator && decorator.child != null)
         {
             children.Add(decorator.child);
+        }
+
+        AIRootNode rootNode = parent as AIRootNode;
+        
+        if(rootNode && rootNode.child != null)
+        {
+            children.Add(rootNode.child);
         }
 
         AICompositNode composit = parent as AICompositNode;
@@ -103,5 +126,12 @@ public class BehaviourTree : ScriptableObject
         return children;
     }
 
-    
+    public BehaviourTree Clone()
+    {
+        BehaviourTree tree = Instantiate(this);
+
+        tree.rootNode = tree.rootNode.Clone();
+
+        return tree;
+    }
 }

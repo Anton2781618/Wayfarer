@@ -1,6 +1,7 @@
 using UnityEngine.UIElements;
 using UnityEditor;
 
+//класс является представлением левой части редактора
 public class InspectorView : VisualElement
 {
     public new class UxmlFactory : UxmlFactory<InspectorView, VisualElement.UxmlTraits>{} 

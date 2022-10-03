@@ -1,6 +1,79 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2279108566254202323
+--- !u!114 &-5656263071044416327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157846abe0ff9364c9594490708ed9df, type: 3}
+  m_Name: AISequencerNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 0dc5e04678f56474699476f669f87119
+  position: {x: -182, y: 38}
+  children:
+  - {fileID: 1609479176309842321}
+  - {fileID: -484967591892430247}
+--- !u!114 &-5552355707139953666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924782712042e304e900d0115688bbe4, type: 3}
+  m_Name: AIRootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: e7899549dd422974b9e5e83a9178c6cf
+  position: {x: -413, y: 38}
+  child: {fileID: 0}
+--- !u!114 &-484967591892430247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02dc5d7520ac531418975ad0630144ce, type: 3}
+  m_Name: DebugLogNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 66c3ab31f9ab4014db7bbe33daf705fb
+  position: {x: 132, y: 38}
+  messege: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1dcbf4c23e8eb4499be9e17bcb7e86, type: 3}
+  m_Name: New Behaviour Tree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -5552355707139953666}
+  treeState: 0
+  nodes:
+  - {fileID: -5552355707139953666}
+  - {fileID: -5656263071044416327}
+  - {fileID: 1609479176309842321}
+  - {fileID: -484967591892430247}
+  - {fileID: 5243822348340503039}
+--- !u!114 &1609479176309842321
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,10 +87,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 4158b4e8ed5fe0146ac7da49da8994d1
-  position: {x: 0, y: 0}
+  guid: 87630bf7cac5543479d2c90a42f98672
+  position: {x: 132, y: -71}
   duration: 1
---- !u!114 &11400000
+--- !u!114 &5243822348340503039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,10 +99,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be1dcbf4c23e8eb4499be9e17bcb7e86, type: 3}
-  m_Name: New Behaviour Tree
+  m_Script: {fileID: 11500000, guid: ef8d8b7e8c1264043aabff8c894b7217, type: 3}
+  m_Name: AIRepeatNode
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 0}
-  treeState: 0
-  nodes:
-  - {fileID: -2279108566254202323}
+  state: 0
+  started: 0
+  guid: 859ec615050b4a24aa9332c08c6f1638
+  position: {x: 0, y: 0}
+  child: {fileID: 0}

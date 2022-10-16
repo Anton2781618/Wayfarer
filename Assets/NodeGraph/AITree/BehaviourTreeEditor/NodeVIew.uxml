@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/NodeGraph/AITree/BehaviourTreeEditor/NodeVIewStyle.uss?fileID=7433441132597879392&amp;guid=fbea4e0d347fd2b43bc6638ca90cb66b&amp;type=3#NodeVIewStyle" />
+    <ui:VisualElement name="node-state" />
+    <ui:VisualElement name="node-border">
+        <ui:VisualElement name="contents">
+            <ui:VisualElement name="divider" class="horizontal" />
+            <ui:VisualElement name="top">
+                <ui:VisualElement name="input" style="height: -3px; width: 352px;" />
+                <ui:VisualElement name="divider" class="vertical" />
+                <ui:VisualElement name="title">
+                    <ui:Label name="title-label" text="DebugLogNode" class="unity-text-element unity-label" />
+                    <ui:VisualElement name="title-button-container">
+                        <ui:VisualElement name="collapse-button">
+                            <ui:VisualElement name="icon" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label tabindex="-1" text="тут помещается описание" display-tooltip-when-elided="true" name="description" enable-rich-text="true" />
+                <ui:VisualElement name="divider" class="vertical" />
+                <ui:VisualElement name="output" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="selection-border" picking-mode="Ignore" />
+</ui:UXML>

@@ -22,6 +22,16 @@ public class BehaviourTreeView : GraphView
 
         StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/NodeGraph/AITree/BehaviourTreeEditor/BehaviourTreeEditor.uss");
         styleSheets.Add(styleSheet); 
+
+        Undo.undoRedoPerformed += OnUndoRedo;
+    }
+
+    //метод нужен для того что бы обновить редактор, иначе при отмене через ctrl+z не чего не происходит
+    private void OnUndoRedo()
+    {
+        PopulateView(tree);
+
+        AssetDatabase.SaveAssets();
     }
 
     //хз че за метод походу возвращает представление ноды по предку
@@ -113,6 +123,16 @@ public class BehaviourTreeView : GraphView
             });
         }
 
+        //условие срабатывает если мы переместим ноду
+        if(graphViewChange.movedElements != null)
+        {
+            nodes.ForEach((n)=> 
+            {
+                AINodeView view = n as AINodeView;
+                view.SortChildren();
+            });
+        }
+
         return graphViewChange;
     }
 
@@ -162,5 +182,16 @@ public class BehaviourTreeView : GraphView
         nodeView.OnNodeSelected = OnNodeSelected;
 
         AddElement(nodeView);
+    }
+
+    //этот метод показывает какие ноды сейчас включаются в редакторе
+    public void UpdateNodeStates()
+    {
+        nodes.ForEach(n => 
+        {
+            AINodeView view = n as AINodeView;
+
+            view.UpdateState();
+        });
     }
 }

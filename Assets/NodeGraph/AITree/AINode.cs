@@ -13,6 +13,8 @@ public abstract class AINode : ScriptableObject
     [HideInInspector] public bool started = false;
     [HideInInspector] public string guid;
     [HideInInspector] public Vector2 position;
+    [HideInInspector] public BlackBoard blackboard;
+    [HideInInspector] public AbstractBehavior agent;
 
     public State Update() 
     {

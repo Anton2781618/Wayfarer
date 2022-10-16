@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DebugLogNode : AIActionNode
 {
-    public string messege;
+    public string messege = "Новое";
     protected override void OnStart()
     {
         Debug.Log("OnStart " + messege);
@@ -18,6 +16,11 @@ public class DebugLogNode : AIActionNode
     protected override State OnUpdate()
     {
         Debug.Log("OnUpdate " + messege);
+
+        Debug.Log("BlackBoard " + blackboard.moveToPosition);
+
+        blackboard.moveToPosition.x += 1;
+        agent.transform.position += new Vector3(1, 0, 0);
 
         return State.Success;
     }

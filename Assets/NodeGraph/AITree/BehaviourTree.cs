@@ -10,6 +10,8 @@ public class BehaviourTree : ScriptableObject
     public AINode.State treeState = AINode.State.Running;
     public List<AINode> nodes = new List<AINode>(); 
 
+    public BlackBoard blackboard = new BlackBoard();
+
     public AINode.State Update()
     {
         if(rootNode.state == AINode.State.Running)
@@ -30,10 +32,17 @@ public class BehaviourTree : ScriptableObject
         
         node.guid = GUID.Generate().ToString();
         
+        Undo.RecordObject(this, "Behaviour Tree (добавить)");
+
         nodes.Add(node);
 
-        AssetDatabase.AddObjectToAsset(node, this);
-        
+        if(!Application.isPlaying)
+        {
+            AssetDatabase.AddObjectToAsset(node, this);
+        }
+
+        Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (добавить)");
+
         AssetDatabase.SaveAssets();
         
         return node;
@@ -42,33 +51,40 @@ public class BehaviourTree : ScriptableObject
     //метод удаляет ноду
     public void DeleteNode(AINode node)
     {
+        Undo.RecordObject(this, "Behaviour Tree (удалить)");
+
         nodes.Remove(node);
-        AssetDatabase.RemoveObjectFromAsset(node);
+
+        Undo.DestroyObjectImmediate(node);
+        
         AssetDatabase.SaveAssets();
     }
 
     //метод добавляет ребро в ноде
     public void AddChild(AINode parent, AINode child)
     {
-        AIDecoratorNode decorator = parent as AIDecoratorNode;
-        
+        AIDecoratorNode decorator = parent as AIDecoratorNode;        
         if(decorator)
         {
+            Undo.RecordObject(decorator, "Behaviour Tree (добавить)");
             decorator.child = child;
+            EditorUtility.SetDirty(decorator);
         }
 
-        AIRootNode rootnode = parent as AIRootNode;
-        
+        AIRootNode rootnode = parent as AIRootNode;        
         if(rootnode)
         {
+            Undo.RecordObject(rootnode, "Behaviour Tree (добавить)");
             rootnode.child = child;
+            EditorUtility.SetDirty(rootNode);
         }
 
-        AICompositNode composit = parent as AICompositNode;
-        
+        AICompositNode composit = parent as AICompositNode;        
         if(composit)
         {
+            Undo.RecordObject(composit, "Behaviour Tree (добавить)");
             composit.children.Add(child);
+            EditorUtility.SetDirty(composit);
         }
     }
 
@@ -79,21 +95,27 @@ public class BehaviourTree : ScriptableObject
         
         if(decorator)
         {
+            Undo.RecordObject(decorator, "Behaviour Tree (удалить)");
             decorator.child = null;
+            EditorUtility.SetDirty(decorator);
         }
 
         AIRootNode rootNode = parent as AIRootNode;
         
         if(rootNode)
         {
+            Undo.RecordObject(rootNode, "Behaviour Tree (удалить)");
             rootNode.child = null;
+            EditorUtility.SetDirty(rootNode);
         }
 
         AICompositNode composit = parent as AICompositNode;
         
         if(composit)
         {
+            Undo.RecordObject(composit, "Behaviour Tree (удалить)");
             composit.children.Remove(child);
+            EditorUtility.SetDirty(composit);
         }
     }
 
@@ -126,12 +148,43 @@ public class BehaviourTree : ScriptableObject
         return children;
     }
 
+    //метод проходит в глубину, начиная с корневого элемента
+    public void Travers(AINode node, System.Action<AINode> visiter)
+    {
+        if(node)
+        {
+            visiter.Invoke(node);
+
+            var children = GetChildren(node);
+            
+            children.ForEach((n)=> Travers(n, visiter));
+        }
+    }
+
     public BehaviourTree Clone()
     {
         BehaviourTree tree = Instantiate(this);
 
         tree.rootNode = tree.rootNode.Clone();
 
+        tree.nodes = new List<AINode>();
+
+        Travers(tree.rootNode, (n)=>
+        {
+            tree.nodes.Add(n);
+        });
+
         return tree;
+    }
+
+    //метод назначает скрипт моба каждому узлу
+    public void Bind(AbstractBehavior agent)
+    {
+        Travers(rootNode, node =>
+        {
+            node.agent = agent;
+            
+            node.blackboard = blackboard;
+        });
     }
 }

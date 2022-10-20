@@ -24,7 +24,7 @@ namespace DS
         public int Choice {get; set;} = 0;
         private UIDialogueTransfer dialogueTransfer;
 
-        public Unit targetUnit;
+        public AbstractBehavior targetUnit;
 
         // public void SetDialog(DSDialogueContainerSO dialogueContainer)
         // {

@@ -16,7 +16,7 @@ public class Unit : AbstractBehavior
     public List<SolutionInfo> solutions;
     private delegate void Operation();
     [SerializeField] protected Canvas unitCanvas;
-    [SerializeField] protected AI aI = new AI();
+    [SerializeField] public AI aI = new AI();
     [SerializeField] protected DSAction currentAction;
     private ModelDate CurrentModelData;
 
@@ -56,7 +56,6 @@ public class Unit : AbstractBehavior
         base.TakeDamage(enemy, value);
 
         aI.SetAttackSolution();
-        // aI.SethealingSolution();
     }
 
     public override void SowHealthBar(bool value)
@@ -154,6 +153,7 @@ public class Unit : AbstractBehavior
         float offset = 6.25f;
 
         map.ForEach(t => Destroy(t.cubePref));
+
         map.Clear();
 
         for (int x = 0; x < 8; x++)
@@ -258,6 +258,7 @@ public class Unit : AbstractBehavior
     private bool FindTarget()
     {
         Eyes eyes = aI.GetEyes();
+
         Mamry mamry = aI.GetMamry();
         
 
@@ -294,7 +295,6 @@ public class Unit : AbstractBehavior
     }
 
     public void SetTarget(ICanUse newTarget) => target = newTarget;
-
     public void SetAnimationWalk(bool value) => anim.SetBool("walk", value);
     public void SetAnimationGetToWork(bool value) => anim.SetBool("Work", value);
     
@@ -572,9 +572,6 @@ public class ModelDate
     public UnitAtribut unitAtribut;
     public UnitOperation unitOperation;
 }
-
-
-
 
 //класс описывает квадрат распологаемый на карте
 [Serializable]

@@ -11,7 +11,7 @@ public class AI
     private UIDialogueTransfer dialogueTransfer;
     [SerializeField] private Eyes eyes = new Eyes();
     [SerializeField] private Mamry mamry = new Mamry();
-    [SerializeField] private DSDialogueContainerSO currentSolution;
+    [SerializeField] public SolutionInfo currentSolution;
     [SerializeField] private SolutionInfo hungerSolution;
     [SerializeField] private SolutionInfo AttackSolution;
     [SerializeField] private SolutionInfo sleepSolution;
@@ -50,10 +50,6 @@ public class AI
     {        
         SetSolutionInList(AttackSolution, 100);
     }
-    public void SethealingSolution()
-    {        
-        SetSolutionInList(healingSolution, 90);
-    }
     public void RemoveAttackSolution()
     {        
         unit.solutions.Remove(AttackSolution);
@@ -74,9 +70,9 @@ public class AI
         {
             // isSolutionActive = true;
 
-            if(unit.solutions[0].solution != currentSolution)
+            if(unit.solutions[0] != currentSolution)
             {
-                currentSolution = unit.solutions[0].solution;
+                currentSolution = unit.solutions[0];
 
                  StartSolution(); 
             }
@@ -149,7 +145,7 @@ public class AI
     //старт решения
     public void StartSolution()
     {
-        foreach (var item in currentSolution.UngroupedDialogues)
+        foreach (var item in currentSolution.solution.UngroupedDialogues)
         {
             if(item.IsStartingDialogue) 
             {   
@@ -188,6 +184,8 @@ public class AI
             
             isSolutionActive = false;
 
+            unit.solutions.Remove(currentSolution);
+
             return;
         }
 
@@ -197,7 +195,7 @@ public class AI
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)
     {
-        currentSolution = dialogueContainer;
+        currentSolution.solution = dialogueContainer;
 
         dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
         
@@ -209,7 +207,7 @@ public class AI
         
         Cursor.lockState = CursorLockMode.None;
 
-        foreach (var dialogueStage in currentSolution.UngroupedDialogues)
+        foreach (var dialogueStage in currentSolution.solution.UngroupedDialogues)
         {
             if(dialogueStage.IsStartingDialogue)stage = dialogueStage;
         }

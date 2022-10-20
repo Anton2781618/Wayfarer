@@ -73,12 +73,12 @@
 
 #title {
     -unity-font-style: bold;
-    font-size: 14px;
+    font-size: 12px;
     min-height: 30px;
 }
 
 #description {
-    font-size: 10px;
+    font-size: 15px;
     white-space: normal;
     max-width: 140px;
 }

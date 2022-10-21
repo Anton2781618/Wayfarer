@@ -12,17 +12,9 @@ public class AI
     [SerializeField] private Eyes eyes = new Eyes();
     [SerializeField] private Mamry mamry = new Mamry();
     [SerializeField] public SolutionInfo currentSolution;
-    [SerializeField] private SolutionInfo hungerSolution;
     [SerializeField] private SolutionInfo AttackSolution;
-    [SerializeField] private SolutionInfo sleepSolution;
-    [SerializeField] private SolutionInfo healingSolution;
     public DSDialogueSO stage{get; private set;}
-    bool newDialogue = false;
-    public bool isSolutionActive = false;
-    public bool brain = true;
-    public bool eye = true;
-    public bool sort = true;
-    public bool command = true;
+    private bool newDialogue = false;
 
     public void Init(Unit unit, Animator anim)
     {
@@ -31,110 +23,16 @@ public class AI
         this.eyes.Init(mamry, anim.GetBoneTransform(HumanBodyBones.Head), unit.transform);
     }
 
-    //метод анализирует обстановку вокруг и принимает решения как реагировать
-    public void Analyzer()
-    {
-        if (Time.frameCount % 40 == 0)
-        {
-            if(brain)StatsConsumption();
-        
-            if(sort)AnalyzeImportanceSolutions();
-
-            if(eye)eyes.FirndVisiblaTargets();
-        }
-
-        if(command)unit.ExecuteCurrentCommand();
-    }
-
     public void SetAttackSolution()
     {        
-        SetSolutionInList(AttackSolution, 100);
+        if(!unit.solutions.Contains(AttackSolution)) 
+        {
+            unit.solutions.Add(AttackSolution);
+        }
     }
     public void RemoveAttackSolution()
     {        
         unit.solutions.Remove(AttackSolution);
-    }
-
-    //метод расходует статы типа голод, сон итп 
-    private void StatsConsumption()
-    {
-        if(unit.unitStats.hunger > 0) unit.unitStats.hunger --;
-        
-        if(unit.unitStats.sleep > 0) unit.unitStats.sleep --;
-
-        SetSolutionInList(hungerSolution, unit.unitStats.hunger);
-
-        SetSolutionInList(sleepSolution, unit.unitStats.sleep);
-
-        if(!isSolutionActive)
-        {
-            // isSolutionActive = true;
-
-            if(unit.solutions[0] != currentSolution)
-            {
-                currentSolution = unit.solutions[0];
-
-                 StartSolution(); 
-            }
-            
-           
-        }
-    }
-
-    private void SetSolutionInList(SolutionInfo solution, float haracteistica)
-    {
-        if(solution == AttackSolution)
-        {
-            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
-         
-            return;
-        }
-
-        if(solution == healingSolution)
-        {
-            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
-
-            if(unit.unitStats.curHP >= unit.unitStats.maxHP)
-            {
-                if(unit.solutions.Contains(solution)) unit.solutions.Remove(solution);
-            }
-         
-            return;
-        }
-
-        if(haracteistica < 80 )
-        {
-            if(!unit.solutions.Contains(solution)) unit.solutions.Add(solution);
-
-            if(solution.importance < 100) solution.importance ++;
-        }
-        else
-        {
-            solution.importance = 0;
-
-            if(unit.solutions.Contains(solution)) unit.solutions.Remove(solution);
-        }
-    }
-
-    //метод анализирует важность решений и сортирует список по важности
-    public void AnalyzeImportanceSolutions()
-    {
-        unit.solutions.Sort(SortByImportance);
-    }
-
-    private int SortByImportance(SolutionInfo a, SolutionInfo b)
-    {
-        if(a.importance < b.importance)
-        {
-            return 1;
-        }
-        else
-        if (a.importance > b.importance)
-        {
-            return -1;
-        }
-
-        return 0;
     }
 
     public Eyes GetEyes() => eyes;   
@@ -181,8 +79,6 @@ public class AI
         if(stage == null) 
         {
             Debug.Log("Решение выполнено!");
-            
-            isSolutionActive = false;
 
             unit.solutions.Remove(currentSolution);
 

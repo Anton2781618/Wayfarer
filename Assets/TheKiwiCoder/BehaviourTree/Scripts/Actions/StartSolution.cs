@@ -15,7 +15,7 @@ public class StartSolution : ActionNode
 
     protected override State OnUpdate() 
     {
-        if(context.unit.aI.currentSolution != context.unit.solutions[0])
+        if(context.unit.solutions.Count > 0 && context.unit.aI.currentSolution != context.unit.solutions[0])
         {
             context.unit.aI.currentSolution = context.unit.solutions[0];
 

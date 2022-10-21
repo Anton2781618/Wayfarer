@@ -38,8 +38,6 @@ public class Unit : AbstractBehavior
         aI.Init(this, anim);
     }    
 
-    private void Update() => aI.Analyzer();
-
     public override void ShowOutline(bool value)
     {
         if(state == States.Мертв)
@@ -313,6 +311,7 @@ public class Unit : AbstractBehavior
         }
 
         if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !needMoving)
+        // if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f && !needMoving)
         {
             PintToWalke = CreatePoints(GetNewRandomPointOnMap());
 
@@ -473,6 +472,7 @@ public class Unit : AbstractBehavior
             SetCompleteCommand();
         }
     }
+
 
     private void CommandCheckTargetInventoryForItem()
     {

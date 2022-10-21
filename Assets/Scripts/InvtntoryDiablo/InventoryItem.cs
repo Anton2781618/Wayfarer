@@ -13,7 +13,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
     public RectTransform rectItemHighLight;
     public Text amauntText;
     public delegate void MyDelegate();
-    private Dictionary<ItemType,MyDelegate> delegatesDict = new Dictionary<ItemType, MyDelegate>();
+    private Dictionary<ItemType,MyDelegate> delegatesDict;
 
     private AbstractBehavior applicant;
 
@@ -24,6 +24,8 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
     public void InitDict() 
     {
+        delegatesDict = new Dictionary<ItemType, MyDelegate>();
+        
         delegatesDict.Add(ItemType.Шлем, UseHelmet);
         delegatesDict.Add(ItemType.Броня, UseArmor);
         delegatesDict.Add(ItemType.Ремень, UseBelt);

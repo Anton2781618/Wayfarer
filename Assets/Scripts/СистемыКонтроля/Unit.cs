@@ -13,11 +13,13 @@ using static Initializer;
 
 public class Unit : AbstractBehavior
 {
+    
     public List<SolutionInfo> solutions;
     private delegate void Operation();
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] public AI aI = new AI();
     [SerializeField] protected DSAction currentAction;
+    public DSDialogueContainerSO dialogTEST;
     private ModelDate CurrentModelData;
 
     //двигается ли персонаж сейчас
@@ -89,7 +91,7 @@ public class Unit : AbstractBehavior
         operation.Invoke();
     }
 
-    public override void Use(AbstractBehavior applicant) => CommandStartDialogue();
+    public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
 
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
@@ -368,8 +370,6 @@ public class Unit : AbstractBehavior
         if(target == null)
         {
             Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
-
-            aI.RemoveAttackSolution();
             
             SetCompleteCommand();
 
@@ -381,8 +381,6 @@ public class Unit : AbstractBehavior
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
             state = States.Патруль;
-
-            aI.RemoveAttackSolution();
             
             SetCompleteCommand();
             
@@ -419,11 +417,6 @@ public class Unit : AbstractBehavior
         SetCompleteCommand();
     }
 
-    public void CommandRetreat()
-    {
-        Debug.Log("Отступаю");
-    }
-
     private void CommandTrading()
     {
         chest.StartTrading(this);
@@ -434,6 +427,12 @@ public class Unit : AbstractBehavior
     private void CommandStartDialogue()
     {
         aI.StartDialogue(CurrentModelData.dialogue);
+
+        SetCompleteCommand();
+    }
+    private void CommandStartDialogue(DSDialogueContainerSO dialog)
+    {
+        aI.StartDialogue(dialog);
 
         SetCompleteCommand();
     }
@@ -473,7 +472,6 @@ public class Unit : AbstractBehavior
         }
     }
 
-
     private void CommandCheckTargetInventoryForItem()
     {
         if(target == null) Debug.Log("нет таргета");
@@ -485,6 +483,7 @@ public class Unit : AbstractBehavior
     {
         SetCompleteCommand(chest.CheckInventoryForItems(CurrentModelData.itemData));
     }
+
     private void CommandCheckSelfInventoryForItemType()
     {
         SetCompleteCommand(chest.CheckInventoryForItemsType(CurrentModelData.itemType));
@@ -516,11 +515,45 @@ public class Unit : AbstractBehavior
         SetCompleteCommand();
     }
 
+    private void CommandAddItemToTargetInventory()
+    {
+        if(target == null) Debug.Log("нет таргета");
+
+        Chest targetChest = target.transform.GetComponent<Chest>();
+
+        targetChest.AddItemToChest(CurrentModelData.itemData);
+
+        SetCompleteCommand();
+    }
+
     private void CommandPickUpItem()
     {
         if(target == null) Debug.Log("нет таргета");
 
         target.Use(this);
+
+        SetCompleteCommand();
+    }
+
+    private void CommandTaskToGroup()
+    {
+        foreach (var person in aI.GetMamry().groupMembers)
+        {
+            person.target = target;
+
+            person.solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
+        }
+
+        SetCompleteCommand();
+    }
+
+    private void CommandObjectOperation()
+    {
+        if(CurrentModelData.objectOperation == ObjectOperation.Выключить)CurrentModelData.obj.SetActive(false);
+        else
+        if(CurrentModelData.objectOperation == ObjectOperation.Включить)CurrentModelData.obj.SetActive(true);
+        else
+        if(CurrentModelData.objectOperation == ObjectOperation.Уничножить) Destroy(CurrentModelData.obj.gameObject);
 
         SetCompleteCommand();
     }
@@ -563,6 +596,7 @@ public class Unit : AbstractBehavior
 public class ModelDate
 {
     public float number;
+    public GameObject obj;
     public Vector3 pos;
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
@@ -570,7 +604,9 @@ public class ModelDate
     public ItemData.ItemType itemType;
     public Transform objectOnScen;
     public UnitAtribut unitAtribut;
+    public ObjectOperation objectOperation;
     public UnitOperation unitOperation;
+    public DSAction dSAction;
 }
 
 //класс описывает квадрат распологаемый на карте
@@ -604,4 +640,10 @@ public class SolutionInfo
     public float importance = 0;
     
     public DSDialogueContainerSO solution;
+
+    public SolutionInfo(float importance, DSDialogueContainerSO solution)
+    {
+        this.importance = importance;
+        this.solution = solution;
+    }
 }

@@ -75,6 +75,7 @@ namespace DS.Elements
             inventoryСategory.Add(DSElementUtility.CreateButton("Проверить свой инвентарь на предмет (по типу)", ()=> {actionChoicesContainer.text = CommandCheckSelfInventoryForItemType();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Использовать предмет из своего инвентаря (по типу)", ()=> {actionChoicesContainer.text = CommandUseSelfInventoryItem();}));
             inventoryСategory.Add(DSElementUtility.CreateButton("Забрать деньги у таргета", ()=> {actionChoicesContainer.text = CommandPlayerGiveMoney();}));
+            inventoryСategory.Add(DSElementUtility.CreateButton("Добавить предмет в инвентарь таргета", ()=> {actionChoicesContainer.text = CommandAddItemToTargetInventory();}));
 
             actionsСategory.Add(DSElementUtility.CreateButton("Атакавать таргет", ()=> { actionChoicesContainer.text = CommandAttackTheTarget();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Начать торговлю с таргетом", ()=> {actionChoicesContainer.text = CommandTrading();}));
@@ -83,6 +84,8 @@ namespace DS.Elements
             actionsСategory.Add(DSElementUtility.CreateButton("Выспаться", ()=> {actionChoicesContainer.text = CommandSleep();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Поднять таргет (предмет)", ()=> {actionChoicesContainer.text = CommandPickUpItem();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с атрибутом", ()=> {actionChoicesContainer.text = CommandPerformOperationWithAttribute();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Передать задачу группе", ()=> {actionChoicesContainer.text = CommandTaskToGroup();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с объектом", ()=> {actionChoicesContainer.text = CommandObjectOperation();}));
             
             actionChoicesContainer.Add(findСategory);
             actionChoicesContainer.Add(MoveСategory);
@@ -427,6 +430,21 @@ namespace DS.Elements
             
             return "Забрать деньги у таргета";
         }
+        private string CommandAddItemToTargetInventory()
+        {
+            Action = DSAction.CommandAddItemToTargetInventory;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectField(modelDate.itemData, x => modelDate.itemData = (ItemData)x.newValue));  
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Добавить предмет в инвентарь таргета";
+        }
         private string CommandPickUpItem()
         {
             Action = DSAction.CommandPickUpItem;
@@ -488,6 +506,38 @@ namespace DS.Elements
             }
             
             return "Двигаться к на работу";
+        }
+        private string CommandTaskToGroup()
+        {
+            Action = DSAction.CommandTaskToGroup;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldDSDialogueSO(modelDate.dialogue, x => modelDate.dialogue = (DSDialogueContainerSO)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Передать задачу группе";
+        }
+        private string CommandObjectOperation()
+        {
+            Action = DSAction.CommandObjectOperation;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.objectOperation, x => modelDate.objectOperation = (ObjectOperation)x.newValue));
+
+            ContainerForTransformation.Add(DSElementUtility.CreateGameObjectField(modelDate.obj, x => modelDate.obj = (GameObject)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Провести операцию с объектом";
         }
     }
 }

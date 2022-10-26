@@ -11,8 +11,8 @@ public class AI
     private UIDialogueTransfer dialogueTransfer;
     [SerializeField] private Eyes eyes = new Eyes();
     [SerializeField] private Mamry mamry = new Mamry();
-    [SerializeField] public SolutionInfo currentSolution;
     [SerializeField] private SolutionInfo AttackSolution;
+    public SolutionInfo currentSolution {get; set;}
     public DSDialogueSO stage{get; private set;}
     private bool newDialogue = false;
 
@@ -30,11 +30,8 @@ public class AI
             unit.solutions.Add(AttackSolution);
         }
     }
-    public void RemoveAttackSolution()
-    {        
-        unit.solutions.Remove(AttackSolution);
-    }
 
+    public SolutionInfo GetCurrentSolution() => currentSolution;
     public Eyes GetEyes() => eyes;   
     public Mamry GetMamry() => mamry;   
 
@@ -225,4 +222,7 @@ public class Mamry
 {
     public Workplace workplace;
     public List<Transform> mamryTargets = new List<Transform>();
+
+    //группа 
+    public List<Unit> groupMembers;
 }

@@ -11,6 +11,9 @@ public class ItemData : ScriptableObject
     public string description;
     public int price = 0;
 
+    //показатель пользы. Например для зелья лечения это сколько хп востановит, а для брони это какая защита
+    public int benefit = 0;
+
     public int width = 1;
     public int height = 1;
 

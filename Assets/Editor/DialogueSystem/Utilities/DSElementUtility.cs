@@ -8,6 +8,7 @@ namespace DS.Utilities
     using DS.Windows;
     using Elements;
     using UnityEditor.UIElements;
+    using UnityEngine;
 
     public static class DSElementUtility
     {
@@ -74,6 +75,22 @@ namespace DS.Utilities
             };
 
             objectField.objectType = typeof(ItemData);
+
+            if (onValueChanged != null)
+            {
+                objectField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return objectField;
+        }
+        public static ObjectField CreateGameObjectField(GameObject value = null, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
+        {
+            ObjectField objectField = new ObjectField()
+            {
+                value = value
+            };
+
+            objectField.objectType = typeof(GameObject);
 
             if (onValueChanged != null)
             {

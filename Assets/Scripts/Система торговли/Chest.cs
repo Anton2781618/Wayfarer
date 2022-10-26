@@ -113,7 +113,7 @@ public class Chest : MonoBehaviour, ICanUse
         return null;
     }
 
-    //проверяет есть ли в инвентаре такой предмет
+    //проверяет есть ли в инвентаре такой предмет по scriptable object
     public int CheckInventoryForItems(ItemData itemData)
     {
         foreach (var item in inventoryItems)
@@ -123,7 +123,8 @@ public class Chest : MonoBehaviour, ICanUse
 
         return 1;
     }
-    //проверяет есть ли в инвентаре такой предмет
+
+    //проверяет есть ли в инвентаре такой предмет по типу
     public int CheckInventoryForItemsType(ItemType itemType)
     {
         foreach (var item in inventoryItems)
@@ -145,10 +146,16 @@ public class Chest : MonoBehaviour, ICanUse
         return null;
     }
 
-    //добавить предмет в сундук
+    //добавить предмет в сундук предмет по  
     public void AddItemToChest(InventoryItemInfo item)
     {
         inventoryItems.Add(item);
+    }
+
+    //добавить предмет в сундук по scriptable object
+    public void AddItemToChest(ItemData itemData)
+    {
+        inventoryItems.Add(new InventoryItemInfo(itemData, itemData.benefit));
     }
 
     // метод убирает из списка итемов в инвентаре определенный итем 

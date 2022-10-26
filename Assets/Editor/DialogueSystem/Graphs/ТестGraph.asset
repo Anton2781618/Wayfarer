@@ -15,41 +15,45 @@ MonoBehaviour:
   <FileName>k__BackingField: "\u0422\u0435\u0441\u0442"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: db0be845-8d68-4d32-8d4f-577f07df0996
-    <Name>k__BackingField: 5d23b945-febe-4874-9d9a-4ec85f2bd43c
+  - <ID>k__BackingField: cd072fd9-56b9-499f-8af0-d9dbc327f1b6
+    <Name>k__BackingField: 3595e54a-f4a4-484c-8bd9-c0e09ea50d39
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
-      <NodeID>k__BackingField: 3f9e7608-b722-4312-8143-87b12a4628f2
+      <NodeID>k__BackingField: 21b4cf1d-948f-4c82-9424-6959671bcf63
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 595, y: 326}
+    <Position>k__BackingField: {x: 558, y: 250}
     <Action>k__BackingField: 15
     <ModelDate>k__BackingField:
       number: 0
+      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
       targetMask:
         serializedVersion: 2
         m_Bits: 8
-      itemType: 8192
+      itemType: 0
       objectOnScen: {fileID: 0}
       unitAtribut: 0
+      objectOperation: 0
       unitOperation: 0
+      dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
-  - <ID>k__BackingField: 3f9e7608-b722-4312-8143-87b12a4628f2
-    <Name>k__BackingField: 0dcc277f-df40-421a-99b2-f9649dbe35db
+  - <ID>k__BackingField: 21b4cf1d-948f-4c82-9424-6959671bcf63
+    <Name>k__BackingField: ada958f9-f814-4bcd-908d-6542ece667c5
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1085, y: 355}
+    <Position>k__BackingField: {x: 908, y: 250}
     <Action>k__BackingField: 12
     <ModelDate>k__BackingField:
       number: 0
+      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
@@ -59,11 +63,13 @@ MonoBehaviour:
       itemType: 0
       objectOnScen: {fileID: 0}
       unitAtribut: 0
+      objectOperation: 0
       unitOperation: 0
+      dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 5d23b945-febe-4874-9d9a-4ec85f2bd43c
-  - 0dcc277f-df40-421a-99b2-f9649dbe35db
+  - 3595e54a-f4a4-484c-8bd9-c0e09ea50d39
+  - ada958f9-f814-4bcd-908d-6542ece667c5
   <OldGroupedNodeNames>k__BackingField:
     list: []

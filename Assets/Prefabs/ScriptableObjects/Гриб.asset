@@ -15,6 +15,7 @@ MonoBehaviour:
   title: "\u0413\u0440\u0438\u0431"
   description: "\u041B\u0435\u0441\u043D\u043E\u0439 \u0433\u0440\u0438\u0431"
   price: 1
+  benefit: 5
   width: 2
   height: 2
   itemIcon: {fileID: 21300000, guid: 6b5889fc63d41e54786da742e2a70900, type: 3}

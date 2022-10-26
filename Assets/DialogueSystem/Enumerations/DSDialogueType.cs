@@ -19,6 +19,12 @@ namespace DS.Enumerations
         Прибавить,
         Вычисть
     }
+    public enum ObjectOperation
+    {
+        Уничножить,
+        Выключить,
+        Включить
+    }
 
     //енумератор действий 
     public enum DSAction 
@@ -46,5 +52,8 @@ namespace DS.Enumerations
         CommandSleep,
         CommandMoveToWork,
         CommandPerformOperationWithAttribute,
+        CommandTaskToGroup,
+        CommandAddItemToTargetInventory,
+        CommandObjectOperation,
     }
 }

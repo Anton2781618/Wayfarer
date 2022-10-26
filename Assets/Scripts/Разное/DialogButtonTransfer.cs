@@ -18,8 +18,8 @@ public class DialogButtonTransfer : MonoBehaviour
         this.ai = ai;
     }
     public void SetChoice()
-    {        
-        if(ai.stage.Choices[indexDialog].NextDialogue.DialogueType == DSDialogueType.Action)
+    {      
+        if(ai.stage.Choices[indexDialog].NextDialogue == null || ai.stage.Choices[indexDialog].NextDialogue.DialogueType == DSDialogueType.Action)
         {
             ai.CloseDialogueAndExitSoltuin();
             

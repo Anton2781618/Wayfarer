@@ -18,6 +18,8 @@ MonoBehaviour:
   position: {x: -22.00008, y: -127.99999}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   child: {fileID: -7822103350009374544}
@@ -41,6 +43,8 @@ MonoBehaviour:
   position: {x: 550.0417, y: 13.999962}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   children:
@@ -64,6 +68,8 @@ MonoBehaviour:
   position: {x: -22, y: 118}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   children:
@@ -89,6 +95,8 @@ MonoBehaviour:
   position: {x: 148, y: 289}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   duration: 1
@@ -110,6 +118,8 @@ MonoBehaviour:
   position: {x: 514.0417, y: 374.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   duration: 1
@@ -131,6 +141,8 @@ MonoBehaviour:
   position: {x: -22, y: 289}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   speed: 5
@@ -156,6 +168,8 @@ MonoBehaviour:
   position: {x: 734.0417, y: 161.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   children:
@@ -179,6 +193,8 @@ MonoBehaviour:
   position: {x: 324.0417, y: 374.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   message: 1
@@ -213,6 +229,8 @@ MonoBehaviour:
   - {fileID: -7822103350009374544}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
 --- !u!114 &3782046084314144754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +249,8 @@ MonoBehaviour:
   position: {x: -194.00003, y: 386.70596}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   message: "\u0441\u0435\u043A\u0432\u0435\u043D\u0441\u0435\u04401"
@@ -252,6 +272,8 @@ MonoBehaviour:
   position: {x: -22.00008, y: -233.99998}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   child: {fileID: -8754077107127582826}
@@ -273,6 +295,8 @@ MonoBehaviour:
   position: {x: -194, y: 289}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   min: {x: -20, y: -20}
@@ -295,6 +319,8 @@ MonoBehaviour:
   position: {x: 734.0417, y: 374.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   message: 2
@@ -316,6 +342,8 @@ MonoBehaviour:
   position: {x: 381.04172, y: 161.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   children:
@@ -339,6 +367,8 @@ MonoBehaviour:
   position: {x: 969.0416, y: 377.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
   description: 
   drawGizmos: 0
   duration: 1

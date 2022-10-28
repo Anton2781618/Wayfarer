@@ -9,11 +9,20 @@ public class CheckParameters : DecoratorNode
     public enum Parameter
     {
         Здоровье, 
-        сон, 
-        голод
+        Сон, 
+        Голод,
+        Видит_объектов
+    }
+    public enum UnitOperation
+    {
+        Больше,
+        Меньше,
+        Равно,
+        Не_равно
     }
 
     public Parameter parameter = Parameter.Здоровье;    
+    public UnitOperation operation = UnitOperation.Больше;    
     public int minimumValue = 80;
     
     protected override void OnStart() 
@@ -26,31 +35,46 @@ public class CheckParameters : DecoratorNode
 
     protected override State OnUpdate() 
     {
-        return DoOperation(parameter);
-    }
-
-    private State DoOperation(Parameter par)
-    {
-        State result = par switch
-        {
-            Parameter.голод => Calculate(context.unit.unitStats.hunger),
-
-            Parameter.Здоровье => Calculate(context.unit.unitStats.curHP),
-            
-            Parameter.сон => Calculate(context.unit.unitStats.sleep),
-            
-            Parameter => throw new ArgumentException("Передан недопустимый аргумент")
-        };
-        return result;
-    }
-
-    private State Calculate(float atribut)
-    {
-        if(atribut <= minimumValue)
+        if(DoOperation(parameter))
         {
             return child.Update();
         }
-        
+
         return State.Failure;
+        
+    }
+
+    private bool DoOperation(Parameter par)
+    {
+        return par switch
+        {
+            Parameter.Голод => Calculate(context.unit.unitStats.hunger, operation),
+
+            Parameter.Здоровье => Calculate(context.unit.unitStats.curHP, operation),
+            
+            Parameter.Сон => Calculate(context.unit.unitStats.sleep, operation),
+
+            Parameter.Видит_объектов => Calculate(context.unit.aI.GetEyes().visileTargets.Count, operation),
+            
+            Parameter => throw new ArgumentException("Передан недопустимый аргумент")
+        };
+    }
+
+    bool Calculate(int atribut, UnitOperation operation)
+    {
+        return operation switch
+        {
+            UnitOperation.Больше => atribut > minimumValue,
+        
+            UnitOperation.Меньше => atribut > minimumValue,
+
+            UnitOperation.Равно => atribut == minimumValue,
+
+            UnitOperation.Не_равно => atribut != minimumValue,
+        
+            UnitOperation => throw new ArgumentException("Передан недопустимый аргумент")
+        };
+
+        
     }
 }

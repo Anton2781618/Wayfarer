@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: SortSolutionsByImportance
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 73a9e9799a947e043b9fe77e32b366d8
   position: {x: 176, y: 661.38086}
   blackboard:
@@ -131,7 +131,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: f52c6c6e2cb0b7d4c9b7cf2e909a4f1b
-  position: {x: 869, y: 817.38086}
+  position: {x: 869, y: 823}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -202,6 +202,45 @@ MonoBehaviour:
   sleep: 1
   hunger: 1
   health: 0
+--- !u!114 &-3787156887959398933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c7ed9dbd743490540b81f55549287794
+  position: {x: 1019.00024, y: 823.0001}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  duration: 1
 --- !u!114 &-2971492514186124287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +254,7 @@ MonoBehaviour:
   m_Name: Repeat
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 4204ded659622b34fa9abe3ec59111ab
   position: {x: -108.60169, y: -87.00014}
   blackboard:
@@ -284,6 +323,7 @@ MonoBehaviour:
   drawGizmos: 0
   child: {fileID: -5783030252698562160}
   parameter: 1
+  operation: 1
   minimumValue: 90
 --- !u!114 &-42174125259652850
 MonoBehaviour:
@@ -300,7 +340,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 67d4e104fea1a9e4aa31c21eeaaa3a44
-  position: {x: 1019.00006, y: 661.38086}
+  position: {x: 1019.0001, y: 661.0001}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -324,8 +364,9 @@ MonoBehaviour:
   description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u043B\u0435
     \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
   drawGizmos: 0
-  child: {fileID: 1031197792702997968}
+  child: {fileID: -3787156887959398933}
   parameter: 0
+  operation: 1
   minimumValue: 90
 --- !u!114 &11400000
 MonoBehaviour:
@@ -359,6 +400,8 @@ MonoBehaviour:
   - {fileID: -6861153782509188970}
   - {fileID: 1804218795905520643}
   - {fileID: 2985072009416844456}
+  - {fileID: 6276317882410427609}
+  - {fileID: -3787156887959398933}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions:
@@ -435,7 +478,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: fd676d40ceda3b447abb03b3a2303caf
-  position: {x: 719, y: 817.38086}
+  position: {x: 719, y: 933}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -479,7 +522,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: af316cd76b0202f4585835184976a870
-  position: {x: 1019.00006, y: 817.38086}
+  position: {x: 1069.32, y: 933}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -601,7 +644,7 @@ MonoBehaviour:
   m_Name: Knot
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 82bd42ad67cf23449bd249c8516aa4e4
   position: {x: -108.60169, y: 78.99983}
   blackboard:
@@ -630,6 +673,45 @@ MonoBehaviour:
   - {fileID: 8221128402664434475}
   - {fileID: -9107368477373103270}
   - {fileID: 1804218795905520643}
+--- !u!114 &6276317882410427609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 59b43500e45859742a5c29e72934d3db
+  position: {x: 719, y: 823}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  duration: 1
 --- !u!114 &7270909161575711797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +725,7 @@ MonoBehaviour:
   m_Name: RootNode
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 97ef87255c22c7c479937eaed74b42c9
   position: {x: -108.60169, y: -261.00012}
   blackboard:
@@ -708,8 +790,9 @@ MonoBehaviour:
   description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u043B\u0435
     \u0433\u043E\u043B\u043E\u0434"
   drawGizmos: 0
-  child: {fileID: 703050155633778445}
+  child: {fileID: 6276317882410427609}
   parameter: 2
+  operation: 1
   minimumValue: 95
 --- !u!114 &8221128402664434475
 MonoBehaviour:
@@ -724,7 +807,7 @@ MonoBehaviour:
   m_Name: ChildrenUpdater
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 0bc377d458bdaab458bbaf2a2cd1dcc8
   position: {x: -108.60169, y: 279.99982}
   blackboard:

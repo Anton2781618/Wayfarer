@@ -7,7 +7,7 @@ using System;
 
 public class MakeADecision : ActionNode
 {
-    [Tooltip("Увеличивать важность пропорционально")]
+    [Tooltip("Нужно ли увеличивать важность пропорционально")]
     [SerializeField] private bool increaseImportance;
     [SerializeField] private Parameter parameter = Parameter.Здоровье;
     [SerializeField] private SolutionInfo hungerSolution;
@@ -25,8 +25,7 @@ public class MakeADecision : ActionNode
     protected override State OnUpdate() 
     {
         if(hungerSolution.importance < 100 && increaseImportance)
-        {
-            
+        {            
             hungerSolution.importance = Operation(parameter);
         } 
         
@@ -38,11 +37,11 @@ public class MakeADecision : ActionNode
 
         return par switch
         {
-            Parameter.голод => CalculatePercent(context.unit.unitStats.hunger, 100),
+            Parameter.Голод => CalculatePercent(context.unit.unitStats.hunger, 100),
 
             Parameter.Здоровье => CalculatePercent(context.unit.unitStats.curHP,  context.unit.unitStats.maxHP),
             
-            Parameter.сон => CalculatePercent(context.unit.unitStats.sleep, 100),
+            Parameter.Сон => CalculatePercent(context.unit.unitStats.sleep, 100),
             
             Parameter => throw new ArgumentException("Передан недопустимый аргумент")
         };

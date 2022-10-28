@@ -131,6 +131,21 @@ namespace DS.Utilities
 
             return floatField;
         }
+        public static IntegerField CreateIntegerField(int value = 0, string label = null, EventCallback<ChangeEvent<int>> onValueChanged = null)
+        {
+            IntegerField integerField = new IntegerField()
+            {
+                value = value,
+                label = label
+            };
+
+            if (onValueChanged != null)
+            {
+                integerField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return integerField;
+        }
         public static LayerMaskField CreateLayerMaskField(int value = 0, EventCallback<ChangeEvent<int>> onValueChanged = null)
         {
             LayerMaskField floatField = new LayerMaskField()

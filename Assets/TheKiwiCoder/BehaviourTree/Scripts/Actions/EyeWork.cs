@@ -18,6 +18,8 @@ public class EyeWork : ActionNode
     protected override State OnUpdate() 
     {
         context.unit.aI.GetEyes().FirndVisiblaTargets();
+        
+        if(context.unit.aI.GetEyes().visileTargets.Count == 0)return State.Failure;
 
         return State.Success;
     }

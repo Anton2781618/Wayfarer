@@ -15,6 +15,7 @@ public class Unit : AbstractBehavior
 {
     
     public List<SolutionInfo> solutions;
+    public List<GameObject> objectsForOperations;
     private delegate void Operation();
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] public AI aI = new AI();
@@ -549,7 +550,8 @@ public class Unit : AbstractBehavior
 
     private void CommandObjectOperation()
     {
-        GameObject obj = GameManager.singleton.GetLor().Find(CurrentModelData.text).gameObject;
+        // GameObject obj = GameManager.singleton.GetLor().Find(CurrentModelData.text).gameObject;
+        GameObject obj = objectsForOperations[CurrentModelData.index];
 
         if(CurrentModelData.objectOperation == ObjectOperation.Выключить)obj.SetActive(false);
         else
@@ -598,8 +600,8 @@ public class Unit : AbstractBehavior
 public class ModelDate
 {
     public float number;
+    public int index;
     public string text;
-    public GameObject obj;
     public Vector3 pos;
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;

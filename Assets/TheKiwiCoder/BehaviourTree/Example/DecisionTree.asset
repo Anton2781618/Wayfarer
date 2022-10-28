@@ -22,8 +22,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -61,8 +61,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -100,8 +100,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -138,8 +138,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -182,8 +182,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -224,8 +224,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -265,8 +265,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -307,8 +307,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -367,8 +367,8 @@ MonoBehaviour:
     a: {fileID: 2261661633899935360, guid: 1e8b97e1719a84843b800d5baf2e790a, type: 3}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -403,8 +403,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -442,8 +442,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -486,8 +486,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -530,8 +530,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -571,8 +571,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -610,8 +610,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -652,8 +652,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -691,8 +691,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}
@@ -733,8 +733,8 @@ MonoBehaviour:
     a: {fileID: 0}
     modelDate:
       number: 0
+      index: 0
       text: 
-      obj: {fileID: 0}
       pos: {x: 0, y: 0, z: 0}
       itemData: {fileID: 0}
       dialogue: {fileID: 0}

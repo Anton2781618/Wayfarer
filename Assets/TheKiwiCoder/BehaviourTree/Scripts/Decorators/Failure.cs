@@ -10,9 +10,12 @@ namespace TheKiwiCoder {
         protected override void OnStop() {
         }
 
-        protected override State OnUpdate() {
+        protected override State OnUpdate() 
+        {
             var state = child.Update();
-            if (state == State.Success) {
+
+            if (state == State.Success) 
+            {
                 return State.Failure;
             }
             return state;

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     [SerializeField] private GameObject[] uiWindows;
+    [SerializeField] private Transform lor;
     public PLayerController pLayerController{get; private set;}
     private InventoryController inventoryController;
     private AbstractBehavior targetHumanForHelp;
@@ -85,6 +86,10 @@ public class GameManager : MonoBehaviour
     public UIDialogueTransfer GetDialogueTransfer()
     {
         return uIDialogueTransfer;
+    }
+    public Transform GetLor()
+    {
+        return lor;
     }
 
     public void CloseAllUiPanels()

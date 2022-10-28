@@ -549,11 +549,13 @@ public class Unit : AbstractBehavior
 
     private void CommandObjectOperation()
     {
-        if(CurrentModelData.objectOperation == ObjectOperation.Выключить)CurrentModelData.obj.SetActive(false);
+        GameObject obj = GameManager.singleton.GetLor().Find(CurrentModelData.text).gameObject;
+
+        if(CurrentModelData.objectOperation == ObjectOperation.Выключить)obj.SetActive(false);
         else
-        if(CurrentModelData.objectOperation == ObjectOperation.Включить)CurrentModelData.obj.SetActive(true);
+        if(CurrentModelData.objectOperation == ObjectOperation.Включить)obj.SetActive(true);
         else
-        if(CurrentModelData.objectOperation == ObjectOperation.Уничножить) Destroy(CurrentModelData.obj.gameObject);
+        if(CurrentModelData.objectOperation == ObjectOperation.Уничножить) Destroy(obj.gameObject);
 
         SetCompleteCommand();
     }
@@ -596,6 +598,7 @@ public class Unit : AbstractBehavior
 public class ModelDate
 {
     public float number;
+    public string text;
     public GameObject obj;
     public Vector3 pos;
     public ItemData itemData;

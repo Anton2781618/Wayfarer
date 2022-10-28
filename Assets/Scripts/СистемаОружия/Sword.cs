@@ -27,7 +27,8 @@ public class Sword : MonoBehaviour
             } 
             else
             {
-                AbstractBehavior bufer = other.transform.root.GetComponent<AbstractBehavior>();
+                AbstractBehavior bufer = other.transform.GetComponent<AbstractBehavior>();
+
                 if(bufer.GetStateNPC() != States.Мертв)
                 {   
                     Instantiate(blood, other.ClosestPoint(transform.position), Quaternion.identity);

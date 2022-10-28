@@ -530,7 +530,7 @@ namespace DS.Elements
 
             ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.objectOperation, x => modelDate.objectOperation = (ObjectOperation)x.newValue));
 
-            ContainerForTransformation.Add(DSElementUtility.CreateGameObjectField(modelDate.obj, x => modelDate.obj = (GameObject)x.newValue));
+            ContainerForTransformation.Add(DSElementUtility.CreateTextField(modelDate.text, null, x => modelDate.text = (string)x.newValue));
 
             if(Choices.Count > 1)
             {

@@ -19,9 +19,11 @@ public class Unit : AbstractBehavior
     private delegate void Operation();
     [SerializeField] protected Canvas unitCanvas;
     [SerializeField] public AI aI = new AI();
-    [SerializeField] protected DSAction currentAction;
+    public DSAction currentAction;
     public DSDialogueContainerSO dialogTEST;
     private ModelDate CurrentModelData;
+
+    public TMPro.TextMeshPro textMesh; 
 
     //двигается ли персонаж сейчас
     private bool needMoving = false;
@@ -561,12 +563,10 @@ public class Unit : AbstractBehavior
 
         SetCompleteCommand();
     }
-    
 
-    [ContextMenu("пуск")]
-    public void Action2()
+    public void CommandPerformOperationWithAttribute()
     {
-        UnitAtribut info = UnitAtribut.Мана;
+        UnitAtribut info = CurrentModelData.unitAtribut;
 
         info = info switch
         {
@@ -581,15 +581,17 @@ public class Unit : AbstractBehavior
         {
             atribut = operation switch
             {
-                UnitOperation.Прибавить => atribut + 1,
+                UnitOperation.Прибавить => atribut + (int)CurrentModelData.number,
             
-                UnitOperation.Вычисть => atribut - 1,
+                UnitOperation.Вычисть => atribut - (int)CurrentModelData.number,
             
                 UnitOperation => throw new ArgumentException("Передан недопустимый аргумент")
             };
 
             return UnitAtribut.Здоровье;
         }
+
+        SetCompleteCommand();
     }
     
     

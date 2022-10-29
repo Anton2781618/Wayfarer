@@ -66,7 +66,7 @@ public class CheckParameters : DecoratorNode
         {
             UnitOperation.Больше => atribut > minimumValue,
         
-            UnitOperation.Меньше => atribut > minimumValue,
+            UnitOperation.Меньше => atribut < minimumValue,
 
             UnitOperation.Равно => atribut == minimumValue,
 

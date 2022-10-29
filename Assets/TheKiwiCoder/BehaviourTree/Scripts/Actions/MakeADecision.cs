@@ -10,11 +10,10 @@ public class MakeADecision : ActionNode
     [Tooltip("Нужно ли увеличивать важность пропорционально")]
     [SerializeField] private bool increaseImportance;
     [SerializeField] private Parameter parameter = Parameter.Здоровье;
-    [SerializeField] private SolutionInfo hungerSolution;
+    [SerializeField] private SolutionInfo solution;
 
     protected override void OnStart() 
     {
-        if(!context.unit.solutions.Contains(hungerSolution)) context.unit.solutions.Add(hungerSolution);
     }
 
     protected override void OnStop() 
@@ -24,9 +23,12 @@ public class MakeADecision : ActionNode
 
     protected override State OnUpdate() 
     {
-        if(hungerSolution.importance < 100 && increaseImportance)
+        if(!context.unit.solutions.Contains(solution)) context.unit.solutions.Add(solution);
+        
+        if(solution.importance < 100 && increaseImportance)
         {            
-            hungerSolution.importance = Operation(parameter);
+            solution.importance = Operation(parameter);
+            
         } 
         
         return State.Success;

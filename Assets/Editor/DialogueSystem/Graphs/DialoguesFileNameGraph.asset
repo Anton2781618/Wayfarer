@@ -14,68 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <FileName>k__BackingField: DialoguesFileName
   <Groups>k__BackingField: []
-  <Nodes>k__BackingField:
-  - <ID>k__BackingField: 1c599710-0fba-48e4-909d-fc84a7ff8280
-    <Name>k__BackingField: 93b3db9b-f9f1-49a4-b1c1-8fe86b5a8ae7
-    <Text>k__BackingField: ',kz'
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 09eed7e5-1c9f-49a8-a3f2-a1c2e7589e14
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 911, y: 258}
-    <Action>k__BackingField: 5
-    <ModelDate>k__BackingField:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-    <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  - <ID>k__BackingField: 09eed7e5-1c9f-49a8-a3f2-a1c2e7589e14
-    <Name>k__BackingField: 5b8d5a09-d875-4f81-9f3b-2564ea0663be
-    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
-    - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1279, y: 302}
-    <Action>k__BackingField: 5
-    <ModelDate>k__BackingField:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-    <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <Nodes>k__BackingField: []
   <OldGroupNames>k__BackingField: []
-  <OldUngroupedNodeNames>k__BackingField:
-  - 93b3db9b-f9f1-49a4-b1c1-8fe86b5a8ae7
-  - 5b8d5a09-d875-4f81-9f3b-2564ea0663be
+  <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list: []

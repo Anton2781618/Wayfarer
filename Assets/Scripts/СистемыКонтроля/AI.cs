@@ -12,9 +12,11 @@ public class AI
     [SerializeField] private Eyes eyes = new Eyes();
     [SerializeField] private Mamry mamry = new Mamry();
     [SerializeField] private SolutionInfo AttackSolution;
-    public SolutionInfo currentSolution {get; set;}
+    public SolutionInfo currentSolution;// {get; set;}
     public DSDialogueSO stage{get; private set;}
     private bool newDialogue = false;
+
+    public TheKiwiCoder.Node.State stateSolution = TheKiwiCoder.Node.State.Success;
 
     public void Init(Unit unit, Animator anim)
     {
@@ -40,6 +42,8 @@ public class AI
     //старт решения
     public void StartSolution()
     {
+        stateSolution = TheKiwiCoder.Node.State.Running;
+
         foreach (var item in currentSolution.solution.UngroupedDialogues)
         {
             if(item.IsStartingDialogue) 
@@ -77,7 +81,11 @@ public class AI
         {
             Debug.Log("Решение выполнено!");
 
+            stateSolution = TheKiwiCoder.Node.State.Success;
+
             unit.solutions.Remove(currentSolution);
+
+            currentSolution = null;
 
             return;
         }

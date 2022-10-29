@@ -6,8 +6,10 @@ using static ICanTakeDamage;
 
 public class StartSolution : ActionNode
 {
+    Unit unit;    
     protected override void OnStart() 
     {
+        unit = context.unit;
     }
 
     protected override void OnStop() 
@@ -16,19 +18,19 @@ public class StartSolution : ActionNode
 
     protected override State OnUpdate() 
     {
-        Unit unit = context.unit;
-
         if(unit.GetStateNPC() == States.Мертв) return State.Failure;
-        
-        if(unit.solutions.Count > 0 && context.unit.aI.currentSolution != context.unit.solutions[0])
+
+        if(unit.solutions.Count > 0 && unit.aI.currentSolution != unit.solutions[0])
         {
-            unit.aI.currentSolution = context.unit.solutions[0];
+            unit.aI.currentSolution = unit.solutions[0];
 
             unit.aI.StartSolution();
-        } 
+            Debug.Log("dasd");
+        }
 
         unit.ExecuteCurrentCommand();
 
-        return State.Success;
+        return State.Running;
+
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using System;
 using static ICanTakeDamage;
-using DS;
-using TheKiwiCoder;
 
 [Serializable]
 public class UnitStats
@@ -116,8 +114,6 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         state = States.Мертв;
 
         this.enabled = false;
-
-        this.GetComponent<BehaviourTreeRunner>().enabled = false;
 
         Debug.Log(transform.name + " умер");
     }

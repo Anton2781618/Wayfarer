@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DS;
 using DS.Enumerations;
 using DS.ScriptableObjects;
+using TheKiwiCoder;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -42,6 +43,19 @@ public class Unit : AbstractBehavior
 
         aI.Init(this, anim);
     }    
+
+    //методы для работы слуха
+    private void OnTriggerEnter(Collider other) 
+    {
+        
+        if(!aI.GetHearing().hearObjectsList.Contains(other.gameObject)) aI.GetHearing().hearObjectsList.Add(other.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        
+        if(aI.GetHearing().hearObjectsList.Contains(other.gameObject)) aI.GetHearing().hearObjectsList.Remove(other.gameObject);
+    }
 
     public override void ShowOutline(bool value)
     {
@@ -246,6 +260,9 @@ public class Unit : AbstractBehavior
     public override void Die()
     {
         base.Die();
+        
+        this.GetComponent<BehaviourTreeRunner>().enabled = false;
+        
         SowHealthBar (false);
     }
 
@@ -552,7 +569,6 @@ public class Unit : AbstractBehavior
 
     private void CommandObjectOperation()
     {
-        // GameObject obj = GameManager.singleton.GetLor().Find(CurrentModelData.text).gameObject;
         GameObject obj = objectsForOperations[CurrentModelData.index];
 
         if(CurrentModelData.objectOperation == ObjectOperation.Выключить)obj.SetActive(false);

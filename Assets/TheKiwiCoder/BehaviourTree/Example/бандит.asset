@@ -1,6 +1,208 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9107368477373103270
+--- !u!114 &-8445733744740219741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
+  m_Name: CheckParameters
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: fd52853be5e22ef49a8da30b66c3c940
+  position: {x: -526, y: 407}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  child: {fileID: 6428255251601409487}
+  parameter: 0
+  operation: 1
+  minimumValue: 80
+--- !u!114 &-7535081824691597128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8094412fa0757c40a637e44f37b6b21, type: 3}
+  m_Name: OutputMessage
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 546baecf55563e4479fb8ebc8537830c
+  position: {x: -947, y: 700}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  massage: 
+--- !u!114 &-6357265280009602735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: f3e8535ec7462c941ad6d63908bc51e5
+  position: {x: 175.99995, y: 828}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  duration: 5
+--- !u!114 &-5081477429183902213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8b87638bafe7e5848baa43efceb9293c
+  position: {x: -526, y: 269}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  child: {fileID: -8445733744740219741}
+  restartOnSuccess: 1
+  restartOnFailure: 1
+--- !u!114 &-4475484030166314176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: e6def8c94c34d8b46bb37682e51182fb
+  position: {x: -759, y: 556}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -7535081824691597128}
+  - {fileID: -3622136552220895609}
+--- !u!114 &-4469747770539439102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,8 +216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 7739226737e6d1b4f93eae74b7615cfc
-  position: {x: 176.00003, y: 279.99997}
+  guid: 8191e1260fcc84f4780464757729ad49
+  position: {x: -958, y: 269}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -36,10 +238,9 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0442\u0435\u043A\u0443\u0449\u0435\u0435
-    \u0440\u0435\u0448\u0435\u043D\u0438\u0435 "
+  description: 
   drawGizmos: 0
---- !u!114 &-8808065959026119339
+--- !u!114 &-3622136552220895609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,13 +249,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 184ea837bd526eb4f8ae3c50e60e2d90, type: 3}
-  m_Name: SortSolutionsByImportance
+  m_Script: {fileID: 11500000, guid: e88fe9701eb9106498087e12a15b0e25, type: 3}
+  m_Name: MakeADecision
   m_EditorClassIdentifier: 
   state: 0
-  started: 1
-  guid: 73a9e9799a947e043b9fe77e32b366d8
-  position: {x: 176, y: 661.38086}
+  started: 0
+  guid: 556457cf51e4a33418ecbdfc3e92c226
+  position: {x: -759, y: 700}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -75,10 +276,98 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C
-    \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043F\u043E \u0432\u0430\u0436\u043D\u043E\u0441\u0442\u0438"
+  description: 
   drawGizmos: 0
---- !u!114 &-6861153782509188970
+  increaseImportance: 1
+  parameter: 0
+  solution:
+    importance: 0
+    solution: {fileID: 11400000, guid: 445bbdf2cfb53d148a90485901af8ffc, type: 2}
+--- !u!114 &-2076612783004657932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88fe9701eb9106498087e12a15b0e25, type: 3}
+  m_Name: MakeADecision
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 4375482c81a00f547b41950dc7349920
+  position: {x: -293, y: 534}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  increaseImportance: 1
+  parameter: 0
+  solution:
+    importance: 0
+    solution: {fileID: 11400000, guid: fdfbeaf34d935cb40b061f315137f817, type: 2}
+--- !u!114 &-1950703965837584246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8094412fa0757c40a637e44f37b6b21, type: 3}
+  m_Name: OutputMessage
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: e6c51e94175d52c4cb8bf80481a67fae
+  position: {x: -5.000041, y: 1031}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  massage: "\u0430\u0445\u0430\u0445\u0430\u0445\u0430\u0445.... \u0434\u0430\u0432\u0430\u0439
+    \u0441\u043F\u0443\u0441\u043A\u0430\u0439\u0441\u044F \u0449\u0430\u043C\u044B
+    \u0442\u0435\u0431\u044F \u0442\u0440\u0440\u0440\u0430\u0445\u043D\u0435\u043C!"
+--- !u!114 &-1793352214920008765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,8 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: f820e8428d2ae4343a7188738cf47732
-  position: {x: 554, y: 377.00006}
+  guid: 6cd73bed110e77641968a51e9eada2cf
+  position: {x: -1167, y: 269}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -116,7 +405,7 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
---- !u!114 &-5783030252698562160
+--- !u!114 &-133844477259348828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,99 +414,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88fe9701eb9106498087e12a15b0e25, type: 3}
-  m_Name: MakeADecision
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: f52c6c6e2cb0b7d4c9b7cf2e909a4f1b
-  position: {x: 869, y: 823}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions: []
-    a: {fileID: 0}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-  description: "\u041F\u0440\u0438\u043D\u044F\u0442\u044C \u0440\u0435\u0448\u0435\u043D\u0438\u0435
-    \u043E\u0442\u0434\u044B\u0445\u0430\u0442\u044C"
-  drawGizmos: 0
-  increaseImportance: 1
-  parameter: 1
-  solution:
-    importance: 0
-    solution: {fileID: 0}
---- !u!114 &-4994161756733188376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82737bc479281e4489e887525103c8c1, type: 3}
-  m_Name: SubtractParameters
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 0f3d55366a4d7d04faa202f47049a2e5
-  position: {x: 348.00006, y: 661.38086}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions: []
-    a: {fileID: 0}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-  description: "\u0443\u043C\u0435\u043D\u044C\u0448\u0430\u0435\u0442 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B
-    \u044E\u043D\u0438\u0442\u0430"
-  drawGizmos: 0
-  sleep: 1
-  hunger: 1
-  health: 0
---- !u!114 &-3787156887959398933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: c7ed9dbd743490540b81f55549287794
-  position: {x: 1019.00024, y: 823.0001}
+  guid: 9b277de8fe8e439469c62f43dd6d077b
+  position: {x: -155.00003, y: 71.833015}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -240,8 +443,72 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
-  duration: 1
---- !u!114 &-2971492514186124287
+  children:
+  - {fileID: 8933841622898825122}
+  - {fileID: -4469747770539439102}
+  - {fileID: -5081477429183902213}
+  - {fileID: 969440005386127044}
+  - {fileID: 6746639347486409662}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: "\u0431\u0430\u043D\u0434\u0438\u0442"
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 9201290710178424885}
+  treeState: 0
+  nodes:
+  - {fileID: 9201290710178424885}
+  - {fileID: 8944329087370506154}
+  - {fileID: -3622136552220895609}
+  - {fileID: -1950703965837584246}
+  - {fileID: 1085200897675601729}
+  - {fileID: -6357265280009602735}
+  - {fileID: 4578413977840203383}
+  - {fileID: 6522577662648941966}
+  - {fileID: -2076612783004657932}
+  - {fileID: -4469747770539439102}
+  - {fileID: -133844477259348828}
+  - {fileID: 6746639347486409662}
+  - {fileID: 969440005386127044}
+  - {fileID: -5081477429183902213}
+  - {fileID: -8445733744740219741}
+  - {fileID: 6428255251601409487}
+  - {fileID: 7398090437216387153}
+  - {fileID: 6720531448142806703}
+  - {fileID: 3225462979582533006}
+  - {fileID: 1027658874776269853}
+  - {fileID: 7910761561600166067}
+  - {fileID: -4475484030166314176}
+  - {fileID: 8933841622898825122}
+  - {fileID: -7535081824691597128}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+--- !u!114 &969440005386127044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,9 +521,9 @@ MonoBehaviour:
   m_Name: Repeat
   m_EditorClassIdentifier: 
   state: 0
-  started: 1
-  guid: 4204ded659622b34fa9abe3ec59111ab
-  position: {x: -108.60169, y: -87.00014}
+  started: 0
+  guid: e4750620b3e97984cae7871a758596f9
+  position: {x: -293, y: 269}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -279,10 +546,10 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
-  child: {fileID: 5004298346182489094}
+  child: {fileID: 6522577662648941966}
   restartOnSuccess: 1
   restartOnFailure: 1
---- !u!114 &-2458752008868080251
+--- !u!114 &1027658874776269853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,13 +558,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
-  m_Name: CheckParameters
+  m_Script: {fileID: 11500000, guid: 63464a6f6cdd80a46b391625a45e9ece, type: 3}
+  m_Name: CheckSolutionState
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 9b830b4768a050d4ab13c57087675770
-  position: {x: 869, y: 661.38086}
+  guid: fd7dce52cf4ac484d9be05db527351bd
+  position: {x: -5.000041, y: 534}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -318,14 +585,11 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u043B\u0435
-    \u0441\u043E\u043D"
+  description: 
   drawGizmos: 0
-  child: {fileID: -5783030252698562160}
-  parameter: 1
-  operation: 1
-  minimumValue: 90
---- !u!114 &-42174125259652850
+  child: {fileID: 1085200897675601729}
+  stateSolution: 2
+--- !u!114 &1085200897675601729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -334,13 +598,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
-  m_Name: CheckParameters
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 67d4e104fea1a9e4aa31c21eeaaa3a44
-  position: {x: 1019.0001, y: 661.0001}
+  guid: d5e381adaedb1b54e8f41a00d9fde325
+  position: {x: -5.000041, y: 678}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -361,14 +625,12 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u043B\u0435
-    \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
+  description: 
   drawGizmos: 0
-  child: {fileID: -3787156887959398933}
-  parameter: 0
-  operation: 1
-  minimumValue: 90
---- !u!114 &11400000
+  children:
+  - {fileID: 6720531448142806703}
+  - {fileID: -6357265280009602735}
+--- !u!114 &3225462979582533006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,68 +639,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
-  m_Name: DecisionTree
-  m_EditorClassIdentifier: 
-  rootNode: {fileID: 7270909161575711797}
-  treeState: 0
-  nodes:
-  - {fileID: 7270909161575711797}
-  - {fileID: -2971492514186124287}
-  - {fileID: 413776272396860181}
-  - {fileID: -4994161756733188376}
-  - {fileID: 7521693505116411096}
-  - {fileID: 703050155633778445}
-  - {fileID: -8808065959026119339}
-  - {fileID: -2458752008868080251}
-  - {fileID: -5783030252698562160}
-  - {fileID: 8221128402664434475}
-  - {fileID: -9107368477373103270}
-  - {fileID: -42174125259652850}
-  - {fileID: 1031197792702997968}
-  - {fileID: 5004298346182489094}
-  - {fileID: 1804218795905520643}
-  - {fileID: 2985072009416844456}
-  - {fileID: 6276317882410427609}
-  - {fileID: -3787156887959398933}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions:
-    - importance: 0
-      solution: {fileID: 0}
-    a: {fileID: 2261661633899935360, guid: 1e8b97e1719a84843b800d5baf2e790a, type: 3}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
---- !u!114 &413776272396860181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
+  m_Script: {fileID: 11500000, guid: b8094412fa0757c40a637e44f37b6b21, type: 3}
+  m_Name: OutputMessage
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: f0d42a4f6ab93664db861df78dab49b5
-  position: {x: 513.00006, y: 661.38086}
+  guid: 3729754f471557a41b702860288f5f5b
+  position: {x: 360.99994, y: 1031}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -459,10 +666,51 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u0436\u0434\u0430\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
+  description: 
   drawGizmos: 0
-  duration: 1
---- !u!114 &703050155633778445
+  massage: "\u042F \u0441\u043A\u0430\u0437\u0430\u043B \u0441\u043F\u0443\u0441\u043A\u0430\u0439\u0442\u044F
+    \u0451\u043F \u0442\u0432\u043E\u044E \u043C\u0430\u0442\u044C"
+--- !u!114 &4578413977840203383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8094412fa0757c40a637e44f37b6b21, type: 3}
+  m_Name: OutputMessage
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: e700311c7407d094fb9e43010fcd7fab
+  position: {x: 175.99995, y: 1031}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  massage: "\u0410 \u043D\u0443 \u0434\u0430\u0432\u0430\u0439 \u0441\u043F\u0443\u0441\u043A\u0430\u0441\u044F
+    \u044F \u0441\u043A\u0430\u0437\u0430\u043B!"
+--- !u!114 &6428255251601409487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,8 +724,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: fd676d40ceda3b447abb03b3a2303caf
-  position: {x: 719, y: 933}
+  guid: d8bd19e83876eee458dd3756ce833aff
+  position: {x: -526, y: 534}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -498,15 +746,56 @@ MonoBehaviour:
       objectOperation: 0
       unitOperation: 0
       dSAction: 0
-  description: "\u041F\u0440\u0438\u043D\u044F\u0442\u044C \u0440\u0435\u0448\u0435\u043D\u0438\u0435
-    \u0443\u0442\u0430\u043B\u0438\u0442\u044C \u0413\u043E\u043B\u043E\u0434"
+  description: 
   drawGizmos: 0
-  increaseImportance: 1
+  increaseImportance: 0
+  parameter: 0
+  solution:
+    importance: 0
+    solution: {fileID: 11400000, guid: 47b9522164554ea4690244e09259e070, type: 2}
+--- !u!114 &6522577662648941966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
+  m_Name: CheckParameters
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 4980f347325a2e946b09e8f36a870fb2
+  position: {x: -293, y: 407}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  child: {fileID: -2076612783004657932}
   parameter: 2
-  solution:
-    importance: 0
-    solution: {fileID: 0}
---- !u!114 &1031197792702997968
+  operation: 1
+  minimumValue: 100
+--- !u!114 &6720531448142806703
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,57 +804,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88fe9701eb9106498087e12a15b0e25, type: 3}
-  m_Name: MakeADecision
+  m_Script: {fileID: 11500000, guid: ee64948bda9e2fe4fb5ad88265395141, type: 3}
+  m_Name: RandomSelector
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: af316cd76b0202f4585835184976a870
-  position: {x: 1069.32, y: 933}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions: []
-    a: {fileID: 0}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-  description: "\u043F\u0440\u0438\u043D\u044F\u0442\u044C \u0440\u0435\u0448\u0435\u043D\u0438\u0435
-    \u043B\u0435\u0447\u0438\u0442\u044C\u0441\u044F "
-  drawGizmos: 0
-  increaseImportance: 1
-  parameter: 0
-  solution:
-    importance: 0
-    solution: {fileID: 0}
---- !u!114 &1804218795905520643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc8f5e7b79b9884ca4bd70b8c718acc, type: 3}
-  m_Name: ChildrenUpdater
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: d0868c047085d2e41866a45e230d64b5
-  position: {x: 719, y: 234.00002}
+  guid: 1464a7a022674494b96d277ed9674361
+  position: {x: -5.000041, y: 828}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -589,9 +834,10 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 0}
-  - {fileID: 2985072009416844456}
---- !u!114 &2985072009416844456
+  - {fileID: -1950703965837584246}
+  - {fileID: 4578413977840203383}
+  - {fileID: 3225462979582533006}
+--- !u!114 &6746639347486409662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -600,13 +846,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 5778a2fd3746f394da21dc85228ce97a
-  position: {x: 869, y: 377.00006}
+  guid: 200ee7b2db5d6d340acf926ce18726c5
+  position: {x: -5.0000305, y: 269.00003}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -629,8 +875,10 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
-  duration: 0.5
---- !u!114 &5004298346182489094
+  child: {fileID: 7910761561600166067}
+  restartOnSuccess: 1
+  restartOnFailure: 1
+--- !u!114 &7398090437216387153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -639,13 +887,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ba09f07551e68a43b010103c4644a0d, type: 3}
-  m_Name: Knot
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
   m_EditorClassIdentifier: 
   state: 0
-  started: 1
-  guid: 82bd42ad67cf23449bd249c8516aa4e4
-  position: {x: -108.60169, y: 78.99983}
+  started: 0
+  guid: 4dddbaccd9d2b4e47986b897f3c41115
+  position: {x: -759, y: 269}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  child: {fileID: 8944329087370506154}
+  restartOnSuccess: 0
+  restartOnFailure: 1
+--- !u!114 &7910761561600166067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460be9e34c566ea45b9e282b1adcb028, type: 3}
+  m_Name: Selector
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 283e1f8e8d5e51f4789e3a1a7bef85e1
+  position: {x: -5.0000305, y: 407.00003}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -669,10 +958,8 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 8221128402664434475}
-  - {fileID: -9107368477373103270}
-  - {fileID: 1804218795905520643}
---- !u!114 &6276317882410427609
+  - {fileID: 1027658874776269853}
+--- !u!114 &8933841622898825122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -681,13 +968,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
+  m_Script: {fileID: 11500000, guid: bc3b4cca3342e9f44b0be82e8503c29b, type: 3}
+  m_Name: EyeWork
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 59b43500e45859742a5c29e72934d3db
-  position: {x: 719, y: 823}
+  guid: dd1d0772ebb34c74b96de7e5cd62b8cc
+  position: {x: -1138, y: 269}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -710,8 +997,49 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
-  duration: 1
---- !u!114 &7270909161575711797
+--- !u!114 &8944329087370506154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
+  m_Name: CheckParameters
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 50ec2ef29840ce248b037f6c100c8411
+  position: {x: -759, y: 407}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    solutions: []
+    a: {fileID: 0}
+    modelDate:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+  description: 
+  drawGizmos: 0
+  child: {fileID: -4475484030166314176}
+  parameter: 3
+  operation: 0
+  minimumValue: 0
+--- !u!114 &9201290710178424885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -724,91 +1052,9 @@ MonoBehaviour:
   m_Name: RootNode
   m_EditorClassIdentifier: 
   state: 0
-  started: 1
-  guid: 97ef87255c22c7c479937eaed74b42c9
-  position: {x: -108.60169, y: -261.00012}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions: []
-    a: {fileID: 0}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-  description: 
-  drawGizmos: 0
-  child: {fileID: -2971492514186124287}
---- !u!114 &7521693505116411096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04b5263c3e1def41ae5b62b2ec6396d, type: 3}
-  m_Name: CheckParameters
-  m_EditorClassIdentifier: 
-  state: 0
   started: 0
-  guid: 0b5d7e1e7fd21c64a98a4c87101c3a75
-  position: {x: 719, y: 661.38086}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    solutions: []
-    a: {fileID: 0}
-    modelDate:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 0}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-  description: "\u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u043B\u0435
-    \u0433\u043E\u043B\u043E\u0434"
-  drawGizmos: 0
-  child: {fileID: 6276317882410427609}
-  parameter: 2
-  operation: 1
-  minimumValue: 95
---- !u!114 &8221128402664434475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc8f5e7b79b9884ca4bd70b8c718acc, type: 3}
-  m_Name: ChildrenUpdater
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 1
-  guid: 0bc377d458bdaab458bbaf2a2cd1dcc8
-  position: {x: -108.60169, y: 279.99982}
+  guid: c009e372d1b6d704793f81afc64c1f65
+  position: {x: -155.00003, y: -76.36502}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -831,10 +1077,4 @@ MonoBehaviour:
       dSAction: 0
   description: 
   drawGizmos: 0
-  children:
-  - {fileID: -8808065959026119339}
-  - {fileID: -4994161756733188376}
-  - {fileID: 413776272396860181}
-  - {fileID: 7521693505116411096}
-  - {fileID: -2458752008868080251}
-  - {fileID: -42174125259652850}
+  child: {fileID: -133844477259348828}

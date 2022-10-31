@@ -11,6 +11,7 @@ public class AI
     private UIDialogueTransfer dialogueTransfer;
     [SerializeField] private Eyes eyes = new Eyes();
     [SerializeField] private Mamry mamry = new Mamry();
+    [SerializeField] private Hearing hearing = new Hearing();
     [SerializeField] private SolutionInfo AttackSolution;
     public SolutionInfo currentSolution;// {get; set;}
     public DSDialogueSO stage{get; private set;}
@@ -36,6 +37,7 @@ public class AI
     public SolutionInfo GetCurrentSolution() => currentSolution;
     public Eyes GetEyes() => eyes;   
     public Mamry GetMamry() => mamry;   
+    public Hearing GetHearing() => hearing;   
 
     #region [rgba(30,106,143, 0.05)] Управление событиями и диалогами -------------------------------------------------------------------------------------------------------//
     
@@ -96,7 +98,9 @@ public class AI
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)
     {
-        currentSolution.solution = dialogueContainer;
+        SolutionInfo a = new SolutionInfo(0, dialogueContainer);
+        currentSolution = a;
+        unit.solutions[0] = a;
 
         dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
         
@@ -147,6 +151,7 @@ public class AI
 #endregion Управление событиями и диалогом КОНЕЦ ------------------------------------------------------------------------------------------------------------------------//
 }
 
+//класс описывает работу глаз
 [Serializable]
 public class Eyes
 {
@@ -225,6 +230,14 @@ public class Eyes
     }
 }
 
+//класс описывает работу слуха
+[Serializable]
+public class Hearing
+{
+    public List<GameObject> hearObjectsList;
+}
+
+//класс описывает работу памяти
 [Serializable]
 public class Mamry
 {

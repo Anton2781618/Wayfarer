@@ -942,6 +942,7 @@ MonoBehaviour:
   drawGizmos: 0
   child: {fileID: 0}
   parameter: 0
+  operation: 0
   minimumValue: 80
 --- !u!114 &4940193319283336994
 MonoBehaviour:

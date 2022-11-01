@@ -14,8 +14,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <FileName>k__BackingField: DialoguesFileName
   <Groups>k__BackingField: []
-  <Nodes>k__BackingField: []
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: d46e1ccf-ceae-437e-ab1f-b42d8c216e9e
+    <Name>k__BackingField: 9f78b3e5-b8be-42ea-bbf7-9a521172b620
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 77a2b7ac-4011-47df-b92a-efffb5d1f995
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 353, y: 252}
+    <Action>k__BackingField: 15
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 8
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+  - <ID>k__BackingField: 77a2b7ac-4011-47df-b92a-efffb5d1f995
+    <Name>k__BackingField: d2ead377-df6f-4fa4-91bf-7f3e0b046061
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 661, y: 252}
+    <Action>k__BackingField: 12
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 11400000, guid: ef81bed8547582d43af225b7e301d6a5, type: 2}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
-  <OldUngroupedNodeNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - 9f78b3e5-b8be-42ea-bbf7-9a521172b620
+  - d2ead377-df6f-4fa4-91bf-7f3e0b046061
   <OldGroupedNodeNames>k__BackingField:
     list: []

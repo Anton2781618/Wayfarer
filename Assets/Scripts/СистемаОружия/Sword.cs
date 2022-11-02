@@ -32,6 +32,7 @@ public class Sword : MonoBehaviour
                 if(bufer.GetStateNPC() != States.Мертв)
                 {   
                     Instantiate(blood, other.ClosestPoint(transform.position), Quaternion.identity);
+
                     bufer.TakeDamage(holder, damage);
                 }
             }

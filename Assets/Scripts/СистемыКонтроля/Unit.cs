@@ -135,7 +135,7 @@ public class Unit : AbstractBehavior
         
         if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
 
-        SetAnimationWalk(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
+        SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
 
         return path;
     }
@@ -315,7 +315,8 @@ public class Unit : AbstractBehavior
     }
 
     public void SetTarget(ICanUse newTarget) => target = newTarget;
-    public void SetAnimationWalk(bool value) => anim.SetBool("walk", value);
+    public void SetAnimationWalk(bool value) => anim.SetBool("Walk", value);
+    public void SetAnimationRun(bool value) => anim.SetBool("Run", value);
     public void SetAnimationGetToWork(bool value) => anim.SetBool("Work", value);
     
         
@@ -380,8 +381,6 @@ public class Unit : AbstractBehavior
     private void CommandStandStill()
     {
         anim.SetBool("walk", false);
-
-        // agent.SetDestination(this.transform.position);
     }
 
     //метод команда атакавать таргет (привязана к системе диалогов)
@@ -406,10 +405,14 @@ public class Unit : AbstractBehavior
             
             return;
         }
+
+        NavMeshPath path = MoveToPoint(target.transform.position);
+
+        if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f) 
+        {
+            anim.SetTrigger("Hit");
+        }
         
-        MoveToPoint(target.transform.position);
-        
-        anim.SetTrigger("Hit");
     }
 
     //метод запускает рабочий/производственный цикл
@@ -576,6 +579,8 @@ public class Unit : AbstractBehavior
         if(CurrentModelData.objectOperation == ObjectOperation.Включить)obj.SetActive(true);
         else
         if(CurrentModelData.objectOperation == ObjectOperation.Уничножить) Destroy(obj.gameObject);
+        else
+        if(CurrentModelData.objectOperation == ObjectOperation.Использовать) obj.GetComponent<ICanUse>().Use();
 
         SetCompleteCommand();
     }

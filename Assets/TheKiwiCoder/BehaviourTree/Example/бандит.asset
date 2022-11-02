@@ -57,7 +57,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 546baecf55563e4479fb8ebc8537830c
-  position: {x: -947, y: 700}
+  position: {x: -935.90045, y: 699.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -176,7 +176,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: e6def8c94c34d8b46bb37682e51182fb
-  position: {x: -759, y: 556}
+  position: {x: -747.9004, y: 556}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -255,7 +255,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 556457cf51e4a33418ecbdfc3e92c226
-  position: {x: -759, y: 700}
+  position: {x: -747.9004, y: 699.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -446,9 +446,9 @@ MonoBehaviour:
   children:
   - {fileID: 8933841622898825122}
   - {fileID: -4469747770539439102}
+  - {fileID: 7398090437216387153}
   - {fileID: -5081477429183902213}
   - {fileID: 969440005386127044}
-  - {fileID: 6746639347486409662}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,7 +893,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 4dddbaccd9d2b4e47986b897f3c41115
-  position: {x: -759, y: 269}
+  position: {x: -748, y: 269}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 50ec2ef29840ce248b037f6c100c8411
-  position: {x: -759, y: 407}
+  position: {x: -747.9004, y: 407}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     solutions: []

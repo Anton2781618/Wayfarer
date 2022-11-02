@@ -25,7 +25,6 @@ public class StartSolution : ActionNode
             unit.aI.currentSolution = unit.solutions[0];
 
             unit.aI.StartSolution();
-            Debug.Log("dasd");
         }
 
         unit.ExecuteCurrentCommand();

@@ -39,7 +39,7 @@ public class Unit : AbstractBehavior
     {
         base.Init();
         
-        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
+        chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
         aI.Init(this, anim);
     }    

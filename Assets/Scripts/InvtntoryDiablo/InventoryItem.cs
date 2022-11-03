@@ -123,7 +123,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
         
         Destroy(gameObject);
 
-        itemGrid.chest.RemoveAtChestGrid(this);
+        itemGrid.chestKeeper.RemoveAtChestGrid(this);
 
         GameManager.singleton.SwithContextMenu(false);
         
@@ -228,9 +228,9 @@ public class InventoryItem : MonoBehaviour, ICanUse
     {
         ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
 
-        buferGrid.chest.money += Amount;
+        buferGrid.chestKeeper.money += Amount;
 
-        buferGrid.chest.UpdateMoney();
+        buferGrid.chestKeeper.UpdateMoney();
         
         DestructSelf(buferGrid);
     }

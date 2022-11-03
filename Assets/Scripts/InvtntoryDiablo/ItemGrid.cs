@@ -13,7 +13,7 @@ public class ItemGrid : MonoBehaviour
     public const float titleSizeHeight = 32;
 
     //это ссылка на того чей инвентарь
-    public Chest chest {get; set;}
+    public Chest chestKeeper {get; set;}
     public AbstractBehavior abstractBehavior;
     
     public Text moneyText;

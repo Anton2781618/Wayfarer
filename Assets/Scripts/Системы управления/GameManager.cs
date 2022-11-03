@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using static Cinemachine.CinemachineBrain;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     private Transform targetItemForHelp;
     [SerializeField] private LayerMask triggerMaskForHelp;
     public CinemachineBrain cameraControll {get; private set;}
+    public CinemachineFreeLook cinemachine {get; private set;}
     public bool isControlingPlayer {get; private set;} = true;
     private UIDialogueTransfer uIDialogueTransfer;
 
@@ -24,13 +26,18 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         Cursor.visible = false;
+        
         Cursor.lockState = CursorLockMode.Locked;
         
         inventoryController = GetComponent<InventoryController>();
+        
         singleton = this;
+        
         pLayerController = FindObjectOfType<PLayerController>();     
 
         cameraControll = FindObjectOfType<CinemachineBrain>();
+
+        cinemachine = FindObjectOfType<CinemachineFreeLook>();
 
         uIDialogueTransfer = uiWindows[(int)windowsUI.DialogUI].GetComponent<UIDialogueTransfer>();
 
@@ -160,7 +167,18 @@ public class GameManager : MonoBehaviour
 
     public void SwithCameraEnabled(bool value)
     {
-        cameraControll.enabled = value;
+        // cameraControll.enabled = value;
+        if(!value)
+        {
+            cinemachine.m_XAxis.m_MaxSpeed = 0.0f;
+            cinemachine.m_YAxis.m_MaxSpeed = 0.0f;
+        }
+        else
+        {
+            cinemachine.m_XAxis.m_MaxSpeed = 300.0f;
+            cinemachine.m_YAxis.m_MaxSpeed = 2.0f;
+        }
+        
     }
 
     public void SetIsControlingPlayer(bool value)

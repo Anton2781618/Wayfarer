@@ -20,6 +20,8 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
         outline.enabled = value;
     }
 
+    public ItemData GetItemData() => itemData;
+
     public void TakeItem(Chest chest)
     {       
         chest.AddItemToChest(new InventoryItemInfo(itemData, Amount));

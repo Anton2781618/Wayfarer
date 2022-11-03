@@ -9,7 +9,8 @@ using static ItemData;
 public class Chest : MonoBehaviour, ICanUse
 {
     private InventoryController inventoryController;
-    [SerializeField] private ItemGrid chestGrid;
+    private ItemGrid chestGrid;
+    [Tooltip("Сетки в инвентаре")] [SerializeField] private List<ItemGrid> grids;
     
     public int money = 500;//{get; set;} = 500;
     
@@ -17,16 +18,42 @@ public class Chest : MonoBehaviour, ICanUse
     [Header("Предметы")]
     [Tooltip("Предметы в инвентаре")] [SerializeField] private List<InventoryItemInfo> inventoryItems;
 
+    public enum InfoGrid
+    {
+        Шлем,
+        Броня,
+        Ремень,
+        Штаны,
+        Сапоги,
+        Оружие,
+        Щит,
+        Кольцо,
+        Кольцо2,
+        Наплечники,
+        Ожерелье,
+        Инвентарь,
+    }
+
     private void Start() 
     {
+
         outline = GetComponent<Outline>();    
+        
         inventoryController = FindObjectOfType<InventoryController>();
+        
         UpdateMoney();
     }
 
-    public void InitChest(ItemGrid chestGrid)
+    public void InitGrid(ItemGrid chestGrid)
     {
         this.chestGrid = chestGrid;
+        
+    }
+    public void InitGrids(List<ItemGrid> chestGrids)
+    {
+        grids = chestGrids;
+     
+        chestGrid = grids[(int)InfoGrid.Инвентарь];
     }
     
     public void ShowOutline(bool value)
@@ -63,7 +90,7 @@ public class Chest : MonoBehaviour, ICanUse
     {
         if(!isPlayerInventory)inventoryController.selectedChest = this;
 
-        chestGrid.chest = this;
+        chestGrid.chestKeeper = this;
 
         this.TryGetComponent(out chestGrid.abstractBehavior);
         
@@ -192,12 +219,29 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
+    
+
     //взять итемы из списка и создать физически
     private void InsertAllInventoryItems()
     {
         foreach (InventoryItemInfo item in inventoryItems)
         {
            inventoryController.CreateAndInsertItem(item.itemData, chestGrid, item.Amount);
+        }
+
+        
+        if(grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[16].prefab != null)
+        {
+            inventoryController.CreateAndInsertItem(
+            grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[16].prefab.GetComponent<ItemOnstreet>().GetItemData(), 
+            grids[(int)InfoGrid.Сапоги], 0);
+        }
+
+        if(grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[8].prefab != null)
+        {
+            inventoryController.CreateAndInsertItem(
+            grids[(int)InfoGrid.Штаны].GetSetCharacter().itemGroups[0].items[8].prefab.GetComponent<ItemOnstreet>().GetItemData(), 
+            grids[(int)InfoGrid.Штаны], 0);
         }
     }
 

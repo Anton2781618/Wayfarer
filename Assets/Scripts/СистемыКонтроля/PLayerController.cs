@@ -22,14 +22,34 @@ public class PLayerController : AbstractBehavior
     private float nextFireTime = 0;
     public override void Init()
     {
-        chest.GetChestGrid().chest = chest;
 
         if(!controller)controller = GetComponent<CharacterController>();
 
         if(!HpSlider) HpSlider = Initializer.singleton.InitObject(InitializerNames.ХПслайдер_Плеера).GetComponent<Slider>();
+
         if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
 
-        chest.InitChest(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
+        if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
+
+        List<ItemGrid> buferGrids = new List<ItemGrid>();
+
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Шлем).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Броня).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Ремень).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Штаны).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Сапоги).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Оружие).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Щит).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Кольцо).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Кольцо2).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Наплечники).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Ожерелье).GetComponent<ItemGrid>());
+        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Инвентарь).GetComponent<ItemGrid>());
+
+        chest.InitGrids(buferGrids);
+        // chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
+        
+        // chest.GetChestGrid().chestKeeper = chest;
     }
 
     private void Update()
@@ -172,8 +192,10 @@ public class PLayerController : AbstractBehavior
 
         anim.SetFloat("horizontal", x, 0.1f, Time.deltaTime);
 
-        if(y != 0 && GameManager.singleton.cameraControll.enabled|| x != 0 && GameManager.singleton.cameraControll.enabled)RotationPlayer();
+        if(y != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0|| x != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0)RotationPlayer();
     }
+
+    //поворачивает плеера в сторону камеры при движении
     private void RotationPlayer()
     {
         float angle = 

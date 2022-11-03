@@ -144,7 +144,9 @@ public class InventoryController : MonoBehaviour
         CreateItem(itemData, amount);
         
         InventoryItem itemToInsert = selectedItem;
+        
         selectedItem = null;
+        
         InsertItemV2(itemToInsert, grid);
     }
 
@@ -320,7 +322,7 @@ public class InventoryController : MonoBehaviour
     //расположить предмет на сетке 
     private void PlaceItem(Vector2Int titleGridPosition)
     {
-        if(IsTreid && buferGrid.chest != SelectedItemGrid.chest)
+        if(IsTreid && buferGrid.chestKeeper != SelectedItemGrid.chestKeeper)
         {
             PlaceItemInTrade();
         }
@@ -355,17 +357,17 @@ public class InventoryController : MonoBehaviour
     //расположить при торговли
     private void PlaceItemInTrade()
     {
-        if(SelectedItemGrid.chest.money < selectedItem.itemData.price)
+        if(SelectedItemGrid.chestKeeper.money < selectedItem.itemData.price)
         {
             SelectedItemGrid.NotEnoughMoneyAnimation();
             return;
         } 
 
-        SelectedItemGrid.chest.money -= selectedItem.itemData.price;
-        buferGrid.chest.money += selectedItem.itemData.price;
+        SelectedItemGrid.chestKeeper.money -= selectedItem.itemData.price;
+        buferGrid.chestKeeper.money += selectedItem.itemData.price;
 
-        buferGrid.chest.UpdateMoney();
-        SelectedItemGrid.chest.UpdateMoney();
+        buferGrid.chestKeeper.UpdateMoney();
+        SelectedItemGrid.chestKeeper.UpdateMoney();
 
         InventoryItem buferItem = selectedItem;
         CreateAndInsertItem(buferItem.itemData, selectedItemGrid, selectedItem.Amount);
@@ -373,11 +375,14 @@ public class InventoryController : MonoBehaviour
         selectedItem = null;
     }
 
+    //надеть одежду 
     private void PutOnClothesOnBody(int index)
     {
         SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefabForPutOn;
         SelectedItemGrid.GetSetCharacter().AddItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
     }
+
+    //снять одежду
     private void TakeOffClothes(int index)
     {
         SelectedItemGrid.GetSetCharacter().RemoveItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);

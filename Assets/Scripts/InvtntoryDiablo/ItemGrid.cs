@@ -39,6 +39,7 @@ public class ItemGrid : MonoBehaviour
     private void Awake() 
     {
         rectTransform = GetComponent<RectTransform>();    
+        
         Init(GridSizeWidth,GridSizeHeight);
     }
 

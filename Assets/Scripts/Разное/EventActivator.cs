@@ -18,7 +18,6 @@ namespace IncludedTypes
         {
             unityEvent?.Invoke();
         }
-
     }
 }
 

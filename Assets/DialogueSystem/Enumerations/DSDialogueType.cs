@@ -56,5 +56,6 @@ namespace DS.Enumerations
         CommandTaskToGroup,
         CommandAddItemToTargetInventory,
         CommandObjectOperation,
+        CommandTakeDecision,
     }
 }

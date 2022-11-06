@@ -98,9 +98,11 @@ public class AI
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)
     {
-        SolutionInfo a = new SolutionInfo(0, dialogueContainer);
-        currentSolution = a;
-        unit.solutions[0] = a;
+        SolutionInfo newSolution = new SolutionInfo(100, dialogueContainer);
+
+        currentSolution = newSolution;
+        
+        unit.solutions.Add(currentSolution);
 
         dialogueTransfer = GameManager.singleton.GetDialogueTransfer();
         

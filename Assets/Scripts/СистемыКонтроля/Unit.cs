@@ -115,29 +115,55 @@ public class Unit : AbstractBehavior
     //двигаться к точке, пересчитывая путь
     private NavMeshPath MoveToPoint(Vector3 point)
     {
-        NavMeshPath path = new NavMeshPath();
+        NavMeshPath path = CreatePath(point);
+        
+        //сколько попыток построить путь
+        int trying = 0;
 
-        NavMeshHit hit;
-
-        Vector3 result = transform.position;
-
-        if (NavMesh.SamplePosition(point, out hit, 10f, NavMesh.AllAreas)) 
+        while (trying < 100 && path == null)
         {
-            result = hit.position;
-        }
+            Debug.Log("Не получилось построить маршрут !!!!!!!!!!!!!!!!!!!!!");
 
-        NavMesh.CalculatePath(transform.position, result, UnityEngine.AI.NavMesh.AllAreas, path);
+            path = CreatePath(point);
 
-        for (int i = 0; i < path.corners.Length - 1; i++)
-        {
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            trying++;
         }
         
-        if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
-
-        SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
+        if(path != null)
+        {
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            }
+            
+            if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
+            
+            SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
+        }
 
         return path;
+    }
+
+    private NavMeshPath CreatePath(Vector3 point)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        NavMeshHit outPoint;
+
+        NavMeshHit outTrasformPos;
+
+        if (NavMesh.SamplePosition(point, out outPoint, 10f, NavMesh.AllAreas)) 
+        {
+            if (NavMesh.SamplePosition(transform.position, out outTrasformPos, 10f, NavMesh.AllAreas)) 
+            {
+                if(NavMesh.CalculatePath(outTrasformPos.position, outPoint.position, UnityEngine.AI.NavMesh.AllAreas, path))
+                {
+                    return path;
+                }
+            }
+        }
+        
+        return null;
     }
 
     //создать случайную точку в выбранном квадрате
@@ -149,7 +175,7 @@ public class Unit : AbstractBehavior
 
         Vector3 result = transform.position;
 
-        if (NavMesh.SamplePosition(point, out hit, 10f, NavMesh.AllAreas)) 
+        if (NavMesh.SamplePosition(point, out hit, 5f, NavMesh.AllAreas)) 
         {
             result = hit.position;
         }
@@ -380,7 +406,8 @@ public class Unit : AbstractBehavior
     //стоять на месте
     private void CommandStandStill()
     {
-        anim.SetBool("walk", false);
+        anim.SetBool("Walk", false);
+        anim.SetBool("Run", false);
     }
 
     //метод команда атакавать таргет (привязана к системе диалогов)
@@ -390,12 +417,16 @@ public class Unit : AbstractBehavior
         {
             Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
             
-            SetCompleteCommand();
+            SetCompleteCommand(1);
 
             return;
         }
         
         AbstractBehavior buferTarget = target as AbstractBehavior;
+        
+        NavMeshPath path = MoveToPoint(target.transform.position);
+
+        if(path == null)SetCompleteCommand(1);
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
@@ -406,13 +437,10 @@ public class Unit : AbstractBehavior
             return;
         }
 
-        NavMeshPath path = MoveToPoint(target.transform.position);
-
-        if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f) 
+        if(path != null && Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f) 
         {
             anim.SetTrigger("Hit");
         }
-        
     }
 
     //метод запускает рабочий/производственный цикл
@@ -453,7 +481,7 @@ public class Unit : AbstractBehavior
 
         SetCompleteCommand();
     }
-    private void CommandStartDialogue(DSDialogueContainerSO dialog)
+    public void CommandStartDialogue(DSDialogueContainerSO dialog)
     {
         aI.StartDialogue(dialog);
 
@@ -474,17 +502,44 @@ public class Unit : AbstractBehavior
             Debug.Log("у NPC не установлен таргет");
         }
 
-        CheckDistanceAndSwitchStage(MoveToPoint(target.transform.position));
+        NavMeshPath path = MoveToPoint(target.transform.position);
+
+        if(path != null)
+        {
+            CheckDistanceAndSwitchStage(path);
+        }
+        else
+        {
+            SetCompleteCommand(1);
+        }
     }
     
     private void CommandMoveToCoordinates()
     {
-        CheckDistanceAndSwitchStage(MoveToPoint(CurrentModelData.pos));
+        NavMeshPath path = MoveToPoint(CurrentModelData.pos);
+
+        if(path != null)
+        {
+            CheckDistanceAndSwitchStage(path);
+        }
+        else
+        {
+            SetCompleteCommand(1);
+        }
     }
 
     private void CommandMoveToWork()
     {
-        CheckDistanceAndSwitchStage(MoveToPoint(aI.GetMamry().workplace.workPoint.position));
+        NavMeshPath path = MoveToPoint(aI.GetMamry().workplace.workPoint.position);
+
+        if(path != null)
+        {
+            CheckDistanceAndSwitchStage(path);
+        }
+        else
+        {
+            SetCompleteCommand(1);
+        }
     }
     
     private void CheckDistanceAndSwitchStage(NavMeshPath path)
@@ -566,6 +621,17 @@ public class Unit : AbstractBehavior
 
             person.solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
         }
+
+        SetCompleteCommand();
+    }
+
+    private void CommandTakeDecision()
+    {
+        target = null;
+
+        aI.GetMamry().mamryTargets.Clear();
+
+        solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
 
         SetCompleteCommand();
     }

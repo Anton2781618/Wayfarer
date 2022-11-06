@@ -14,13 +14,16 @@ public class InventoryController : MonoBehaviour
     //выбраный инвентарь
     public Chest selectedChest{get; set;}
     public bool IsTreid{get; set;} = false;
-    private ItemGrid selectedItemGrid;
+    private
+     ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid 
     {
         get => selectedItemGrid; 
+        
         set 
         {
             selectedItemGrid = value;
+        
             inventoryIHighLight.SetParent(value);
         }
     }
@@ -306,7 +309,7 @@ public class InventoryController : MonoBehaviour
 
         if(SelectedItemGrid.isSingle)
         {
-            TakeOffClothes((int)selectedItem.itemData.itemType);
+            TakeOffClothes(selectedItem.itemData.GetItemTypeIndex());
         }
 
         if (selectedItem)
@@ -336,19 +339,24 @@ public class InventoryController : MonoBehaviour
     private void PlaceItemIsNotTraded(Vector2Int titleGridPosition)
     {
         bool complete =  SelectedItemGrid.PlaceItem(selectedItem, titleGridPosition.x, titleGridPosition.y, ref overlapItem);        
+        
         if(complete)
         {
             if(SelectedItemGrid.isSingle)
             {
-                PutOnClothesOnBody((int)selectedItem.itemData.itemType);
+                PutOnClothesOnBody(selectedItem.itemData.GetItemTypeIndex());
             }
             
             selectedItem = null;
+            
             if(overlapItem != null)
             {
                 selectedItem = overlapItem;
+            
                 overlapItem = null;
+            
                 rectTransform = selectedItem.GetComponent<RectTransform>();
+            
                 rectTransform.SetAsLastSibling();
             }
         }
@@ -378,7 +386,7 @@ public class InventoryController : MonoBehaviour
     //надеть одежду 
     private void PutOnClothesOnBody(int index)
     {
-        SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefabForPutOn;
+        SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
         SelectedItemGrid.GetSetCharacter().AddItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
     }
 

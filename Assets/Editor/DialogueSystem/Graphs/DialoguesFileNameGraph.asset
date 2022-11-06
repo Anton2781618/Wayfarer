@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: d46e1ccf-ceae-437e-ab1f-b42d8c216e9e
-    <Name>k__BackingField: 1f78160f-5e3f-4cef-bc81-12d01620e1ff
+    <Name>k__BackingField: 4aec92b9-27b1-43b5-bba2-5b362cba3d32
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
@@ -43,9 +43,11 @@ MonoBehaviour:
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: 77a2b7ac-4011-47df-b92a-efffb5d1f995
-    <Name>k__BackingField: bb6cf26a-0f09-4f3f-8bb1-2b03d2a5fd64
+    <Name>k__BackingField: 353a963c-6a7d-4d72-9371-282a0e244760
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
@@ -71,7 +73,7 @@ MonoBehaviour:
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 1f78160f-5e3f-4cef-bc81-12d01620e1ff
-  - bb6cf26a-0f09-4f3f-8bb1-2b03d2a5fd64
+  - 4aec92b9-27b1-43b5-bba2-5b362cba3d32
+  - 353a963c-6a7d-4d72-9371-282a0e244760
   <OldGroupedNodeNames>k__BackingField:
     list: []

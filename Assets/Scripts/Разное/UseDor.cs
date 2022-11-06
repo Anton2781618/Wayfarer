@@ -1,37 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UseDor : MonoBehaviour, ICanUse
 {
     [SerializeField] private Vector3 toOpen; 
     [SerializeField] private Vector3 toClose; 
-
-    [SerializeField] private bool isClose = true;
     [SerializeField] private int speed = 40;
+    [SerializeField] private UnityEvent unityEvent;
+    [SerializeField] private bool isLock = false;
+    private bool isClose = false;
     private Outline outline;
     private Coroutine coroutine;
+    private float startTime;
 
     
     private void Start() 
     {
         outline = this.GetComponent<Outline>();
+        startTime = Time.time;
     }
     public void ShowOutline(bool value)
     {
-         outline.enabled = value;
+        outline.enabled = value;
     }
 
     public void Use(AbstractBehavior applicant = null)
     {
+        unityEvent?.Invoke();
+    }
+
+    public void SwithDoor(bool value)
+    {
         if(coroutine != null) StopCoroutine(coroutine);
-        
+
+        coroutine = StartCoroutine(OpenCloseDoor(value));
+    }
+
+    public void SwithDoor()
+    {
         SwithDoor(isClose = !isClose);
     }
 
-    private void SwithDoor(bool value)
+    //удаляет компонент через промежуток веремени
+    public void DestroySelfImmediate(float durationTime)
     {
-        coroutine = StartCoroutine(OpenCloseDoor(value));
+        Invoke("DestroySelfImmediate", durationTime);
+    }
+
+    //удаляет компонент сразу
+    public void DestroySelfImmediate()
+    {
+        DestroyImmediate(this);
     }
 
     private IEnumerator OpenCloseDoor(bool openOreClose)

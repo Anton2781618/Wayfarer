@@ -21,7 +21,7 @@ public class ItemData : ScriptableObject
     public GameObject prefab;
 
     //этот префаб одежды которая наденется непосредственно на
-    public GameObject prefabForPutOn;
+    // public GameObject prefabForPutOn;
     public ItemType itemType;
 
     public Vector3 pos;
@@ -45,5 +45,23 @@ public class ItemData : ScriptableObject
         Зелье_маны = 1 << 11,
         Золотые_монеты = 1 << 12,
         Еда = 1 << 13,
+    }
+
+    public int GetItemTypeIndex()
+    {
+        return itemType switch
+        {
+            ItemType.Шлем => 0,
+            ItemType.Броня => 1,
+            ItemType.Ремень => 2,
+            ItemType.Штаны => 3,
+            ItemType.Сапоги => 4,
+            ItemType.Оружие => 5,
+            ItemType.Щит => 6,
+            ItemType.Кольцо => 7,
+            ItemType.Ожерелье => 8,
+            ItemType.Наплечники => 9,
+            ItemType => throw new ArgumentException("Передан недопустимый аргумент")
+        };
     }
 }

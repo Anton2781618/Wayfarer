@@ -219,8 +219,6 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    
-
     //взять итемы из списка и создать физически
     private void InsertAllInventoryItems()
     {
@@ -228,20 +226,15 @@ public class Chest : MonoBehaviour, ICanUse
         {
            inventoryController.CreateAndInsertItem(item.itemData, chestGrid, item.Amount);
         }
-
-        
-        if(grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[16].prefab != null)
+    
+        for (int i = 0; i < grids.Count; i++)
         {
-            inventoryController.CreateAndInsertItem(
-            grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[16].prefab.GetComponent<ItemOnstreet>().GetItemData(), 
-            grids[(int)InfoGrid.Сапоги], 0);
-        }
+            GameObject buferPrefab = grids[i].GetSetCharacter().itemGroups[0].items[i].prefab;
 
-        if(grids[(int)InfoGrid.Сапоги].GetSetCharacter().itemGroups[0].items[8].prefab != null)
-        {
-            inventoryController.CreateAndInsertItem(
-            grids[(int)InfoGrid.Штаны].GetSetCharacter().itemGroups[0].items[8].prefab.GetComponent<ItemOnstreet>().GetItemData(), 
-            grids[(int)InfoGrid.Штаны], 0);
+            if(buferPrefab != null)
+            {
+                inventoryController.CreateAndInsertItem( buferPrefab.GetComponent<ItemOnstreet>().GetItemData(), grids[i], 0);
+            }
         }
     }
 

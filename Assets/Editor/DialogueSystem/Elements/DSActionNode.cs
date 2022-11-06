@@ -86,6 +86,7 @@ namespace DS.Elements
             actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с атрибутом", ()=> {actionChoicesContainer.text = CommandPerformOperationWithAttribute();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Передать задачу группе", ()=> {actionChoicesContainer.text = CommandTaskToGroup();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с объектом", ()=> {actionChoicesContainer.text = CommandObjectOperation();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Запустить решение", ()=> {actionChoicesContainer.text = CommandTakeDecision();}));
             
             actionChoicesContainer.Add(findСategory);
             actionChoicesContainer.Add(MoveСategory);
@@ -226,9 +227,9 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
 
-            if(Choices.Count > 1)
+            if(Choices.Count < 2)
             {
-                DeleteLastPort();          
+                AddPort();
             }
             
             return "Атакавать таргет";
@@ -269,9 +270,9 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
 
-            if(Choices.Count > 1)
+            if(Choices.Count < 2)
             {
-                DeleteLastPort();          
+                AddPort();
             }
             
             return "Двигаться к таргету";
@@ -287,7 +288,7 @@ namespace DS.Elements
             if(Choices.Count < 2)
             {
                 AddPort();
-            }   
+            }
 
             return "Проверить инвентарь на предмет (тагрет)";
         }
@@ -487,9 +488,9 @@ namespace DS.Elements
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.y, null, collBack => modelDate.pos.y = collBack.newValue));
             ContainerForTransformation.Add(DSElementUtility.CreateFloatField(modelDate.pos.z, null, collBack => modelDate.pos.z = collBack.newValue));
 
-            if(Choices.Count > 1)
+            if(Choices.Count < 2)
             {
-                DeleteLastPort();          
+                AddPort();
             }
             
             return "Двигаться к корординатам";
@@ -500,9 +501,9 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
 
-            if(Choices.Count > 1)
+            if(Choices.Count < 2)
             {
-                DeleteLastPort();          
+                AddPort();
             }
             
             return "Двигаться к на работу";
@@ -538,6 +539,21 @@ namespace DS.Elements
             }
             
             return "Провести операцию с объектом";
+        }
+        private string CommandTakeDecision()
+        {
+            Action = DSAction.CommandTakeDecision;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldDSDialogueSO(modelDate.dialogue, x => modelDate.dialogue = (DSDialogueContainerSO)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Запустить решение";
         }
     }
 }

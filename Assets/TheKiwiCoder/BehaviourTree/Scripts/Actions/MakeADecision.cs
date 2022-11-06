@@ -27,8 +27,7 @@ public class MakeADecision : ActionNode
         
         if(solution.importance < 100 && increaseImportance)
         {            
-            solution.importance = Operation(parameter);
-            
+            solution.importance = Operation(parameter);            
         } 
         
         return State.Success;

@@ -115,33 +115,58 @@ public class Unit : AbstractBehavior
     //двигаться к точке, пересчитывая путь
     private NavMeshPath MoveToPoint(Vector3 point)
     {
-        NavMeshPath path = CreatePath(point);
+        agent.updateRotation = false;
         
-        //сколько попыток построить путь
-        int trying = 0;
+        agent.SetDestination(point);
+        Debug.Log(agent.pathStatus + " " );
 
-        while (trying < 100 && path == null)
+        SetAnimationRun(Vector3.Distance(transform.position, point) > agent.stoppingDistance);
+
+        if(agent.path.corners.Length > 1)
         {
-            Debug.Log("Не получилось построить маршрут !!!!!!!!!!!!!!!!!!!!!");
-
-            path = CreatePath(point);
-
-            trying++;
+            FaceToPoint(agent.path.corners[1]);
         }
         
-        if(path != null)
-        {
-            for (int i = 0; i < path.corners.Length - 1; i++)
-            {
-                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
-            }
-            
-            if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
-            
-            SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
-        }
+        // //сколько попыток построить путь
+        // NavMeshPath path = CreatePath(point);
+        // int trying = 0;
 
-        return path;
+        // while (trying < 100 && path == null)
+        // {
+        //     Debug.Log("Не получилось построить маршрут !!!!!!!!!!!!!!!!!!!!!");
+
+        //     path = CreatePath(point);
+
+        //     trying++;
+        // }
+        
+        // if(path != null)
+        // {
+        //     for (int i = 0; i < path.corners.Length - 1; i++)
+        //     {
+        //         Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        //     }
+            
+        //     if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
+            
+        //     SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
+        // }
+        
+        // return path;
+        return agent.path;
+    }
+
+    private void OnDrawGizmos() 
+    {
+        Gizmos.color = Color.black; 
+        var agentPath = agent.path;
+        Vector3 prevCorner = transform.position;
+        foreach (var corner in agentPath.corners)
+        {
+            Gizmos.DrawLine(prevCorner, corner);
+            Gizmos.DrawSphere(corner, 0.1f);
+            prevCorner = corner;
+        }
     }
 
     private NavMeshPath CreatePath(Vector3 point)
@@ -154,10 +179,15 @@ public class Unit : AbstractBehavior
 
         if (NavMesh.SamplePosition(point, out outPoint, 10f, NavMesh.AllAreas)) 
         {
-            if (NavMesh.SamplePosition(transform.position, out outTrasformPos, 10f, NavMesh.AllAreas)) 
+            Debug.Log("1 прошел");
+            
+            if (NavMesh.SamplePosition(transform.localPosition, out outTrasformPos, 10f, NavMesh.AllAreas)) 
             {
+                Debug.Log("2 прошел");
                 if(NavMesh.CalculatePath(outTrasformPos.position, outPoint.position, UnityEngine.AI.NavMesh.AllAreas, path))
+                // if(NavMesh.CalculatePath(transform.position, outPoint.position, UnityEngine.AI.NavMesh.AllAreas, path))
                 {
+                    Debug.Log("3 прошел");
                     return path;
                 }
             }
@@ -378,6 +408,7 @@ public class Unit : AbstractBehavior
         if(FindTarget()) SetCompleteCommand();
     }
 
+    
     private void TestTime()
     {
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
@@ -423,24 +454,35 @@ public class Unit : AbstractBehavior
         }
         
         AbstractBehavior buferTarget = target as AbstractBehavior;
-        
-        NavMeshPath path = MoveToPoint(target.transform.position);
 
-        if(path == null)SetCompleteCommand(1);
-
-        if(buferTarget.GetCurrentUnitState() == States.Мертв)
+        if(Vector3.Distance(transform.position, target.transform.position) > agent.stoppingDistance && 
+            !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") )
         {
-            state = States.Патруль;
-            
-            SetCompleteCommand();
-            
-            return;
+            NavMeshPath path = MoveToPoint(target.transform.position);
+
+            if(buferTarget.GetCurrentUnitState() == States.Мертв)
+            {
+                state = States.Патруль;
+                
+                SetCompleteCommand();
+                
+                return;
+            }
+        }
+        else
+        {
+            FaceToPoint(target.transform.position);
+
+            SetAnimationRun(false);
+
+            if(Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance) anim.SetTrigger("Hit");
         }
 
-        if(path != null && Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f) 
-        {
-            anim.SetTrigger("Hit");
-        }
+        // if(agent.pathStatus != NavMeshPathStatus.PathInvalid && agent.pathStatus != NavMeshPathStatus.PathPartial)
+        // {
+
+        //     SetCompleteCommand(1);
+        // }
     }
 
     //метод запускает рабочий/производственный цикл

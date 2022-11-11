@@ -29,12 +29,22 @@ namespace CartoonHeroes
         public GameObject AddItem(ItemGroup itemGroup, int itemSlot)
         {
             Item item = itemGroup.items[itemSlot];
+            
             GameObject itemInstance = GameObject.Instantiate(item.prefab);
-            itemInstance.GetComponent<Collider>().enabled = false;
+            
+            // itemInstance.GetComponent<Collider>().enabled = false;
+            DestroyImmediate(itemInstance.GetComponent<Collider>());
+            
+            DestroyImmediate(itemInstance.GetComponent<Outline>());
+
+            DestroyImmediate(itemInstance.GetComponent<ItemOnstreet>());
+
+            DestroyImmediate(itemInstance.GetComponent<Rigidbody>());
 
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
 
             RemoveAnimator(itemInstance);
+            
             ParentObjectAndBones(itemInstance);
 
             SetGraySkeletonVisibility(!VisibleItems());

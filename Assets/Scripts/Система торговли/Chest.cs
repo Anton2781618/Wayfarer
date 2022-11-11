@@ -8,9 +8,10 @@ using static ItemData;
 //класс является представлением места для хранения предметов (сундук или инвентарь игрока или торговца)
 public class Chest : MonoBehaviour, ICanUse
 {
+    [SerializeField] private List<ItemGrid> grids;
     private InventoryController inventoryController;
-    private ItemGrid chestGrid;
-    [Tooltip("Сетки в инвентаре")] [SerializeField] private List<ItemGrid> grids;
+    [SerializeField] private ItemGrid chestGrid;
+    
     
     public int money = 500;//{get; set;} = 500;
     

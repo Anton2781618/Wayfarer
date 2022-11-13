@@ -26,6 +26,10 @@ namespace DS.Enumerations
         Включить,
         Использовать,
     }
+    public enum CurrentAnimation
+    {
+        Украсть,
+    }
 
     //енумератор действий 
     public enum DSAction 
@@ -57,5 +61,6 @@ namespace DS.Enumerations
         CommandAddItemToTargetInventory,
         CommandObjectOperation,
         CommandTakeDecision,
+        CommandPlayAnimation,
     }
 }

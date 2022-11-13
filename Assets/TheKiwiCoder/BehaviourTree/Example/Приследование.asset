@@ -34,6 +34,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -76,6 +77,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -115,6 +117,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -154,6 +157,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -195,6 +199,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -236,6 +241,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -274,6 +280,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -317,6 +324,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -360,6 +368,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -401,6 +410,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -439,6 +449,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -506,6 +517,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
 --- !u!114 &969440005386127044
@@ -542,6 +554,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -583,6 +596,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -623,6 +637,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -664,6 +679,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -704,6 +720,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -744,6 +761,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -787,6 +805,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -829,6 +848,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -871,6 +891,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -912,6 +933,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -953,6 +975,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -993,6 +1016,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -1031,6 +1055,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 
@@ -1073,6 +1098,7 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
   description: 

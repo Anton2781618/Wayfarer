@@ -8,6 +8,7 @@ using static Cinemachine.CinemachineBrain;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject Prefab;
     public static GameManager singleton;
     [SerializeField] private GameObject[] uiWindows;
     [SerializeField] private Transform lor;
@@ -270,6 +271,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CreateNewEnemy()
+    {
+        GameObject enemy = Instantiate(Prefab, Prefab.transform.position, Quaternion.identity);
+        enemy.SetActive(true);
     }
 
     private bool CheckTarget()

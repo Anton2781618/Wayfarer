@@ -87,6 +87,7 @@ namespace DS.Elements
             actionsСategory.Add(DSElementUtility.CreateButton("Передать задачу группе", ()=> {actionChoicesContainer.text = CommandTaskToGroup();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Провести операцию с объектом", ()=> {actionChoicesContainer.text = CommandObjectOperation();}));
             actionsСategory.Add(DSElementUtility.CreateButton("Запустить решение", ()=> {actionChoicesContainer.text = CommandTakeDecision();}));
+            actionsСategory.Add(DSElementUtility.CreateButton("Проиграть анимацию", ()=> {actionChoicesContainer.text = CommandPlayAnimation();}));
             
             actionChoicesContainer.Add(findСategory);
             actionChoicesContainer.Add(MoveСategory);
@@ -547,6 +548,21 @@ namespace DS.Elements
             ContainerForTransformation.Clear();
 
             ContainerForTransformation.Add(DSElementUtility.CreateObjectFieldDSDialogueSO(modelDate.dialogue, x => modelDate.dialogue = (DSDialogueContainerSO)x.newValue));
+
+            if(Choices.Count > 1)
+            {
+                DeleteLastPort();          
+            }
+            
+            return "Запустить решение";
+        }
+        private string CommandPlayAnimation()
+        {
+            Action = DSAction.CommandPlayAnimation;
+            
+            ContainerForTransformation.Clear();
+
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.currentAnimation, x => modelDate.currentAnimation = (CurrentAnimation)x.newValue));
 
             if(Choices.Count > 1)
             {

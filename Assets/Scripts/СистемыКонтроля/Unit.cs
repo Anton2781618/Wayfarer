@@ -39,6 +39,8 @@ public class Unit : AbstractBehavior
     {
         base.Init();
         
+        agent.updateRotation = false;
+        
         chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
         aI.Init(this, anim);
@@ -113,59 +115,15 @@ public class Unit : AbstractBehavior
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
     //двигаться к точке, пересчитывая путь
-    private NavMeshPath MoveToPoint(Vector3 point)
+    private void MoveToPoint(Vector3 point)
     {
-        agent.updateRotation = false;
-        
         agent.SetDestination(point);
-        Debug.Log(agent.pathStatus + " " );
 
         SetAnimationRun(Vector3.Distance(transform.position, point) > agent.stoppingDistance);
 
         if(agent.path.corners.Length > 1)
         {
             FaceToPoint(agent.path.corners[1]);
-        }
-        
-        // //сколько попыток построить путь
-        // NavMeshPath path = CreatePath(point);
-        // int trying = 0;
-
-        // while (trying < 100 && path == null)
-        // {
-        //     Debug.Log("Не получилось построить маршрут !!!!!!!!!!!!!!!!!!!!!");
-
-        //     path = CreatePath(point);
-
-        //     trying++;
-        // }
-        
-        // if(path != null)
-        // {
-        //     for (int i = 0; i < path.corners.Length - 1; i++)
-        //     {
-        //         Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
-        //     }
-            
-        //     if(path.corners.Length > 0) FaceToPoint(path.corners[1]);
-            
-        //     SetAnimationRun(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) > 1.5f);
-        // }
-        
-        // return path;
-        return agent.path;
-    }
-
-    private void OnDrawGizmos() 
-    {
-        Gizmos.color = Color.black; 
-        var agentPath = agent.path;
-        Vector3 prevCorner = transform.position;
-        foreach (var corner in agentPath.corners)
-        {
-            Gizmos.DrawLine(prevCorner, corner);
-            Gizmos.DrawSphere(corner, 0.1f);
-            prevCorner = corner;
         }
     }
 
@@ -319,7 +277,7 @@ public class Unit : AbstractBehavior
         
         this.GetComponent<BehaviourTreeRunner>().enabled = false;
         
-        SowHealthBar (false);
+        SowHealthBar(false);
     }
 
     private void FaceToPoint(Vector3 point)
@@ -455,34 +413,45 @@ public class Unit : AbstractBehavior
         
         AbstractBehavior buferTarget = target as AbstractBehavior;
 
-        if(Vector3.Distance(transform.position, target.transform.position) > agent.stoppingDistance && 
-            !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") )
+        if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
-            NavMeshPath path = MoveToPoint(target.transform.position);
-
-            if(buferTarget.GetCurrentUnitState() == States.Мертв)
-            {
-                state = States.Патруль;
-                
-                SetCompleteCommand();
-                
-                return;
-            }
+            state = States.Патруль;
+            
+            SetCompleteCommand();
+            
+            return;
         }
-        else
+
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))MoveToPoint(target.transform.position);
+
+        if(Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance ) 
         {
+
             FaceToPoint(target.transform.position);
 
-            SetAnimationRun(false);
-
-            if(Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance) anim.SetTrigger("Hit");
+            SetAnimationRun(false);            
+            
+            Attack();
         }
+    }
 
-        // if(agent.pathStatus != NavMeshPathStatus.PathInvalid && agent.pathStatus != NavMeshPathStatus.PathPartial)
-        // {
+    private float cooldown = 2f;
+    private float nextHit = 0f;
+    private void Attack()
+    {
+        if(Time.time >= nextHit)
+        {
+            
+            if(Vector3.Distance(transform.position, target.transform.position) < agent.stoppingDistance)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, target.transform.position.z - 1.5f), 1 * Time.deltaTime);
+            }
+            
 
-        //     SetCompleteCommand(1);
-        // }
+            nextHit = Time.time + cooldown;
+
+            anim.SetTrigger("Hit");
+        }
     }
 
     //метод запускает рабочий/производственный цикл
@@ -539,54 +508,28 @@ public class Unit : AbstractBehavior
 
     private void CommandMoveToTarget()
     {
-        if(target == null)
-        {
-            Debug.Log("у NPC не установлен таргет");
-        }
+        MoveToPoint(target.transform.position);
 
-        NavMeshPath path = MoveToPoint(target.transform.position);
-
-        if(path != null)
-        {
-            CheckDistanceAndSwitchStage(path);
-        }
-        else
-        {
-            SetCompleteCommand(1);
-        }
+        CheckDistanceAndSwitchStage(target.transform.position);
     }
     
     private void CommandMoveToCoordinates()
     {
-        NavMeshPath path = MoveToPoint(CurrentModelData.pos);
+        MoveToPoint(CurrentModelData.pos);
 
-        if(path != null)
-        {
-            CheckDistanceAndSwitchStage(path);
-        }
-        else
-        {
-            SetCompleteCommand(1);
-        }
+        CheckDistanceAndSwitchStage(CurrentModelData.pos);
     }
 
     private void CommandMoveToWork()
     {
-        NavMeshPath path = MoveToPoint(aI.GetMamry().workplace.workPoint.position);
+        MoveToPoint(aI.GetMamry().workplace.workPoint.position);
 
-        if(path != null)
-        {
-            CheckDistanceAndSwitchStage(path);
-        }
-        else
-        {
-            SetCompleteCommand(1);
-        }
+        CheckDistanceAndSwitchStage(aI.GetMamry().workplace.workPoint.position);
     }
     
-    private void CheckDistanceAndSwitchStage(NavMeshPath path)
+    private void CheckDistanceAndSwitchStage(Vector3 point)
     {
-        if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f)
+        if(Vector3.Distance(transform.position, point) <= agent.stoppingDistance)
         {
             SetCompleteCommand();
         }
@@ -678,6 +621,46 @@ public class Unit : AbstractBehavior
         SetCompleteCommand();
     }
 
+    private string cunAnimPlay = "";
+    bool isPlayin = false; 
+    private void CommandPlayAnimation()
+    {
+        
+        if(CurrentModelData.currentAnimation == CurrentAnimation.Украсть)
+        {
+            if(!anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == false)
+            {
+                cunAnimPlay = "Steal";
+
+                anim.Play("Steal");
+            }
+        }
+
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay))isPlayin = true;
+            
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == true)
+        {
+            cunAnimPlay = "";
+
+            isPlayin = false;
+
+            SetCompleteCommand();
+        }
+    }
+
+    public AnimationClip FindAnimation (string name) 
+    {
+        foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == name)
+            {
+                return clip;
+            }
+        }
+
+        return null;
+    }
+
     private void CommandObjectOperation()
     {
         GameObject obj = objectsForOperations[CurrentModelData.index];
@@ -741,6 +724,7 @@ public class ModelDate
     public Transform objectOnScen;
     public UnitAtribut unitAtribut;
     public ObjectOperation objectOperation;
+    public CurrentAnimation currentAnimation;
     public UnitOperation unitOperation;
     public DSAction dSAction;
 }

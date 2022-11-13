@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
   - <ID>k__BackingField: cd072fd9-56b9-499f-8af0-d9dbc327f1b6
-    <Name>k__BackingField: fa6f66d3-6321-4909-8192-caf6f249659a
+    <Name>k__BackingField: 5190fa32-7700-48cd-b8b1-6aa708e64c56
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
@@ -39,15 +39,16 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: 21b4cf1d-948f-4c82-9424-6959671bcf63
-    <Name>k__BackingField: 5dd56a21-d8a5-4780-92fd-507271e296a8
+    <Name>k__BackingField: 863ca119-9477-4b2a-a9d0-ca22278d6b6a
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
-      <NodeID>k__BackingField: 7965fa9f-2ac7-4813-8da0-560a3d737743
+      <NodeID>k__BackingField: b1e7a831-0164-473a-9a85-3578b6fb21e5
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
@@ -68,38 +69,12 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
-      unitOperation: 0
-      dSAction: 0
-    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
-  - <ID>k__BackingField: 7965fa9f-2ac7-4813-8da0-560a3d737743
-    <Name>k__BackingField: 8e5abcba-0c16-4eb4-bf8e-0c5fe6bacb46
-    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
-      <NodeID>k__BackingField: 95b16c0f-d41d-45b2-bf5f-674ee8a0f905
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1205, y: 250}
-    <Action>k__BackingField: 3
-    <ModelDate>k__BackingField:
-      number: 0
-      index: 0
-      text: 
-      pos: {x: 0, y: 0, z: 0}
-      itemData: {fileID: 11400000, guid: d0d6458dfed654b41af2e392e6fd4a6e, type: 2}
-      dialogue: {fileID: 0}
-      targetMask:
-        serializedVersion: 2
-        m_Bits: 0
-      itemType: 0
-      objectOnScen: {fileID: 0}
-      unitAtribut: 0
-      objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: 95b16c0f-d41d-45b2-bf5f-674ee8a0f905
-    <Name>k__BackingField: fa24d4bf-2287-4e96-9f32-498de21b115a
+    <Name>k__BackingField: 5926bad4-056a-42d2-9f5d-b725b30fe22e
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
@@ -108,7 +83,7 @@ MonoBehaviour:
       <NodeID>k__BackingField: 8416d676-8fef-4430-9ab0-6047b99649b0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1628, y: 250}
+    <Position>k__BackingField: {x: 1961, y: 243}
     <Action>k__BackingField: 13
     <ModelDate>k__BackingField:
       number: 0
@@ -124,11 +99,12 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: cc9ed3e2-c83b-4034-b414-664f5af522ad
-    <Name>k__BackingField: 7268ee3c-0645-4dd3-ac62-32921f428514
+    <Name>k__BackingField: 53b20deb-30d0-44c4-8ce8-2e0d47dfbbe3
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
@@ -137,7 +113,7 @@ MonoBehaviour:
       <NodeID>k__BackingField: 8416d676-8fef-4430-9ab0-6047b99649b0
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 1972, y: 250}
+    <Position>k__BackingField: {x: 2305, y: 243}
     <Action>k__BackingField: 13
     <ModelDate>k__BackingField:
       number: 0
@@ -153,18 +129,19 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: 6f01c5e1-19c6-481b-8c92-04ad368de892
-    <Name>k__BackingField: db8a08ac-7fca-466b-8f97-fa2c37db9c7e
+    <Name>k__BackingField: bd1c1acf-d86b-4054-a45e-aa19eea4144f
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 2339, y: 250}
+    <Position>k__BackingField: {x: 2672, y: 243}
     <Action>k__BackingField: 25
     <ModelDate>k__BackingField:
       number: 0
@@ -180,11 +157,12 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 3
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   - <ID>k__BackingField: 8416d676-8fef-4430-9ab0-6047b99649b0
-    <Name>k__BackingField: df895985-05d6-483e-ab72-73797c29f712
+    <Name>k__BackingField: 554276ae-791f-47db-ad45-1ea7e14be122
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
     - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
@@ -193,7 +171,7 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
     <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 2194, y: 621}
+    <Position>k__BackingField: {x: 2527, y: 614}
     <Action>k__BackingField: 13
     <ModelDate>k__BackingField:
       number: 0
@@ -209,17 +187,75 @@ MonoBehaviour:
       objectOnScen: {fileID: 0}
       unitAtribut: 0
       objectOperation: 0
+      currentAnimation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+  - <ID>k__BackingField: 7965fa9f-2ac7-4813-8da0-560a3d737743
+    <Name>k__BackingField: 46b54cb1-5b60-42e4-b3b1-f5a0e2653f6f
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 95b16c0f-d41d-45b2-bf5f-674ee8a0f905
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 1538, y: 243}
+    <Action>k__BackingField: 3
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 11400000, guid: d0d6458dfed654b41af2e392e6fd4a6e, type: 2}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      currentAnimation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+  - <ID>k__BackingField: b1e7a831-0164-473a-9a85-3578b6fb21e5
+    <Name>k__BackingField: b1e7a831-0164-473a-9a85-3578b6fb21e5
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 7965fa9f-2ac7-4813-8da0-560a3d737743
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 1214, y: 250}
+    <Action>k__BackingField: 27
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      objectOnScen: {fileID: 0}
+      unitAtribut: 0
+      objectOperation: 0
+      currentAnimation: 0
       unitOperation: 0
       dSAction: 0
     <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - fa6f66d3-6321-4909-8192-caf6f249659a
-  - 5dd56a21-d8a5-4780-92fd-507271e296a8
-  - 8e5abcba-0c16-4eb4-bf8e-0c5fe6bacb46
-  - fa24d4bf-2287-4e96-9f32-498de21b115a
-  - 7268ee3c-0645-4dd3-ac62-32921f428514
-  - db8a08ac-7fca-466b-8f97-fa2c37db9c7e
-  - df895985-05d6-483e-ab72-73797c29f712
+  - 5190fa32-7700-48cd-b8b1-6aa708e64c56
+  - 863ca119-9477-4b2a-a9d0-ca22278d6b6a
+  - 5926bad4-056a-42d2-9f5d-b725b30fe22e
+  - 53b20deb-30d0-44c4-8ce8-2e0d47dfbbe3
+  - bd1c1acf-d86b-4054-a45e-aa19eea4144f
+  - 554276ae-791f-47db-ad45-1ea7e14be122
+  - 46b54cb1-5b60-42e4-b3b1-f5a0e2653f6f
+  - b1e7a831-0164-473a-9a85-3578b6fb21e5
   <OldGroupedNodeNames>k__BackingField:
     list: []

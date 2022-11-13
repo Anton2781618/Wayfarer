@@ -19,7 +19,7 @@ public class SortSolutionsByImportance : ActionNode
     {
         AnalyzeImportanceSolutions();
         
-        return State.Success;
+        return State.Running;
     }
 
     //метод анализирует важность решений и сортирует список по важности

@@ -107,7 +107,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     public virtual void Die()
     {
-        if(agent)agent.enabled = false;
+        // if(agent)agent.enabled = false;
 
         anim.SetBool("die", true);
         

@@ -2958,6 +2958,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2311302852594243209}
+  - component: {fileID: 1587012157380264442}
+  - component: {fileID: 5534906242359585931}
   m_Layer: 3
   m_Name: "\u0433\u0440\u0430\u0443\u043D\u0434"
   m_TagString: Untagged
@@ -2980,6 +2982,32 @@ Transform:
   m_Father: {fileID: 2261661633899935381}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1587012157380264442
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311302852594243208}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5534906242359585931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311302852594243208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0086b732ea2f341b451bf3a7160fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCollider: {fileID: 1587012157380264442}
 --- !u!1 &2311302852600029909
 GameObject:
   m_ObjectHideFlags: 0

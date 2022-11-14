@@ -276,6 +276,8 @@ public class Unit : AbstractBehavior
         base.Die();
         
         this.GetComponent<BehaviourTreeRunner>().enabled = false;
+
+        transform.Find("граунд").GetComponent<ExampleClass>().gameObject.SetActive(false);
         
         SowHealthBar(false);
     }

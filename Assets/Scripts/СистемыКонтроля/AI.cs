@@ -17,8 +17,6 @@ public class AI
     public DSDialogueSO stage{get; private set;}
     private bool newDialogue = false;
 
-    public TheKiwiCoder.Node.State stateSolution = TheKiwiCoder.Node.State.Success;
-
     public void Init(Unit unit, Animator anim)
     {
         this.unit = unit;
@@ -44,8 +42,6 @@ public class AI
     //старт решения
     public void StartSolution()
     {
-        stateSolution = TheKiwiCoder.Node.State.Running;
-
         foreach (var item in currentSolution.solution.UngroupedDialogues)
         {
             if(item.IsStartingDialogue) 
@@ -82,8 +78,6 @@ public class AI
         if(stage == null) 
         {
             Debug.Log("Решение выполнено!");
-
-            stateSolution = TheKiwiCoder.Node.State.Success;
 
             unit.solutions.Remove(currentSolution);
 

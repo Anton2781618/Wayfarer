@@ -7,12 +7,10 @@ public class ExampleClass : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
-        
         if(other.gameObject.layer == 7 || other.gameObject.layer == 3) return;
 
-            Debug.Log(other.transform.name);
-            Debug.Log(other.gameObject.layer);
-            Physics.IgnoreCollision(other.collider, myCollider);
-
+        Debug.Log(other.transform.name);
+        Debug.Log(other.gameObject.layer);
+        Physics.IgnoreCollision(other.collider, myCollider);
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using DS;
 using DS.Enumerations;
 using DS.ScriptableObjects;
-using TheKiwiCoder;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -76,6 +75,31 @@ public class Unit : AbstractBehavior
 
         aI.SetAttackSolution();
     }
+    public void TakeDamage(int value)
+    {
+        unitStats.curHP -= value;
+
+        HpSlider.value -= value;
+        
+        Debug.Log(unitStats.curHP);
+        if(unitStats.curHP <= 0)
+        {
+            StartCoroutine(DieCurutina());
+        }
+        else
+        {
+            anim.SetBool("Takehit", true);
+        }
+    }
+
+    private IEnumerator DieCurutina()
+    {
+        yield return new WaitForEndOfFrame();
+
+        Die();
+    }
+
+    
 
     public override void SowHealthBar(bool value)
     {
@@ -274,10 +298,8 @@ public class Unit : AbstractBehavior
     public override void Die()
     {
         base.Die();
-        
-        this.GetComponent<BehaviourTreeRunner>().enabled = false;
 
-        transform.Find("граунд").GetComponent<ExampleClass>().gameObject.SetActive(false);
+        // transform.Find("граунд").GetComponent<ExampleClass>().gameObject.SetActive(false);
         
         SowHealthBar(false);
     }

@@ -21,8 +21,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         /// <returns></returns>
         public override TaskStatus OnUpdate()
         {
+            Debug.Log("работает");
             returnedObject.Value = WithinSight(targetObject.Value, fieldOfViewAngle.Value, viewDistance.Value);
-            if (returnedObject.Value != null) {
+            if (returnedObject.Value != null) 
+            {
                 // Return success if an object was found
                 return TaskStatus.Success;
             }
@@ -35,15 +37,22 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         /// </summary>
         private GameObject WithinSight(GameObject targetObject, float fieldOfViewAngle, float viewDistance)
         {
-            if (targetObject == null) {
+            if (targetObject == null) 
+            {
                 return null;
             }
+            
             var direction = targetObject.transform.position - transform.position;
+            
             direction.y = 0;
+            
             var angle = Vector3.Angle(direction, transform.forward);
-            if (direction.magnitude < viewDistance && angle < fieldOfViewAngle * 0.5f) {
+            
+            if (direction.magnitude < viewDistance && angle < fieldOfViewAngle * 0.5f) 
+            {
                 // The hit agent needs to be within view of the current agent
-                if (LineOfSight(targetObject)) {
+                if (LineOfSight(targetObject)) 
+                {
                     return targetObject; // return the target object meaning it is within sight
                 }
             }
@@ -56,8 +65,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         private bool LineOfSight(GameObject targetObject)
         {
             RaycastHit hit;
-            if (Physics.Linecast(transform.position, targetObject.transform.position, out hit)) {
-                if (hit.transform.IsChildOf(targetObject.transform) || targetObject.transform.IsChildOf(hit.transform)) {
+            
+            if (Physics.Linecast(transform.position, targetObject.transform.position, out hit)) 
+            {
+                if (hit.transform.IsChildOf(targetObject.transform) || targetObject.transform.IsChildOf(hit.transform)) 
+                {
                     return true;
                 }
             }

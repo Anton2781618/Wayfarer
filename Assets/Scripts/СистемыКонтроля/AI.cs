@@ -237,7 +237,10 @@ public class Hearing
 [Serializable]
 public class Mamry
 {
+    //рабочее место
     public Workplace workplace;
+
+    //таргеты 
     public List<Transform> mamryTargets = new List<Transform>();
 
     //группа 

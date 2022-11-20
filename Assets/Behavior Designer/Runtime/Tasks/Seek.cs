@@ -51,7 +51,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
             if (HasArrived()) {
                 return TaskStatus.Success;
             }
-
+Debug.Log(target.Value.transform.name);
             SetDestination(Target());
 
             return TaskStatus.Running;

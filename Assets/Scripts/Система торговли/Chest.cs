@@ -142,14 +142,14 @@ public class Chest : MonoBehaviour, ICanUse
     }
 
     //проверяет есть ли в инвентаре такой предмет по scriptable object
-    public int CheckInventoryForItems(ItemData itemData)
+    public bool CheckInventoryForItems(ItemData itemData)
     {
         foreach (var item in inventoryItems)
         {
-            if(item.itemData == itemData) return 0;
+            if(item.itemData == itemData) return true;
         }
 
-        return 1;
+        return false;
     }
 
     //проверяет есть ли в инвентаре такой предмет по типу

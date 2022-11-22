@@ -10,6 +10,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
     {
         [SerializeField] private float speedDampTime;
         [SerializeField] private SharedGameObject target;
+        [SerializeField] private SharedVector3 targetPosition;
         private Animator animator;
         private UnityEngine.AI.NavMeshAgent agent;
         private float speed;
@@ -52,7 +53,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 
             speed = agent.desiredVelocity.magnitude;
 
-            agent.SetDestination(target.Value.transform.position);
+            agent.SetDestination(Target());
 
             if(agent.path.corners.Length > 1)
             {
@@ -87,6 +88,15 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
             }
 
             return remainingDistance <= agent.stoppingDistance;
+        }
+        private Vector3 Target()
+        {
+            if (target.Value != null) 
+            {
+                return target.Value.transform.position;
+            }
+
+            return targetPosition.Value;
         }
     }
 }

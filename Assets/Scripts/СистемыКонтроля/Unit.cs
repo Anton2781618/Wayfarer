@@ -563,12 +563,15 @@ public class Unit : AbstractBehavior
     {
         if(target == null) Debug.Log("нет таргета");
 
-        SetCompleteCommand(target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData));
+        bool res = target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
+        SetCompleteCommand(res ? 0 : 1);
     }
     
     private void CommandCheckSelfInventoryForItem()
     {
-        SetCompleteCommand(chest.CheckInventoryForItems(CurrentModelData.itemData));
+        bool res = chest.CheckInventoryForItems(CurrentModelData.itemData);
+
+        SetCompleteCommand(res ? 0 : 1);
     }
 
     private void CommandCheckSelfInventoryForItemType()

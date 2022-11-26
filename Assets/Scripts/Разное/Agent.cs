@@ -26,22 +26,21 @@ namespace BehavorTreeDesigner.Example
 		{
 			if (AgentDone())
 			{
-				// locomotion.Do(0, 0);
+				locomotion.Do(0, 0);
 			}
 			else
 			{
 				float speed = agent.desiredVelocity.magnitude;
-				animator.SetFloat("Run Blend", 1);
 				Vector3 velocity = Quaternion.Inverse(transform.rotation) * agent.desiredVelocity;
 				float angle = Mathf.Atan2(velocity.x, velocity.z) * 180.0f / 3.14159f;
-				// locomotion.Do(speed, angle);
+				locomotion.Do(speed, angle);
 			}
 		}
 
 		private void OnAnimatorMove()
 		{
-			// agent.velocity = animator.deltaPosition / Time.deltaTime;
-			// transform.rotation = animator.rootRotation;
+			agent.velocity = animator.deltaPosition / Time.deltaTime;
+			transform.rotation = animator.rootRotation;
 		}
 
 		protected bool AgentDone()

@@ -77,7 +77,7 @@ public class MovementInput : MonoBehaviour
             anim.SetLookAtPosition(lookPos);
         }
 
-        // MovePelviusHeight();
+        MovePelviusHeight();
         // MovePelviusHeight2();
 
         //правая стопа ik позиция и поворот

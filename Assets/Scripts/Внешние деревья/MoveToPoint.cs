@@ -36,6 +36,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
             }
         }
 
+        
+
         public override TaskStatus OnUpdate()
         {
             if(target.Value == null )
@@ -50,10 +52,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
                 if(animator.GetFloat(m_SpeedId) <= 0.05) return TaskStatus.Success;
             }
 
-
             speed = agent.desiredVelocity.magnitude;
-
-            agent.SetDestination(Target());
 
             if(agent.path.corners.Length > 1)
             {
@@ -76,6 +75,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 
         private bool HasArrived()
         {
+            agent.SetDestination(Target());
+         
             float remainingDistance;
             
             if (agent.pathPending) 

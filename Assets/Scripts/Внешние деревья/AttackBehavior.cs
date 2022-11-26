@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 {
@@ -8,7 +7,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 
     public class AttackBehavior : Action
     {
-        public SharedGameObject target;
+        [SerializeField] private SharedGameObject target;
+
+        [SerializeField] private string[] attaksArray;
 
         private Animator anim;
         private UnityEngine.AI.NavMeshAgent agent;
@@ -16,25 +17,28 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         public float cooldown = 2f;
         public float nextHit = 0f;
 
-        public override void OnAwake()
+        public override void OnStart()
         {
             anim = GetComponent<Animator>();
+            
             agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
 
         public override TaskStatus OnUpdate()
         {
-            if(Vector3.Distance(transform.position, target.Value.transform.position) <= agent.stoppingDistance)
-            {
-                FaceToPoint(target.Value.transform.position);
 
-                Attack();
+            // if(Vector3.Distance(transform.position, target.Value.transform.position) <= agent.stoppingDistance)
+            // {
+            //     FaceToPoint(target.Value.transform.position);
 
-                return TaskStatus.Success;
-            }
+            //     Attack();
 
-            return TaskStatus.Failure;
+            //     return TaskStatus.Success;
+            // }
+            anim.SetTrigger(attaksArray[Random.Range(0, attaksArray.Length - 1)]);
+
+            return TaskStatus.Success;
         }
 
         private void Attack()

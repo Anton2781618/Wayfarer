@@ -21,7 +21,7 @@ public class Sword : MonoBehaviour
         if(other.transform.gameObject != transform.gameObject)
         {
 
-            if(other.gameObject.layer == 9)
+            if(other.gameObject.layer == 9 || other.gameObject.layer == 13)
             {
                 Instantiate(wood, other.ClosestPoint(transform.position), Quaternion.identity);
             } 

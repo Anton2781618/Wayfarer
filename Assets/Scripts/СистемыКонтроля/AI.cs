@@ -128,7 +128,7 @@ public class AI
 
         dialogueTransfer.ClearButtons();
 
-        stage.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
+        // stage.Choices.ForEach(t => dialogueTransfer.CreateButtonsAnswers(t.Text, this));
     }
 
     public void CloseDialogueAndExitSoltuin()

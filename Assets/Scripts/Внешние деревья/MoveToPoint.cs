@@ -49,7 +49,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
             {
                 animator.SetFloat(m_SpeedId, 0, speedDampTime, Time.deltaTime);
 
-                if(animator.GetFloat(m_SpeedId) <= 0.05) return TaskStatus.Success;
+                if(animator.GetFloat(m_SpeedId) <= 0.3) return TaskStatus.Success;
             }
 
             speed = agent.desiredVelocity.magnitude;

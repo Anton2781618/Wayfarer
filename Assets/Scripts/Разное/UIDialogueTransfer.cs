@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +21,11 @@ public class UIDialogueTransfer : MonoBehaviour
         dialogText.text = value;
     }
 
-    public void CreateButtonsAnswers(string value, AI ai)
+    public void CreateButtonsAnswers(string value, DialogNode dialogNode)
     {
         DialogButtonTransfer buffer = Instantiate(questButt, dialogWindow.transform);
         
-        buffer.Init(value, index, ai);
+        buffer.Init(value, index, dialogNode);
 
         questButtons.Add(buffer);
 

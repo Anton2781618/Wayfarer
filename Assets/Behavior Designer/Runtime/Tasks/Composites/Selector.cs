@@ -24,6 +24,7 @@
         public override void OnChildExecuted(TaskStatus childStatus)
         {
             // Increase the child index and update the execution status after a child has finished running.
+            // Увеличьте дочерний индекс и обновите статус выполнения после завершения дочернего элемента.
             currentChildIndex++;
             executionStatus = childStatus;
         }

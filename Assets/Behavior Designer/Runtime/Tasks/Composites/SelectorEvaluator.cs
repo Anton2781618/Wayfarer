@@ -1,9 +1,13 @@
 ﻿namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("The selector evaluator is a selector task which reevaluates its children every tick. It will run the lowest priority child which returns a task status of running. " +
-                     "This is done each tick. If a higher priority child is running and the next frame a lower priority child wants to run it will interrupt the higher priority child. " +
-                     "The selector evaluator will return success as soon as the first child returns success otherwise it will keep trying higher priority children. This task mimics " +
-                     "the conditional abort functionality except the child tasks don't always have to be conditional tasks.")]
+    // [TaskDescription("The selector evaluator is a selector task which reevaluates its children every tick. It will run the lowest priority child which returns a task status of running. " +
+    //                  "This is done each tick. If a higher priority child is running and the next frame a lower priority child wants to run it will interrupt the higher priority child. " +
+    //                  "The selector evaluator will return success as soon as the first child returns success otherwise it will keep trying higher priority children. This task mimics " +
+    //                  "the conditional abort functionality except the child tasks don't always have to be conditional tasks.")]
+    [TaskDescription("Оценщик селектора - это задача селектора, которая переоценивает свои дочерние элементы каждый тик. Он запустит дочерний элемент с наименьшим приоритетом, который вернет статус задачи запущенной." +
+"Это делается каждый тик. Если запущен дочерний элемент с более высоким приоритетом и следующий кадр захочет запустить дочерний элемент с более низким приоритетом, он прервет дочерний элемент с более высоким приоритетом. " +
+"Оценщик селектора вернет успех, как только первый дочерний элемент вернет успех, в противном случае он будет продолжать пробовать дочерние элементы с более высоким приоритетом. Эта задача имитирует " +
+"функциональность условного прерывания, за исключением дочерних задач, не всегда должна быть условными задачами.")]
     [TaskIcon("{SkinColor}SelectorEvaluatorIcon.png")]
     public class SelectorEvaluator : Composite
     {

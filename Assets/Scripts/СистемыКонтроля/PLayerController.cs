@@ -86,14 +86,16 @@ public class PLayerController : AbstractBehavior
         if(Time.time - lastClicedTime > 1.5f)
         {
             noOfcliks = 0;
-            anim.SetBool("attack1", false);
-            anim.SetBool("attack2", false);
-            anim.SetBool("attack3", false);
+            anim.SetBool("Attack1", false);
+            anim.SetBool("Attack2", false);
+            anim.SetBool("Attack3", false);
         }
 
 
+            RotationPlayer();
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
+
             lastClicedTime = Time.time;
             
             if(Time.time <= nextFireTime) return;
@@ -105,17 +107,17 @@ public class PLayerController : AbstractBehavior
             
             if(noOfcliks >= 1)
             {
-                anim.SetBool("attack1", true);
+                anim.SetBool("Attack1", true);
             }
 
             if(noOfcliks >= 2)
             {
-                anim.SetBool("attack2", true);
+                anim.SetBool("Attack2", true);
             }
 
             if(noOfcliks >= 3)
             {
-                anim.SetBool("attack3", true);
+                anim.SetBool("Attack3", true);
             }
 
         }
@@ -135,7 +137,7 @@ public class PLayerController : AbstractBehavior
             anim.SetTrigger("Уврот назад");
         }
 
-        anim.SetBool("block", Input.GetKey(KeyCode.LeftShift));
+        anim.SetBool("Block", Input.GetKey(KeyCode.LeftShift));
 
         if(Input.GetKeyDown(KeyCode.E) && target != null)
         {

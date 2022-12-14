@@ -2,9 +2,12 @@ using System.Collections.Generic;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
-    [TaskDescription("Similar to the selector task, the priority selector task will return success as soon as a child task returns success. " +
-                      "Instead of running the tasks sequentially from left to right within the tree, the priority selector will ask the task what its priority is to determine the order. " +
-                      "The higher priority tasks have a higher chance at being run first.")]
+    // [TaskDescription("Similar to the selector task, the priority selector task will return success as soon as a child task returns success. " +
+    //                   "Instead of running the tasks sequentially from left to right within the tree, the priority selector will ask the task what its priority is to determine the order. " +
+    //                   "The higher priority tasks have a higher chance at being run first.")]
+    [TaskDescription("Аналогично задаче выбора, задача выбора приоритета вернет успех, как только дочерняя задача вернет успех. " +
+                        "Вместо того, чтобы выполнять задачи последовательно слева направо в дереве, селектор приоритетов спросит задачу, каков ее приоритет, чтобы определить порядок." +
+                        "Задачи с более высоким приоритетом имеют больше шансов быть запущенными первыми")]
     [TaskIcon("{SkinColor}PrioritySelectorIcon.png")]
     public class PrioritySelector : Composite
     {
@@ -44,6 +47,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         public override bool CanExecute()
         {
             // We can continue to execuate as long as we have children that haven't been executed and no child has returned success.
+            // Мы можем продолжать выполнение до тех пор, пока у нас есть дочерние элементы, которые не были выполнены, и ни один дочерний элемент не вернул успех.
             return currentChildIndex < children.Count && executionStatus != TaskStatus.Success;
         }
 

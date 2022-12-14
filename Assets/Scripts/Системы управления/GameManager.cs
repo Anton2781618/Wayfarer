@@ -159,16 +159,26 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-        
-        SwithCameraEnabled(!value);
-        SetIsControlingPlayer(!value);
-        Cursor.visible = value;
-        Cursor.lockState = !value ? CursorLockMode.Locked : CursorLockMode.None;
+
+        BlockPlayerControl(value);
     }
 
+    //метод отключает контроль у камеры и включает мышку
+    public void BlockPlayerControl(bool value)
+    {
+        SwithCameraEnabled(!value);
+        
+        SetIsControlingPlayer(!value);
+        
+        Cursor.visible = value;
+        
+        Cursor.lockState = !value ? CursorLockMode.Locked : CursorLockMode.None;
+
+    }
+
+    //метод парализует камеру
     public void SwithCameraEnabled(bool value)
     {
-        // cameraControll.enabled = value;
         if(!value)
         {
             cinemachine.m_XAxis.m_MaxSpeed = 0.0f;
@@ -185,6 +195,20 @@ public class GameManager : MonoBehaviour
     public void SetIsControlingPlayer(bool value)
     {
         isControlingPlayer = value;
+    }
+
+    //метод дает ссылку на диалоговое окно
+    public UIDialogueTransfer GetDialogWindow()
+    {
+        foreach (var item in uiWindows)
+        {
+            if(item.name == "UI Dialog Window")
+            {
+                return item.GetComponent<UIDialogueTransfer>();
+            } 
+        }
+
+        return null;
     }
 
     public void CommandReviveTarget()

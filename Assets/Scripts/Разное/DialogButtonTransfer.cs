@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tasks;
 using DS;
 using DS.Enumerations;
 using UnityEngine;
@@ -7,27 +8,20 @@ public class DialogButtonTransfer : MonoBehaviour
 {
     [SerializeField] private Text textButt;
     [SerializeField] private int indexDialog;
-    private AI ai;
+    private DialogNode dialogNode;
 
-    public void Init(string textMess, int index, AI ai)
+    public void Init(string textMess, int index, DialogNode dialogNode)
     {
         textButt.text = textMess;
 
         indexDialog = index;
 
-        this.ai = ai;
+        this.dialogNode = dialogNode;
     }
     public void SetChoice()
     {      
-        if(ai.stage.Choices[indexDialog].NextDialogue == null || ai.stage.Choices[indexDialog].NextDialogue.DialogueType == DSDialogueType.Action)
-        {
-            ai.CloseDialogueAndExitSoltuin();
-            
-            ai.NextStage(indexDialog);
-        }
-        else
-        {
-            ai.NextStage(indexDialog);
-        }
+        dialogNode.choise = indexDialog;
+
+        dialogNode.next = true;
     }    
 }

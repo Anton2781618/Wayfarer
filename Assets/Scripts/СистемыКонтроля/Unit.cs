@@ -134,7 +134,11 @@ public class Unit : AbstractBehavior
         operation.Invoke();
     }
 
-    public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
+    // public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
+    public override void Use(AbstractBehavior applicant)
+    {
+        gameObject.GetComponent<BehaviorDesigner.Runtime.BehaviorTree>().SetVariableValue("DialogState", true);
+    }
 
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 

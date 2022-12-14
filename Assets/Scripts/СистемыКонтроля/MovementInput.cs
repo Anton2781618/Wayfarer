@@ -81,8 +81,8 @@ public class MovementInput : MonoBehaviour
         // MovePelviusHeight2();
 
         //правая стопа ik позиция и поворот
-        anim.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
-        anim.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
+        anim.SetIKPositionWeight(AvatarIKGoal.RightFoot, anim.GetFloat(rightFootAnimVariableName));
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftFoot, anim.GetFloat(leftFootAnimVariableName));
 
         MoveFeetToIkPoin(AvatarIKGoal.RightFoot, rightFootIKPosition, rightFootIkRotation, ref lastRightFootPositionY);
         MoveFeetToIkPoin(AvatarIKGoal.LeftFoot, leftFootIkPosition, leftFootIkRotation, ref lastLeftFootPositionY);
@@ -123,6 +123,7 @@ public class MovementInput : MonoBehaviour
         anim.SetIKPosition(foot, targetIkPosition);
     }
 
+    //метод двигает корень персонажа в след за коллайдером с ограниченой скоростью
     private void MovePelviusHeight()
     {
         if(rightFootIKPosition == Vector3.zero || leftFootIkPosition == Vector3.zero || lastPelviusPositionY == 0)
@@ -164,6 +165,7 @@ public class MovementInput : MonoBehaviour
 //         anim.bodyPosition = NewPosition;
 //     }
 
+    //метод определяет положение ног
     private void FeetPositionSolver(Vector3 fromSkyPosition, ref Vector3 feetIkPosition, ref Quaternion feetIkRotation)
     {
         //секция расчта луча

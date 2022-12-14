@@ -18,12 +18,14 @@
         public override bool CanExecute()
         {
             // We can continue to execuate as long as we have children that haven't been executed and no child has returned failure.
+            // Мы можем продолжать выполнение до тех пор, пока у нас есть дочерние элементы, которые не были выполнены, и ни один дочерний элемент не вернул ошибку.
             return currentChildIndex < children.Count && executionStatus != TaskStatus.Failure;
         }
 
         public override void OnChildExecuted(TaskStatus childStatus)
         {
             // Increase the child index and update the execution status after a child has finished running.
+            // Увеличьте дочерний индекс и обновите статус выполнения после завершения дочернего элемента.
             currentChildIndex++;
             executionStatus = childStatus;
         }
@@ -31,6 +33,7 @@
         public override void OnConditionalAbort(int childIndex)
         {
             // Set the current child index to the index that caused the abort
+            // Установите для текущего дочернего индекса значение индекса, вызвавшего прерывание
             currentChildIndex = childIndex;
             executionStatus = TaskStatus.Inactive;
         }
@@ -38,6 +41,7 @@
         public override void OnEnd()
         {
             // All of the children have run. Reset the variables back to their starting values.
+            // Все дети убежали. Верните переменным их начальные значения.
             executionStatus = TaskStatus.Inactive;
             currentChildIndex = 0;
         }

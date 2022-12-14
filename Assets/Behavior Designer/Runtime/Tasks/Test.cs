@@ -9,6 +9,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 
     public class Test : Action
     {
-        
+        public override TaskStatus OnUpdate()
+        {
+            return TaskStatus.Inactive;
+        }
     }
 }

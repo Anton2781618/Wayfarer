@@ -7,11 +7,19 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
     [TaskCategory("Tutorial")]
 
 
-    public class Test : Action
+    public class Test : Conditional
     {
+        [SerializeField] private SharedGameObject target;
+
         public override TaskStatus OnUpdate()
         {
-            return TaskStatus.Inactive;
+                Debug.Log(target.Value.GetComponent<AbstractBehavior>().unitStats.curHP);
+            if(target.Value.GetComponent<AbstractBehavior>().unitStats.curHP > 0)
+            {
+                return TaskStatus.Success;
+            }
+
+            return TaskStatus.Failure;
         }
     }
 }

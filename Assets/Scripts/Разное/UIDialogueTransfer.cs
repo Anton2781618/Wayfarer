@@ -21,11 +21,11 @@ public class UIDialogueTransfer : MonoBehaviour
         dialogText.text = value;
     }
 
-    public void CreateButtonsAnswers(string value, DialogNode dialogNode)
+    public void CreateButtonsAnswers(string value, Brain brain)
     {
         DialogButtonTransfer buffer = Instantiate(questButt, dialogWindow.transform);
         
-        buffer.Init(value, index, dialogNode);
+        buffer.Init(value, index, brain);
 
         questButtons.Add(buffer);
 

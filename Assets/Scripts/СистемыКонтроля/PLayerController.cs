@@ -205,7 +205,6 @@ public class PLayerController : AbstractBehavior
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
-
     private void Gravity()
     {
         isGrounded = Physics.CheckSphere(groundCheckObject.position,0.4f, groundMask);
@@ -216,10 +215,12 @@ public class PLayerController : AbstractBehavior
 
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                velocity.y = Mathf.Sqrt(1.6f * -1 * -9.18f);
+                velocity.y = Mathf.Sqrt(5 * -1 * -9.18f);
 
                 anim.SetTrigger("jump");
             }
+            
+            return; 
         }
 
         velocity.y += -9.18f * Time.deltaTime; 

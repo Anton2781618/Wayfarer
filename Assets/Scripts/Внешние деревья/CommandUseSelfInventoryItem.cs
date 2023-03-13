@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// команда использовать предмет из своего инвинтаря по типу предмета
 namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 {
     [TaskCategory("Tutorial")]
@@ -10,11 +11,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
     {
         [SerializeField] private ItemData.ItemType itemType;
         
-        private AbstractBehavior unit;
+        private AbstractBehavior mySelf;
 
         public override void OnStart()
         {
-            unit = GetComponent<AbstractBehavior>();
+            mySelf = GetComponent<AbstractBehavior>();
         }
 
 
@@ -27,11 +28,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 
         private void UseSelfInventoryItem()
         {
-            InventoryItemInfo item =  unit.chest.GetInventoryForItemType(itemType);
+            InventoryItemInfo item =  mySelf.chest.GetInventoryForItemType(itemType);
             
-            item.Use(unit);
+            item.Use(mySelf);
 
-            unit.chest.RemoveAtChestGrid(item);
+            mySelf.chest.RemoveAtChestGrid(item);
         }
     }
 }

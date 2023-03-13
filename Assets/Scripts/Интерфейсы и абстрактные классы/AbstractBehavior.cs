@@ -39,7 +39,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     private void Start() 
     {
-        target = FindObjectOfType<PLayerController>();
+        // target = FindObjectOfType<PLayerController>();
 
         agent = GetComponent<NavMeshAgent>();
 

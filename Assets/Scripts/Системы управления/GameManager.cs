@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject Prefab;
     public static GameManager singleton;
     [SerializeField] private GameObject[] uiWindows;
-    [SerializeField] private Transform lor;
     public PLayerController pLayerController{get; private set;}
     private InventoryController inventoryController;
     private AbstractBehavior targetHumanForHelp;
@@ -20,7 +19,6 @@ public class GameManager : MonoBehaviour
     public CinemachineBrain cameraControll {get; private set;}
     public CinemachineFreeLook cinemachine {get; private set;}
     public bool isControlingPlayer {get; private set;} = true;
-    private UIDialogueTransfer uIDialogueTransfer;
 
     public enum windowsUI { HelpUI, InventoryUI, StatsUI, ChestUI, ContextMenuUI, InfoItemUI, DialogUI }
 
@@ -40,15 +38,23 @@ public class GameManager : MonoBehaviour
 
         cinemachine = FindObjectOfType<CinemachineFreeLook>();
 
-        uIDialogueTransfer = uiWindows[(int)windowsUI.DialogUI].GetComponent<UIDialogueTransfer>();
-
         CloseAllUiPanels();
     }
 
     private void Update() 
     {
+        InputHandler();
+    }
+
+    ///<summary>
+    ///обработчик нажатий, запускает метод в зависимости от кнопки 
+    ///</summary>
+    private void InputHandler()
+    {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
+            if(GetDialogWindow().isActiveAndEnabled) return;
+
             inventoryController.IsTreid = false;
 
             CollUIPanel(uiWindows[(int)windowsUI.InventoryUI], !uiWindows[(int)windowsUI.InventoryUI].activeSelf);
@@ -91,15 +97,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public UIDialogueTransfer GetDialogueTransfer()
-    {
-        return uIDialogueTransfer;
-    }
-    public Transform GetLor()
-    {
-        return lor;
-    }
-
+    ///<summary>
+    /// закрыть все панели
+    ///</summary>
     public void CloseAllUiPanels()
     {
         inventoryController.IsTreid = false;
@@ -109,12 +109,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    ///<summary>
+    /// открыть сундук
+    ///</summary>
     public void OpenChest()
     {
         CollUIPanel(uiWindows[(int)windowsUI.ChestUI], true);
         CollUIPanel(uiWindows[(int)windowsUI.InventoryUI], true);
     }
 
+    ///<summary>
+    /// открыть/закрыть контекстное меню
+    ///</summary>
     public GameObject SwithContextMenu(bool value)
     {
         CollUIPanel(uiWindows[(int)windowsUI.ContextMenuUI], value, false);
@@ -140,10 +147,13 @@ public class GameManager : MonoBehaviour
         CollUIPanel(value);
     }
 
-    //метод вклюает/выключает переданый UI
+    ///<summary>
+    /// метод вклюает/выключает переданый UI
+    ///</summary>
     public void CollUIPanel( GameObject obj, bool value = false, bool tagetoff = true)
     {
         obj.SetActive(value);
+
         SetPLayerController(value);
         
         if(tagetoff)TargetOff();
@@ -173,7 +183,6 @@ public class GameManager : MonoBehaviour
         Cursor.visible = value;
         
         Cursor.lockState = !value ? CursorLockMode.Locked : CursorLockMode.None;
-
     }
 
     //метод парализует камеру
@@ -200,15 +209,7 @@ public class GameManager : MonoBehaviour
     //метод дает ссылку на диалоговое окно
     public UIDialogueTransfer GetDialogWindow()
     {
-        foreach (var item in uiWindows)
-        {
-            if(item.name == "UI Dialog Window")
-            {
-                return item.GetComponent<UIDialogueTransfer>();
-            } 
-        }
-
-        return null;
+        return uiWindows[(int)windowsUI.DialogUI].GetComponent<UIDialogueTransfer>();
     }
 
     public void CommandReviveTarget()

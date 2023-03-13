@@ -37,7 +37,7 @@ namespace BehaviorDesigner.Runtime.Tasks
 
             dialogueTransfer.ClearButtons();
 
-            answers.ForEach(answer => dialogueTransfer.CreateButtonsAnswers(answer, this));
+            // answers.ForEach(answer => dialogueTransfer.CreateButtonsAnswers(answer, this));
         }
 
         public override bool CanExecute()

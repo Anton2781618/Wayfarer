@@ -6,22 +6,29 @@ using UnityEngine.UI;
 
 public class DialogButtonTransfer : MonoBehaviour
 {
-    [SerializeField] private Text textButt;
-    [SerializeField] private int indexDialog;
-    private DialogNode dialogNode;
+    [SerializeField] private Text _textButt;
+    [SerializeField] private int _indexDialog;
+    private Brain _brain;
 
-    public void Init(string textMess, int index, DialogNode dialogNode)
+    public void Init(string textMess, int index, Brain brain)
     {
-        textButt.text = textMess;
+        _textButt.text = textMess;
 
-        indexDialog = index;
+        _indexDialog = index;
 
-        this.dialogNode = dialogNode;
+        this._brain = brain;
     }
     public void SetChoice()
     {      
-        dialogNode.choise = indexDialog;
-
-        dialogNode.next = true;
+        if(_brain.stage.Choices[_indexDialog].NextDialogue == null || _brain.stage.Choices[_indexDialog].NextDialogue.DialogueType == DSDialogueType.Action)
+        {
+            _brain.CloseDialogueAndExitSoltuin();
+            
+            _brain.NextStage(_indexDialog);
+        }
+        else
+        {
+            _brain.NextStage(_indexDialog);
+        }
     }    
 }

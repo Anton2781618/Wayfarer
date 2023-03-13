@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//проверить инвентарь на предмет по представлению
 namespace BehaviorDesigner.Runtime.Tasks.Tutorials
 {
     [TaskCategory("Tutorial")]

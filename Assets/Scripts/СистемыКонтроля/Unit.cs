@@ -9,6 +9,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using static ICanTakeDamage;
 using static Initializer;
+using Unity.VisualScripting;
 
 
 public class Unit : AbstractBehavior
@@ -18,7 +19,7 @@ public class Unit : AbstractBehavior
     public List<GameObject> objectsForOperations;
     private delegate void Operation();
     [SerializeField] protected Canvas unitCanvas;
-    [SerializeField] public AI aI = new AI();
+    [SerializeField] public Brain brain = new Brain();
     public DSAction currentAction;
     public DSDialogueContainerSO dialogTEST;
     private ModelDate CurrentModelData;
@@ -42,22 +43,44 @@ public class Unit : AbstractBehavior
         
         chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
-        aI.Init(this, anim);
+        brain.Init(this, anim);
     }    
+
+    private void Update() => brain.Analyzer();
+
+    public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
+    
+    //метод принять решение, передает в мозг решение
+    public void SetSolution(DSDialogueContainerSO solution)
+    {
+        if(solution.UngroupedDialogues[0].DialogueType == DSDialogueType.Action)
+        {
+            brain.StartAction(solution);
+        }
+        else
+        {
+            CommandStartDialogue(solution);
+        }
+    }
 
     //методы для работы слуха
     private void OnTriggerEnter(Collider other) 
     {
-        
-        if(!aI.GetHearing().hearObjectsList.Contains(other.gameObject)) aI.GetHearing().hearObjectsList.Add(other.gameObject);
+        if(!brain.GetHearing().hearObjectsList.Contains(other.gameObject)) 
+        {
+            brain.GetHearing().hearObjectsList.Add(other.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other) 
     {
-        
-        if(aI.GetHearing().hearObjectsList.Contains(other.gameObject)) aI.GetHearing().hearObjectsList.Remove(other.gameObject);
+        if(brain.GetHearing().hearObjectsList.Contains(other.gameObject)) 
+        {
+            brain.GetHearing().hearObjectsList.Remove(other.gameObject);
+        }
     }
-
+    
+    //подсветить себя
     public override void ShowOutline(bool value)
     {
         if(state == States.Мертв)
@@ -69,12 +92,12 @@ public class Unit : AbstractBehavior
         SowHealthBar(value);
     }
 
+    //получить урон
     public override void TakeDamage(AbstractBehavior enemy, int value)
     {
         base.TakeDamage(enemy, value);
-
-        aI.SetAttackSolution();
     }
+
     public void TakeDamage(int value)
     {
         unitStats.curHP -= value;
@@ -98,8 +121,6 @@ public class Unit : AbstractBehavior
 
         Die();
     }
-
-    
 
     public override void SowHealthBar(bool value)
     {
@@ -134,10 +155,14 @@ public class Unit : AbstractBehavior
         operation.Invoke();
     }
 
-    // public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
-    public override void Use(AbstractBehavior applicant)
+
+    //поварачивает канвас юнита лицом к игроку
+    private void RotateCanvas()
     {
-        gameObject.GetComponent<BehaviorDesigner.Runtime.BehaviorTree>().SetVariableValue("DialogState", true);
+        if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
+        {
+            unitCanvas.transform.rotation = Camera.main.transform.rotation;
+        }
     }
 
     #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
@@ -279,14 +304,7 @@ public class Unit : AbstractBehavior
         return new Vector3(x, y + 1, z);
     }
 
-    //поварачивает канвас юнита лицом к игроку
-    private void RotateCanvas()
-    {
-        if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
-        {
-            unitCanvas.transform.rotation = Camera.main.transform.rotation;
-        }
-    }
+    
 
     public void SetCompleteCommand(int dialogueIndex = 0)
     {
@@ -296,7 +314,7 @@ public class Unit : AbstractBehavior
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
-        aI.NextStage(dialogueIndex);
+        brain.NextStage(dialogueIndex);
     }
 
     public override void Die()
@@ -317,14 +335,14 @@ public class Unit : AbstractBehavior
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    private bool FindTarget()
+    //метод находит таргеты
+    public bool FindTarget(LayerMask layerMask)
     {
-        Eyes eyes = aI.GetEyes();
+        Eyes eyes = brain.GetEyes();
 
-        Mamry mamry = aI.GetMamry();
-        
+        Mamry mamry = brain.GetMamry();
 
-        eyes.SetTargetMaskForEyes(CurrentModelData.targetMask);         
+        eyes.SetTargetMaskForEyes(layerMask);         
 
         if(eyes.visileTargets.Count > 0)
         {
@@ -339,7 +357,7 @@ public class Unit : AbstractBehavior
 
         if(mamry.mamryTargets.Count > 0)
         {
-            if(mamry.mamryTargets[0] == null || (CurrentModelData.targetMask.value & (1 << mamry.mamryTargets[0].gameObject.layer)) == 0)
+            if(mamry.mamryTargets[0] == null || (layerMask.value & (1 << mamry.mamryTargets[0].gameObject.layer)) == 0)
             {
                 mamry.mamryTargets.RemoveAt(0);
 
@@ -391,33 +409,12 @@ public class Unit : AbstractBehavior
             needMoving = false;
         }
         
-        if(FindTarget()) SetCompleteCommand();
+        if(FindTarget(CurrentModelData.targetMask)) SetCompleteCommand();
     }
-
     
-    private void TestTime()
-    {
-        System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
-     
-        stopWatch.Start();
-
-        // FindTarget();
-        System.Threading.Thread.Sleep(100);
-
-        stopWatch.Stop();
-
-        // Get the elapsed time as a TimeSpan value.
-        TimeSpan ts = stopWatch.Elapsed;
-
-        // Format and display the TimeSpan value.
-        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
-
-        Debug.Log("Ticks " + ts.Ticks);
-    }
-
     private void CommandHoldPositionFindTheTarget()
     {
-        if(FindTarget()) SetCompleteCommand();
+        if(FindTarget(CurrentModelData.targetMask)) SetCompleteCommand();
     }
 
     //стоять на месте
@@ -469,12 +466,10 @@ public class Unit : AbstractBehavior
     {
         if(Time.time >= nextHit)
         {
-            
             if(Vector3.Distance(transform.position, target.transform.position) < agent.stoppingDistance)
             {
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, target.transform.position.z - 1.5f), 1 * Time.deltaTime);
             }
-            
 
             nextHit = Time.time + cooldown;
 
@@ -485,7 +480,7 @@ public class Unit : AbstractBehavior
     //метод запускает рабочий/производственный цикл
     private void CommandGetToWork()
     {
-        IWorkplace newTarget = aI.GetMamry().workplace;
+        IWorkplace newTarget = brain.GetMamry().workplace;
 
         if(newTarget.WorkIsFinish)
         {
@@ -516,13 +511,13 @@ public class Unit : AbstractBehavior
 
     private void CommandStartDialogue()
     {
-        aI.StartDialogue(CurrentModelData.dialogue);
+        brain.StartDialogue(CurrentModelData.dialogue);
 
         SetCompleteCommand();
     }
     public void CommandStartDialogue(DSDialogueContainerSO dialog)
     {
-        aI.StartDialogue(dialog);
+        brain.StartDialogue(dialog);
 
         SetCompleteCommand();
     }
@@ -550,9 +545,9 @@ public class Unit : AbstractBehavior
 
     private void CommandMoveToWork()
     {
-        MoveToPoint(aI.GetMamry().workplace.workPoint.position);
+        MoveToPoint(brain.GetMamry().workplace.workPoint.position);
 
-        CheckDistanceAndSwitchStage(aI.GetMamry().workplace.workPoint.position);
+        CheckDistanceAndSwitchStage(brain.GetMamry().workplace.workPoint.position);
     }
     
     private void CheckDistanceAndSwitchStage(Vector3 point)
@@ -583,6 +578,7 @@ public class Unit : AbstractBehavior
         SetCompleteCommand(chest.CheckInventoryForItemsType(CurrentModelData.itemType));
     }
 
+    //! перенес
     private void CommandUseSelfInventoryItem()
     {
         InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemType);
@@ -594,6 +590,7 @@ public class Unit : AbstractBehavior
         SetCompleteCommand();
     }
 
+    //! перенес
     private void CommandTakeItemFromTarget()
     {
         if(target == null) Debug.Log("нет таргета");
@@ -631,7 +628,7 @@ public class Unit : AbstractBehavior
 
     private void CommandTaskToGroup()
     {
-        foreach (var person in aI.GetMamry().groupMembers)
+        foreach (var person in brain.GetMamry().groupMembers)
         {
             person.target = target;
 
@@ -645,7 +642,7 @@ public class Unit : AbstractBehavior
     {
         target = null;
 
-        aI.GetMamry().mamryTargets.Clear();
+        brain.GetMamry().mamryTargets.Clear();
 
         solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
 

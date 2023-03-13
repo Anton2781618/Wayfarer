@@ -22,7 +22,7 @@ namespace DS
         [SerializeField] private int selectedDialogueIndex;
 
         public int Choice {get; set;} = 0;
-        private UIDialogueTransfer dialogueTransfer;
+        private DialogueWindowUI dialogueTransfer;
 
         public AbstractBehavior targetUnit;
 

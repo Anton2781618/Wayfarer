@@ -207,9 +207,9 @@ public class GameManager : MonoBehaviour
     }
 
     //метод дает ссылку на диалоговое окно
-    public UIDialogueTransfer GetDialogWindow()
+    public DialogueWindowUI GetDialogWindow()
     {
-        return uiWindows[(int)windowsUI.DialogUI].GetComponent<UIDialogueTransfer>();
+        return uiWindows[(int)windowsUI.DialogUI].GetComponent<DialogueWindowUI>();
     }
 
     public void CommandReviveTarget()

@@ -8,7 +8,7 @@ using UnityEngine;
 public class Brain
 {   
     private Unit _unit;
-    private UIDialogueTransfer _dialogueTransfer;
+    private DialogueWindowUI _dialogueTransfer;
     [SerializeField] private Eyes _eyes = new Eyes();
     [SerializeField] private Mamry _mamry = new Mamry();
     [SerializeField] private Hearing _hearing = new Hearing();

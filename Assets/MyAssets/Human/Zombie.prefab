@@ -236,6 +236,59 @@ Transform:
   m_Father: {fileID: 7111499291968254223}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &136529607212692184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3518362639180863081}
+  - component: {fileID: 5389300625501627758}
+  m_Layer: 5
+  m_Name: UI Bars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &3518362639180863081
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136529607212692184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1839431911240749413}
+  - {fileID: 6734520804268188169}
+  m_Father: {fileID: 397258959806675132}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5389300625501627758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136529607212692184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd567ffe5d88cf498efd44031caeced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _HpSlider: {fileID: 3278402671800334565}
+  _MpSlider: {fileID: 621551620569140707}
 --- !u!1 &161947430025982832
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +323,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1057,7 +1110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &60860937700455560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1784,7 +1837,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2815,7 +2868,8 @@ GameObject:
   - component: {fileID: 7126713242284042683}
   - component: {fileID: 2562537170870461055}
   - component: {fileID: 4184994061941950309}
-  - component: {fileID: 8618089908335005470}
+  - component: {fileID: 777367939}
+  - component: {fileID: 777367940}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -2905,6 +2959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8423926cd8872654982f225ebb7c2a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 8691770235129940575}
   unitStats:
     level: 1
     maxExperience: 500
@@ -2917,40 +2972,13 @@ MonoBehaviour:
     experienceForKilling: 50
     hunger: 100
     sleep: 100
-  HpSlider: {fileID: 3278402671800334565}
-  MpSlider: {fileID: 621551620569140707}
-  state: 2
-  anim: {fileID: 0}
-  sword: {fileID: 0}
+  _hpView: {fileID: 5389300625501627758}
+  _state: 2
+  _sword: {fileID: 0}
   solutions: []
   objectsForOperations: []
-  unitCanvas: {fileID: 1234352913876547880}
-  aI:
-    eyes:
-      viewRadiusEyes: 4
-      viewAngleEyes: 130
-      targetMaskForEyes:
-        serializedVersion: 2
-        m_Bits: 136
-      obstaclMaskForEyes:
-        serializedVersion: 2
-        m_Bits: 64
-      visileTargets: []
-    mamry:
-      workplace: {fileID: 0}
-      mamryTargets: []
-      groupMembers: []
-    hearing:
-      hearObjectsList: []
-    AttackSolution:
-      importance: 101
-      solution: {fileID: 11400000, guid: 6f9fdf900b83da7499aa735489a8b5c6, type: 2}
-    currentSolution:
-      importance: 0
-      solution: {fileID: 0}
-  currentAction: 11
-  dialogTEST: {fileID: 11400000, guid: 74aca3a58a28d2b4eaadb305e3a1ec45, type: 2}
   textMesh: {fileID: 0}
+  currentAction: 11
   currentTerrain: {fileID: 0}
   map:
   - pos: {x: 6.25, y: 6.25}
@@ -3145,8 +3173,24 @@ MonoBehaviour:
   - pos: {x: 93.75, y: 93.75}
     size: {x: 12.5, y: 12.5}
     cubePref: {fileID: 0}
+  brain:
+    _eyes:
+      viewRadiusEyes: 4
+      viewAngleEyes: 130
+      targetMaskForEyes:
+        serializedVersion: 2
+        m_Bits: 136
+      obstaclMaskForEyes:
+        serializedVersion: 2
+        m_Bits: 64
+      visileTargets: []
+    _mamry:
+      workplace: {fileID: 0}
+      mamryTargets: []
+      groupMembers: []
+    _hearing:
+      hearObjectsList: []
   posGame: {fileID: 0}
-  testlist: 
 --- !u!114 &2562537170870461055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3185,7 +3229,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &8618089908335005470
+--- !u!114 &777367939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3194,37 +3238,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 2680946358662613663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Script: {fileID: 11500000, guid: efe58df89b5b74a97a123b5ed2b70422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 11400000, guid: a492c4783c0fe9243a54a872af8ec2e5, type: 2}
-  mBehaviorSource:
-    behaviorName: Behavior
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"returnedObject","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"hunger","IsShared":true,"SinglemValue":85},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"DialogState","IsShared":true,"BooleanmValue":false}]}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects: []
-        byteData: 
-        byteDataArray: 
-      Version: 1.6.8
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  _data:
+    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: 6326505837a6ef34e8c69f72efc241fc, type: 2}
+--- !u!114 &777367940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680946358662613663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Plyer","value":null,"typeHandle":{"Identification":"PLayerController,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
 --- !u!1 &2717945898736135240
 GameObject:
   m_ObjectHideFlags: 0
@@ -3944,7 +3980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &397258959806675132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3958,8 +3994,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 60860937700455560}
-  - {fileID: 1839431911240749413}
-  - {fileID: 6734520804268188169}
+  - {fileID: 3518362639180863081}
   m_Father: {fileID: 3350522193225584677}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4055,18 +4090,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4141031769992457187}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.004239856, y: -0.0041364445, z: -0.004136445}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 310155146324117897}
   - {fileID: 5964815975425924456}
-  m_Father: {fileID: 397258959806675132}
-  m_RootOrder: 1
+  m_Father: {fileID: 3518362639180863081}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.063}
+  m_AnchoredPosition: {x: 0, y: -0.06300163}
   m_SizeDelta: {x: 160, y: 34.4038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &621551620569140707
@@ -4368,18 +4403,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4447663655241229346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.004239856, y: -0.0041364445, z: -0.004136445}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3864815713873726891}
   - {fileID: 6948504011806571523}
-  m_Father: {fileID: 397258959806675132}
-  m_RootOrder: 0
+  m_Father: {fileID: 3518362639180863081}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0}
   m_SizeDelta: {x: 160, y: 34.4038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3278402671800334565

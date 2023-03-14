@@ -25,23 +25,18 @@ public class UnitStats
 
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 {
-    public UnitStats unitStats;
-    protected ICanUse target;
-    [SerializeField] protected Slider HpSlider;   
-    [SerializeField] protected Slider MpSlider;   
-    [SerializeField] protected States state = States.Патруль;
-    
     public Animator anim;
-    
-    protected NavMeshAgent agent;
-    [SerializeField] private Sword sword;
+    public UnitStats unitStats;
+    protected ICanUse _target;
+    protected NavMeshAgent _agent;
     public Chest chest{get; private set;}
+    [SerializeField] protected HPWindowUI _hpView;   
+    [SerializeField] protected States _state = States.Патруль;
+    [SerializeField] private Sword _sword;
 
     private void Start() 
     {
-        // target = FindObjectOfType<PLayerController>();
-
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
 
         anim = GetComponent<Animator>();
         
@@ -49,12 +44,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         
         Init();
 
-        // unitStats.curHP = unitStats.maxHP;
-
-        HpSlider.maxValue = unitStats.maxHP;
-
-        HpSlider.value = unitStats.curHP;
-
+        _hpView.InitHp(unitStats.curHP, unitStats.maxHP);
     }
 
     public virtual void Init()
@@ -63,11 +53,11 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     public virtual void TakeDamage(AbstractBehavior enemy, int value)
     {
-        target = enemy;
+        _target = enemy;
 
         unitStats.curHP -= value;
 
-        HpSlider.value -= value;
+        _hpView.SetHpValue(value);
         
         if(unitStats.curHP <= 0)
         {
@@ -83,6 +73,8 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     {
         UseMana(5);
     }
+
+    //использовать ману
     public void UseMana(int value)
     {
         if(value > unitStats.curMana)
@@ -93,7 +85,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         unitStats.curMana -= value;
 
-        MpSlider.value -= value;
+        _hpView.SetManaValue(value);
 
         if(unitStats.curMana < 0) unitStats.curMana = 0;
     }
@@ -104,14 +96,15 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         Die();
     }
-
+    
+    //умереть
     public virtual void Die()
     {
         // if(agent)agent.enabled = false;
 
         anim.SetBool("die", true);
         
-        state = States.Мертв;
+        _state = States.Мертв;
 
         this.enabled = false;
 
@@ -119,48 +112,61 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     }
 
     public UnitStats GetStats() => unitStats;
-    public States GetCurrentUnitState() => state;
+    public States GetCurrentUnitState() => _state;
 
     public void SetHitBoolOFF()
     {
-        if(sword == null)
+        if(_sword == null)
         {
             Debug.Log("У " + transform.name + " нет оружия");
             return;
         }
-        sword.SetHitBoolOFF();
+        _sword.SetHitBoolOFF();
     }
 
     public void SetHitBoolOn()
     {
-        if(sword == null)
+        if(_sword == null)
         {
             Debug.Log("У " + transform.name + " нет оружия");
             return;
         }
-        sword.SetHitBoolOn();
+
+        _sword.SetHitBoolOn();
     }
 
-    public ICanUse GetTarget() => target;
+    public ICanUse GetTarget() => _target;
+    // public void SetTarget(ICanUse newTarget) => _target = newTarget;
+    public void SetTarget(ICanUse newTarget)
+    {
+
+        _target = newTarget;
+
+        Debug.Log(_target + " " + newTarget);
+    } 
 
     public void Revive()
     {
-        if(state != States.Мертв)
+        if(_state != States.Мертв)
         {
             Debug.Log(transform.name + " живой");
             return;
         }
 
-        state = States.Патруль;
+        _state = States.Патруль;
+
         StartCoroutine(WaihtRevive());
         
         unitStats.curHP = unitStats.maxHP;
-        HpSlider.value = unitStats.maxHP;
+
+        _hpView.SetHpValue(unitStats.maxHP);
 
         anim.SetTrigger("Revive");
+
         anim.SetBool("die", false);
         
         transform.GetComponent<Collider>().enabled = true;
+
         this.enabled = true;
     }
 
@@ -177,7 +183,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
                 continue;  
             }   
 
-            if(agent)agent.enabled = true;  
+            if(_agent)_agent.enabled = true;  
 
             end = true; 
         }
@@ -189,14 +195,14 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         {
             unitStats.curHP = unitStats.maxHP;
 
-            HpSlider.value = unitStats.curHP;
+            _hpView.SetHpValue(unitStats.curHP);
 
             return;
         }
 
         unitStats.curHP += value;
 
-        HpSlider.value = unitStats.curHP;
+        _hpView.SetHpValue(unitStats.curHP);
     }
 
     public void RestoreMana(int value)
@@ -204,16 +210,19 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         if((value + unitStats.curMana) > unitStats.maxMana)
         {
             unitStats.curMana = unitStats.maxMana;
-            MpSlider.value = unitStats.curMana;
+            
+            _hpView.SetManaValue(unitStats.curMana);
             return;
         }
+        
         unitStats.curMana += value;
-        MpSlider.value = unitStats.curMana;
+        
+        _hpView.SetManaValue(unitStats.curMana);
     }
 
     public int GetCurHP() => unitStats.curHP;
 
-    public States GetStateNPC() => state;
+    public States GetStateNPC() => _state;
 
     public Animator GetAnim() => anim;
 
@@ -228,10 +237,5 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     public virtual void ShowOutline(bool value)
     {
-    }
-
-    public virtual void ShowTest()
-    {
-        Debug.Log("базовый");
     }
 }

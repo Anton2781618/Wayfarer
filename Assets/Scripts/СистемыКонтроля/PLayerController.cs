@@ -25,12 +25,6 @@ public class PLayerController : AbstractBehavior
 
         if(!controller)controller = GetComponent<CharacterController>();
 
-        if(!HpSlider) HpSlider = Initializer.singleton.InitObject(InitializerNames.ХПслайдер_Плеера).GetComponent<Slider>();
-
-        if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
-
-        if(!MpSlider) MpSlider = Initializer.singleton.InitObject(InitializerNames.МПслайдер_Плеера).GetComponent<Slider>();
-
         List<ItemGrid> buferGrids = new List<ItemGrid>();
 
         buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Шлем).GetComponent<ItemGrid>());
@@ -139,26 +133,26 @@ public class PLayerController : AbstractBehavior
 
         anim.SetBool("Block", Input.GetKey(KeyCode.LeftShift));
 
-        if(Input.GetKeyDown(KeyCode.E) && target != null)
+        if(Input.GetKeyDown(KeyCode.E) && _target != null)
         {
-            target.Use(this);
-            target = null;
+            _target.Use(this);
+            _target = null;
         }       
     }
     
     //метод пускает сферу вперед и проверяет что в радиусе по маске
     private void ForwardCheckOversphere()
     {
-        if(target != null)
+        if(_target != null)
         {
             try 
             {
-                target.ShowOutline(false);    
+                _target.ShowOutline(false);    
             }       
             catch (MissingReferenceException){}
         }
 
-        target = null;
+        _target = null;
         
         float distanceToHit = 4;     
         
@@ -182,9 +176,9 @@ public class PLayerController : AbstractBehavior
                 }
             }            
 
-            target = hitObject.transform.GetComponent<ICanUse>();
+            _target = hitObject.transform.GetComponent<ICanUse>();
  
-            target.ShowOutline(true);
+            _target.ShowOutline(true);
         }
     }
 

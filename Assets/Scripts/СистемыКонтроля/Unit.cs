@@ -14,32 +14,27 @@ using Unity.VisualScripting;
 
 public class Unit : AbstractBehavior
 {
-    
     public List<SolutionInfo> solutions;
     public List<GameObject> objectsForOperations;
-    private delegate void Operation();
-    [SerializeField] protected Canvas unitCanvas;
-    [SerializeField] public Brain brain = new Brain();
-    public DSAction currentAction;
-    public DSDialogueContainerSO dialogTEST;
-    private ModelDate CurrentModelData;
-
     public TMPro.TextMeshPro textMesh; 
-
+    public DSAction currentAction;
+    public Terrain currentTerrain;//!ждет доработки
+    public List<MapSquare> map = new List<MapSquare>();
+    private ModelDate CurrentModelData;
     //двигается ли персонаж сейчас
     private bool needMoving = false;
     private bool needCreateMap = true;
     private Vector3 PintToWalke;
+    private delegate void Operation();
+    [SerializeField] private Brain brain = new Brain();
 
     //участок земли 
-    public Terrain currentTerrain;//!ждет доработки
-    public List<MapSquare> map = new List<MapSquare>();
 
     public override void Init()
     {
         base.Init();
         
-        agent.updateRotation = false;
+        _agent.updateRotation = false;
         
         chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
@@ -48,8 +43,8 @@ public class Unit : AbstractBehavior
 
     private void Update() => brain.Analyzer();
 
-    public override void Use(AbstractBehavior applicant) => CommandStartDialogue(dialogTEST);
-    
+    public override void Use(AbstractBehavior applicant) => CustomEvent.Trigger(this.gameObject, "StartDialogue");
+
     //метод принять решение, передает в мозг решение
     public void SetSolution(DSDialogueContainerSO solution)
     {
@@ -83,7 +78,7 @@ public class Unit : AbstractBehavior
     //подсветить себя
     public override void ShowOutline(bool value)
     {
-        if(state == States.Мертв)
+        if(_state == States.Мертв)
         {
             SowHealthBar(false);    
 
@@ -98,13 +93,15 @@ public class Unit : AbstractBehavior
         base.TakeDamage(enemy, value);
     }
 
+    //получить урон, вторая перегрузка
     public void TakeDamage(int value)
     {
         unitStats.curHP -= value;
 
-        HpSlider.value -= value;
+        _hpView.SetHpValue(value);
         
         Debug.Log(unitStats.curHP);
+
         if(unitStats.curHP <= 0)
         {
             StartCoroutine(DieCurutina());
@@ -124,16 +121,10 @@ public class Unit : AbstractBehavior
 
     public override void SowHealthBar(bool value)
     {
-        if(unitCanvas == null)
-        {
-            Debug.Log("у " + transform.name + " не установлен unitCanvas");
-
-            return;
-        }
-        unitCanvas.gameObject.SetActive(value);
+        _hpView.gameObject.SetActive(value);
     }
 
-    public States GetUnityState() => state;
+    public States GetUnityState() => _state;
 
     //установить действие
     public void SetAction(DSAction action, ModelDate modelDate)
@@ -148,7 +139,7 @@ public class Unit : AbstractBehavior
     //выполнить текущую задачу
     public void ExecuteCurrentCommand()
     {
-        if(unitCanvas.gameObject.activeSelf)RotateCanvas();
+        if(_hpView.gameObject.activeSelf)RotateHpBar();
 
         Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, currentAction.ToString());
 
@@ -157,11 +148,11 @@ public class Unit : AbstractBehavior
 
 
     //поварачивает канвас юнита лицом к игроку
-    private void RotateCanvas()
+    private void RotateHpBar()
     {
-        if(unitCanvas.transform.rotation != Camera.main.transform.rotation)
+        if(_hpView.transform.rotation != Camera.main.transform.rotation)
         {
-            unitCanvas.transform.rotation = Camera.main.transform.rotation;
+            _hpView.transform.rotation = Camera.main.transform.rotation;
         }
     }
 
@@ -170,13 +161,13 @@ public class Unit : AbstractBehavior
     //двигаться к точке, пересчитывая путь
     private void MoveToPoint(Vector3 point)
     {
-        agent.SetDestination(point);
+        _agent.SetDestination(point);
 
-        SetAnimationRun(Vector3.Distance(transform.position, point) > agent.stoppingDistance);
+        SetAnimationRun(Vector3.Distance(transform.position, point) > _agent.stoppingDistance);
 
-        if(agent.path.corners.Length > 1)
+        if(_agent.path.corners.Length > 1)
         {
-            FaceToPoint(agent.path.corners[1]);
+            FaceToPoint(_agent.path.corners[1]);
         }
     }
 
@@ -364,9 +355,9 @@ public class Unit : AbstractBehavior
                 return false;
             }
             
-            target = mamry.mamryTargets[0].GetComponent<ICanUse>();
+            _target = mamry.mamryTargets[0].GetComponent<ICanUse>();
 
-            Debug.Log("найден таргет " + target);
+            Debug.Log("найден таргет " + _target);
             
             return true;
         }
@@ -374,7 +365,6 @@ public class Unit : AbstractBehavior
         return false;
     }
 
-    public void SetTarget(ICanUse newTarget) => target = newTarget;
     public void SetAnimationWalk(bool value) => anim.SetBool("Walk", value);
     public void SetAnimationRun(bool value) => anim.SetBool("Run", value);
     public void SetAnimationGetToWork(bool value) => anim.SetBool("Work", value);
@@ -393,7 +383,7 @@ public class Unit : AbstractBehavior
             needCreateMap = false;
         }
 
-        if(!agent.pathPending && agent.remainingDistance < agent.stoppingDistance && !needMoving)
+        if(!_agent.pathPending && _agent.remainingDistance < _agent.stoppingDistance && !needMoving)
         // if(Vector3.Distance(transform.position, path.corners[path.corners.Length - 1]) <= 1.5f && !needMoving)
         {
             PintToWalke = CreatePoints(GetNewRandomPointOnMap());
@@ -427,7 +417,7 @@ public class Unit : AbstractBehavior
     //метод команда атакавать таргет (привязана к системе диалогов)
     public void CommandAttackTheTarget()
     {
-        if(target == null)
+        if(_target == null)
         {
             Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
             
@@ -436,23 +426,23 @@ public class Unit : AbstractBehavior
             return;
         }
         
-        AbstractBehavior buferTarget = target as AbstractBehavior;
+        AbstractBehavior buferTarget = _target as AbstractBehavior;
 
         if(buferTarget.GetCurrentUnitState() == States.Мертв)
         {
-            state = States.Патруль;
+            _state = States.Патруль;
             
             SetCompleteCommand();
             
             return;
         }
 
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))MoveToPoint(target.transform.position);
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))MoveToPoint(_target.transform.position);
 
-        if(Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance ) 
+        if(Vector3.Distance(transform.position, _target.transform.position) <= _agent.stoppingDistance ) 
         {
 
-            FaceToPoint(target.transform.position);
+            FaceToPoint(_target.transform.position);
 
             SetAnimationRun(false);            
             
@@ -466,9 +456,9 @@ public class Unit : AbstractBehavior
     {
         if(Time.time >= nextHit)
         {
-            if(Vector3.Distance(transform.position, target.transform.position) < agent.stoppingDistance)
+            if(Vector3.Distance(transform.position, _target.transform.position) < _agent.stoppingDistance)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, target.transform.position.z - 1.5f), 1 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, _target.transform.position.z - 1.5f), 1 * Time.deltaTime);
             }
 
             nextHit = Time.time + cooldown;
@@ -531,9 +521,9 @@ public class Unit : AbstractBehavior
 
     private void CommandMoveToTarget()
     {
-        MoveToPoint(target.transform.position);
+        MoveToPoint(_target.transform.position);
 
-        CheckDistanceAndSwitchStage(target.transform.position);
+        CheckDistanceAndSwitchStage(_target.transform.position);
     }
     
     private void CommandMoveToCoordinates()
@@ -552,7 +542,7 @@ public class Unit : AbstractBehavior
     
     private void CheckDistanceAndSwitchStage(Vector3 point)
     {
-        if(Vector3.Distance(transform.position, point) <= agent.stoppingDistance)
+        if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance)
         {
             SetCompleteCommand();
         }
@@ -560,9 +550,9 @@ public class Unit : AbstractBehavior
 
     private void CommandCheckTargetInventoryForItem()
     {
-        if(target == null) Debug.Log("нет таргета");
+        if(_target == null) Debug.Log("нет таргета");
 
-        bool res = target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
+        bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
         SetCompleteCommand(res ? 0 : 1);
     }
     
@@ -593,9 +583,9 @@ public class Unit : AbstractBehavior
     //! перенес
     private void CommandTakeItemFromTarget()
     {
-        if(target == null) Debug.Log("нет таргета");
+        if(_target == null) Debug.Log("нет таргета");
 
-        Chest targetChest = target.transform.GetComponent<Chest>();
+        Chest targetChest = _target.transform.GetComponent<Chest>();
 
         InventoryItemInfo item = targetChest.GetInventoryItem(CurrentModelData.itemData);
 
@@ -608,9 +598,9 @@ public class Unit : AbstractBehavior
 
     private void CommandAddItemToTargetInventory()
     {
-        if(target == null) Debug.Log("нет таргета");
+        if(_target == null) Debug.Log("нет таргета");
 
-        Chest targetChest = target.transform.GetComponent<Chest>();
+        Chest targetChest = _target.transform.GetComponent<Chest>();
 
         targetChest.AddItemToChest(CurrentModelData.itemData);
 
@@ -619,9 +609,9 @@ public class Unit : AbstractBehavior
 
     private void CommandPickUpItem()
     {
-        if(target == null) Debug.Log("нет таргета");
+        if(_target == null) Debug.Log("нет таргета");
 
-        target.Use(this);
+        _target.Use(this);
 
         SetCompleteCommand();
     }
@@ -630,7 +620,7 @@ public class Unit : AbstractBehavior
     {
         foreach (var person in brain.GetMamry().groupMembers)
         {
-            person.target = target;
+            person._target = _target;
 
             person.solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
         }
@@ -640,7 +630,7 @@ public class Unit : AbstractBehavior
 
     private void CommandTakeDecision()
     {
-        target = null;
+        _target = null;
 
         brain.GetMamry().mamryTargets.Clear();
 

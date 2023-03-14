@@ -5,22 +5,27 @@ using UnityEngine.Events;
 
 public class UseDor : MonoBehaviour, ICanUse
 {
+    private bool isClose = false;
+    private Coroutine coroutine;
+    private float startTime;
     [SerializeField] private Vector3 toOpen; 
     [SerializeField] private Vector3 toClose; 
     [SerializeField] private int speed = 40;
     [SerializeField] private UnityEvent unityEvent;
     [SerializeField] private bool isLock = false;
-    private bool isClose = false;
-    private Outline outline;
-    private Coroutine coroutine;
-    private float startTime;
+    [SerializeField] Outline outline;
 
     
     private void Start() 
     {
-        outline = this.GetComponent<Outline>();
         startTime = Time.time;
     }
+
+    public void LockDore(bool value)
+    {
+        isLock = value;
+    }
+    
     public void ShowOutline(bool value)
     {
         outline.enabled = value;

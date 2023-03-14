@@ -29,13 +29,14 @@ public class Sword : MonoBehaviour
             {
                 AbstractBehavior bufer = other.transform.GetComponent<AbstractBehavior>();
 
-                if(bufer.GetStateNPC() != States.Мертв)
+                if(!bufer.IsDead)
                 {   
                     Instantiate(blood, other.ClosestPoint(transform.position), Quaternion.identity);
 
                     bufer.TakeDamage(holder, damage);
                 }
             }
+            
             SetHitBoolOFF();
         }
     }
@@ -48,11 +49,6 @@ public class Sword : MonoBehaviour
     public void SetHitBoolOn()
     {
         hit = true;
-    }
-
-    public int Jopa()
-    {
-        return 0;
     }
 }
 

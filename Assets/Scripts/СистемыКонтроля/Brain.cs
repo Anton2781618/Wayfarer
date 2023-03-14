@@ -7,14 +7,14 @@ using UnityEngine;
 [Serializable]
 public class Brain
 {   
+    public SolutionInfo currentSolution {get; set;}
+    public DSDialogueSO stage{get; private set;}
     private Unit _unit;
+    private bool newDialogue = false;
     private DialogueWindowUI _dialogueTransfer;
     [SerializeField] private Eyes _eyes = new Eyes();
     [SerializeField] private Mamry _mamry = new Mamry();
     [SerializeField] private Hearing _hearing = new Hearing();
-    public SolutionInfo currentSolution {get; set;}
-    public DSDialogueSO stage{get; private set;}
-    private bool newDialogue = false;
 
     public void Init(Unit unit, Animator anim)
     {

@@ -40,7 +40,7 @@ public class PLayerController : AbstractBehavior
         buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Ожерелье).GetComponent<ItemGrid>());
         buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Инвентарь).GetComponent<ItemGrid>());
 
-        chest.InitGrids(buferGrids);
+        Chest.InitGrids(buferGrids);
         // chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
         
         // chest.GetChestGrid().chestKeeper = chest;
@@ -80,9 +80,9 @@ public class PLayerController : AbstractBehavior
         if(Time.time - lastClicedTime > 1.5f)
         {
             noOfcliks = 0;
-            anim.SetBool("Attack1", false);
-            anim.SetBool("Attack2", false);
-            anim.SetBool("Attack3", false);
+            _animator.SetBool("Attack1", false);
+            _animator.SetBool("Attack2", false);
+            _animator.SetBool("Attack3", false);
         }
 
 
@@ -101,37 +101,37 @@ public class PLayerController : AbstractBehavior
             
             if(noOfcliks >= 1)
             {
-                anim.SetBool("Attack1", true);
+                _animator.SetBool("Attack1", true);
             }
 
             if(noOfcliks >= 2)
             {
-                anim.SetBool("Attack2", true);
+                _animator.SetBool("Attack2", true);
             }
 
             if(noOfcliks >= 3)
             {
-                anim.SetBool("Attack3", true);
+                _animator.SetBool("Attack3", true);
             }
 
         }
 
         if(Input.GetKey(KeyCode.Mouse1) && Input.GetKey(KeyCode.A))
         {
-            anim.SetBool("уворот влево", true);
+            _animator.SetBool("уворот влево", true);
         }
 
         if(Input.GetKey(KeyCode.Mouse1) && Input.GetKey(KeyCode.D))
         {
-            anim.SetTrigger("уворот вправо");
+            _animator.SetTrigger("уворот вправо");
         }
 
         if(Input.GetKey(KeyCode.Mouse1) && Input.GetKey(KeyCode.S))
         {
-            anim.SetTrigger("Уврот назад");
+            _animator.SetTrigger("Уврот назад");
         }
 
-        anim.SetBool("Block", Input.GetKey(KeyCode.LeftShift));
+        _animator.SetBool("Block", Input.GetKey(KeyCode.LeftShift));
 
         if(Input.GetKeyDown(KeyCode.E) && _target != null)
         {
@@ -184,9 +184,9 @@ public class PLayerController : AbstractBehavior
 
     private void MovePlayer(float x, float y)
     {
-        anim.SetFloat("vertical", y, 0.1f, Time.deltaTime);
+        _animator.SetFloat("vertical", y, 0.1f, Time.deltaTime);
 
-        anim.SetFloat("horizontal", x, 0.1f, Time.deltaTime);
+        _animator.SetFloat("horizontal", x, 0.1f, Time.deltaTime);
 
         if(y != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0|| x != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0)RotationPlayer();
     }
@@ -211,7 +211,7 @@ public class PLayerController : AbstractBehavior
             {
                 velocity.y = Mathf.Sqrt(5 * -1 * -9.18f);
 
-                anim.SetTrigger("jump");
+                _animator.SetTrigger("jump");
             }
             
             return; 

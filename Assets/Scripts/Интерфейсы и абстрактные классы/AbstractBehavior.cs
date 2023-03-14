@@ -25,30 +25,57 @@ public class UnitStats
 
 public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 {
-    public Animator anim;
     public UnitStats unitStats;
+    public bool IsDead {get; private set;}
+    protected Animator _animator;
     protected ICanUse _target;
     protected NavMeshAgent _agent;
-    public Chest chest{get; private set;}
+    public Chest Chest{get; private set;}
     [SerializeField] protected HPWindowUI _hpView;   
-    [SerializeField] protected States _state = States.Патруль;
     [SerializeField] private Sword _sword;
 
     private void Start() 
     {
         _agent = GetComponent<NavMeshAgent>();
 
-        anim = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         
-        chest = GetComponent<Chest>();
+        Chest = GetComponent<Chest>();
         
         Init();
 
         _hpView.InitHp(unitStats.curHP, unitStats.maxHP);
     }
 
-    public virtual void Init()
+    public abstract void Init();
+    
+    //метод переопределяется в классе Unit
+    public virtual void Use(AbstractBehavior applicant){}
+
+    public UnitStats GetStats() => unitStats;
+
+    public ICanUse GetTarget() => _target;
+
+    public void SetTarget(ICanUse newTarget) => _target = newTarget;
+
+    public int GetCurHP() => unitStats.curHP;
+
+    public void SowHealthBar(bool value) => _hpView.gameObject.SetActive(value);
+
+    public void SetHitBoolOFF() => _sword.SetHitBoolOFF();
+
+    public void SetHitBoolOn() => _sword.SetHitBoolOn();
+
+    public void ShowOutline(bool value)
     {
+        if(IsDead)
+        {
+            SowHealthBar(false);    
+
+            return;
+        }
+        
+        SowHealthBar(value);
     }
 
     public virtual void TakeDamage(AbstractBehavior enemy, int value)
@@ -61,17 +88,12 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         
         if(unitStats.curHP <= 0)
         {
-            StartCoroutine(DieCurutina());
+            Die();
         }
         else
         {
-            anim.SetBool("Takehit", true);
+            _animator.SetBool("Takehit", true);
         }
-    }
-
-    public void ManaMinus()
-    {
-        UseMana(5);
     }
 
     //использовать ману
@@ -80,6 +102,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         if(value > unitStats.curMana)
         {
             Debug.Log("не хватает маны");
+
             return;
         } 
 
@@ -89,71 +112,30 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         if(unitStats.curMana < 0) unitStats.curMana = 0;
     }
-
-    private IEnumerator DieCurutina()
-    {
-        yield return new WaitForEndOfFrame();
-
-        Die();
-    }
     
     //умереть
     public virtual void Die()
     {
-        // if(agent)agent.enabled = false;
+        if(_agent)_agent.enabled = false;
 
-        anim.SetBool("die", true);
+        _animator.SetBool("die", true);
         
-        _state = States.Мертв;
+        IsDead = true;
 
         this.enabled = false;
 
         Debug.Log(transform.name + " умер");
     }
 
-    public UnitStats GetStats() => unitStats;
-    public States GetCurrentUnitState() => _state;
-
-    public void SetHitBoolOFF()
-    {
-        if(_sword == null)
-        {
-            Debug.Log("У " + transform.name + " нет оружия");
-            return;
-        }
-        _sword.SetHitBoolOFF();
-    }
-
-    public void SetHitBoolOn()
-    {
-        if(_sword == null)
-        {
-            Debug.Log("У " + transform.name + " нет оружия");
-            return;
-        }
-
-        _sword.SetHitBoolOn();
-    }
-
-    public ICanUse GetTarget() => _target;
-    // public void SetTarget(ICanUse newTarget) => _target = newTarget;
-    public void SetTarget(ICanUse newTarget)
-    {
-
-        _target = newTarget;
-
-        Debug.Log(_target + " " + newTarget);
-    } 
-
+    //воскресить
     public void Revive()
     {
-        if(_state != States.Мертв)
+        if(!IsDead)
         {
             Debug.Log(transform.name + " живой");
+
             return;
         }
-
-        _state = States.Патруль;
 
         StartCoroutine(WaihtRevive());
         
@@ -161,15 +143,16 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         _hpView.SetHpValue(unitStats.maxHP);
 
-        anim.SetTrigger("Revive");
+        _animator.SetTrigger("Revive");
 
-        anim.SetBool("die", false);
+        _animator.SetBool("die", false);
         
         transform.GetComponent<Collider>().enabled = true;
 
         this.enabled = true;
     }
 
+    //ждать пока npc понимится.
     private IEnumerator WaihtRevive()
     {
         bool end = false;
@@ -178,7 +161,8 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         {
             yield return new WaitForEndOfFrame();
 
-            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Get Up") || anim.GetCurrentAnimatorStateInfo(0).IsName("Male Die"))
+            if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Get Up") ||
+             _animator.GetCurrentAnimatorStateInfo(0).IsName("Male Die"))
             {
                 continue;  
             }   
@@ -189,6 +173,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         }
     }
 
+    //лечить
     public void Healing(int value)
     {
         if((value + unitStats.curHP) > unitStats.maxHP)
@@ -205,6 +190,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         _hpView.SetHpValue(unitStats.curHP);
     }
 
+    //пополнить ману
     public void RestoreMana(int value)
     {
         if((value + unitStats.curMana) > unitStats.maxMana)
@@ -212,30 +198,12 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
             unitStats.curMana = unitStats.maxMana;
             
             _hpView.SetManaValue(unitStats.curMana);
+     
             return;
         }
         
         unitStats.curMana += value;
         
         _hpView.SetManaValue(unitStats.curMana);
-    }
-
-    public int GetCurHP() => unitStats.curHP;
-
-    public States GetStateNPC() => _state;
-
-    public Animator GetAnim() => anim;
-
-    public virtual void SowHealthBar(bool value)
-    {
-    }
-
-    //метод переопределяется в классе Unit
-    public virtual void Use(AbstractBehavior applicant)
-    {
-    }
-
-    public virtual void ShowOutline(bool value)
-    {
     }
 }

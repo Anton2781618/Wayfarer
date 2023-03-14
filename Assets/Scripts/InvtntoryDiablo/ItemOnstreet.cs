@@ -32,7 +32,7 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
     public void Use(AbstractBehavior applicant)
     {
         ShowOutline(false);
-        TakeItem(applicant.chest);
+        TakeItem(applicant.Chest);
     }
 
     private void Dest()

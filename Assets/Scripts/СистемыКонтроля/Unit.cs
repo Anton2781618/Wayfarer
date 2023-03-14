@@ -16,10 +16,9 @@ public class Unit : AbstractBehavior
 {
     public List<SolutionInfo> solutions;
     public List<GameObject> objectsForOperations;
-    public TMPro.TextMeshPro textMesh; 
-    public DSAction currentAction;
     public Terrain currentTerrain;//!ждет доработки
     public List<MapSquare> map = new List<MapSquare>();
+    private DSAction currentAction = DSAction.CommandStandStill;
     private ModelDate CurrentModelData;
     //двигается ли персонаж сейчас
     private bool needMoving = false;
@@ -32,13 +31,11 @@ public class Unit : AbstractBehavior
 
     public override void Init()
     {
-        base.Init();
-        
         _agent.updateRotation = false;
         
-        chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
+        Chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
 
-        brain.Init(this, anim);
+        brain.Init(this, _animator);
     }    
 
     private void Update() => brain.Analyzer();
@@ -74,59 +71,9 @@ public class Unit : AbstractBehavior
             brain.GetHearing().hearObjectsList.Remove(other.gameObject);
         }
     }
-    
-    //подсветить себя
-    public override void ShowOutline(bool value)
-    {
-        if(_state == States.Мертв)
-        {
-            SowHealthBar(false);    
-
-            return;
-        }
-        SowHealthBar(value);
-    }
-
-    //получить урон
-    public override void TakeDamage(AbstractBehavior enemy, int value)
-    {
-        base.TakeDamage(enemy, value);
-    }
-
-    //получить урон, вторая перегрузка
-    public void TakeDamage(int value)
-    {
-        unitStats.curHP -= value;
-
-        _hpView.SetHpValue(value);
-        
-        Debug.Log(unitStats.curHP);
-
-        if(unitStats.curHP <= 0)
-        {
-            StartCoroutine(DieCurutina());
-        }
-        else
-        {
-            anim.SetBool("Takehit", true);
-        }
-    }
-
-    private IEnumerator DieCurutina()
-    {
-        yield return new WaitForEndOfFrame();
-
-        Die();
-    }
-
-    public override void SowHealthBar(bool value)
-    {
-        _hpView.gameObject.SetActive(value);
-    }
-
-    public States GetUnityState() => _state;
 
     //установить действие
+    //! надо перенести в мозг
     public void SetAction(DSAction action, ModelDate modelDate)
     {
         Debug.Log("устанавливаю задачу " + action);
@@ -136,7 +83,7 @@ public class Unit : AbstractBehavior
         currentAction = action;
     }
 
-    //выполнить текущую задачу
+    //выполнить текущую задачу работает постоянно постоянно
     public void ExecuteCurrentCommand()
     {
         if(_hpView.gameObject.activeSelf)RotateHpBar();
@@ -163,7 +110,7 @@ public class Unit : AbstractBehavior
     {
         _agent.SetDestination(point);
 
-        SetAnimationRun(Vector3.Distance(transform.position, point) > _agent.stoppingDistance);
+        SetAnimationRun(_agent.velocity.magnitude);
 
         if(_agent.path.corners.Length > 1)
         {
@@ -365,9 +312,10 @@ public class Unit : AbstractBehavior
         return false;
     }
 
-    public void SetAnimationWalk(bool value) => anim.SetBool("Walk", value);
-    public void SetAnimationRun(bool value) => anim.SetBool("Run", value);
-    public void SetAnimationGetToWork(bool value) => anim.SetBool("Work", value);
+    public void SetAnimationWalk(bool value) => _animator.SetBool("Walk", value);
+    public void SetAnimationRun(bool value) => _animator.SetBool("Run", value);
+    public void SetAnimationRun(float value) => _animator.SetFloat("vertical", value);
+    public void SetAnimationGetToWork(bool value) => _animator.SetBool("Work", value);
     
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
@@ -410,8 +358,8 @@ public class Unit : AbstractBehavior
     //стоять на месте
     private void CommandStandStill()
     {
-        anim.SetBool("Walk", false);
-        anim.SetBool("Run", false);
+        _animator.SetBool("Walk", false);
+        _animator.SetBool("Run", false);
     }
 
     //метод команда атакавать таргет (привязана к системе диалогов)
@@ -428,23 +376,19 @@ public class Unit : AbstractBehavior
         
         AbstractBehavior buferTarget = _target as AbstractBehavior;
 
-        if(buferTarget.GetCurrentUnitState() == States.Мертв)
+        if(buferTarget.IsDead)
         {
-            _state = States.Патруль;
-            
             SetCompleteCommand();
             
             return;
         }
 
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))MoveToPoint(_target.transform.position);
+        if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))MoveToPoint(_target.transform.position);
 
         if(Vector3.Distance(transform.position, _target.transform.position) <= _agent.stoppingDistance ) 
         {
 
             FaceToPoint(_target.transform.position);
-
-            SetAnimationRun(false);            
             
             Attack();
         }
@@ -463,7 +407,7 @@ public class Unit : AbstractBehavior
 
             nextHit = Time.time + cooldown;
 
-            anim.SetTrigger("Hit");
+            _animator.SetTrigger("Attack");
         }
     }
 
@@ -494,7 +438,7 @@ public class Unit : AbstractBehavior
 
     private void CommandTrading()
     {
-        chest.StartTrading(this);
+        Chest.StartTrading(this);
 
         SetCompleteCommand();
     }
@@ -514,7 +458,7 @@ public class Unit : AbstractBehavior
 
     private void CommandPlayerGiveMoney()
     {
-        chest.ReceiveMoney(GameManager.singleton.pLayerController.chest, (int)CurrentModelData.number);
+        Chest.ReceiveMoney(GameManager.singleton.pLayerController.Chest, (int)CurrentModelData.number);
         
         SetCompleteCommand();
     }
@@ -558,24 +502,24 @@ public class Unit : AbstractBehavior
     
     private void CommandCheckSelfInventoryForItem()
     {
-        bool res = chest.CheckInventoryForItems(CurrentModelData.itemData);
+        bool res = Chest.CheckInventoryForItems(CurrentModelData.itemData);
 
         SetCompleteCommand(res ? 0 : 1);
     }
 
     private void CommandCheckSelfInventoryForItemType()
     {
-        SetCompleteCommand(chest.CheckInventoryForItemsType(CurrentModelData.itemType));
+        SetCompleteCommand(Chest.CheckInventoryForItemsType(CurrentModelData.itemType));
     }
 
     //! перенес
     private void CommandUseSelfInventoryItem()
     {
-        InventoryItemInfo item = chest.GetInventoryForItemType(CurrentModelData.itemType);
+        InventoryItemInfo item = Chest.GetInventoryForItemType(CurrentModelData.itemType);
         
         item.Use(this);
 
-        chest.RemoveAtChestGrid(item);
+        Chest.RemoveAtChestGrid(item);
 
         SetCompleteCommand();
     }
@@ -591,7 +535,7 @@ public class Unit : AbstractBehavior
 
         targetChest.RemoveAtChestGrid(item);
         
-        chest.AddItemToChest(item);
+        Chest.AddItemToChest(item);
 
         SetCompleteCommand();
     }
@@ -646,17 +590,17 @@ public class Unit : AbstractBehavior
         
         if(CurrentModelData.currentAnimation == CurrentAnimation.Украсть)
         {
-            if(!anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == false)
+            if(!_animator.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == false)
             {
                 cunAnimPlay = "Steal";
 
-                anim.Play("Steal");
+                _animator.Play("Steal");
             }
         }
 
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay))isPlayin = true;
+        if(_animator.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay))isPlayin = true;
             
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == true)
+        if(!_animator.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == true)
         {
             cunAnimPlay = "";
 
@@ -668,7 +612,7 @@ public class Unit : AbstractBehavior
 
     public AnimationClip FindAnimation (string name) 
     {
-        foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+        foreach (AnimationClip clip in _animator.runtimeAnimatorController.animationClips)
         {
             if (clip.name == name)
             {

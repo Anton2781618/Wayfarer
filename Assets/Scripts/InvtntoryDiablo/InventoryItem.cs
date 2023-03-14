@@ -194,7 +194,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
         applicant.unitStats.hunger += Amount;
 
-        DestructSelf(applicant.chest.GetChestGrid());
+        DestructSelf(applicant.Chest.GetChestGrid());
     }
 
     //Наплечники
@@ -207,7 +207,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
     {
         applicant.Healing(Amount);
 
-        DestructSelf(applicant.chest.GetChestGrid());
+        DestructSelf(applicant.Chest.GetChestGrid());
 
         Debug.Log("Использовал Зелье здоровья");
     }

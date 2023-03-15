@@ -16,7 +16,7 @@ public class PLayerController : AbstractBehavior
     private CharacterController controller;    
     private bool isGrounded = true;
     private float smoothVel;
-    private Vector3 velocity;
+    public Vector3 velocity;
     public static int noOfcliks = 0;
     private float lastClicedTime = 0;
     private float nextFireTime = 0;

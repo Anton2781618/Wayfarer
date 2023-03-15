@@ -7,7 +7,7 @@ using static ICanTakeDamage;
 
 public class Sword : MonoBehaviour
 {
-    [SerializeField] private AbstractBehavior holder; 
+    [SerializeField] private AbstractBehavior _holder; 
     [SerializeField] private int damage = 50; 
     [SerializeField] private LayerMask triggerMask;
     [SerializeField] private GameObject blood;
@@ -33,7 +33,7 @@ public class Sword : MonoBehaviour
                 {   
                     Instantiate(blood, other.ClosestPoint(transform.position), Quaternion.identity);
 
-                    bufer.TakeDamage(holder, damage);
+                    bufer.TakeDamage(_holder, damage);
                 }
             }
             

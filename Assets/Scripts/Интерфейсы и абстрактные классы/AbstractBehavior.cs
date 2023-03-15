@@ -84,7 +84,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         unitStats.curHP -= value;
 
-        _hpView.SetHpValue(value);
+        _hpView.SetHpValue(unitStats.curHP);
         
         if(unitStats.curHP <= 0)
         {
@@ -108,7 +108,7 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
         unitStats.curMana -= value;
 
-        _hpView.SetManaValue(value);
+        _hpView.SetManaValue(unitStats.curMana);
 
         if(unitStats.curMana < 0) unitStats.curMana = 0;
     }

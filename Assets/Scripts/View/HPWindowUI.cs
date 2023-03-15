@@ -17,11 +17,11 @@ public class HPWindowUI : MonoBehaviour
 
     public void SetHpValue(int value)
     {
-        _HpSlider.value -= value;
+        _HpSlider.value = value;
     }
 
     public void SetManaValue(int value)
     {
-        _MpSlider.value -= value;
+        _MpSlider.value = value;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DS.Enumerations;
 using DS.ScriptableObjects;
 using UnityEngine;
+using Unity.VisualScripting;
 
 [Serializable]
 public class Brain
@@ -129,6 +130,8 @@ public class Brain
             _unit.solutions.Remove(currentSolution);
 
             currentSolution = null;
+
+            if(_unit.solutions.Count == 0) CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
 
             return;
         }

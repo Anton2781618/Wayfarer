@@ -35,7 +35,7 @@ namespace CartoonHeroes
             // itemInstance.GetComponent<Collider>().enabled = false;
             DestroyImmediate(itemInstance.GetComponent<Collider>());
             
-            DestroyImmediate(itemInstance.GetComponent<Outline>());
+            // DestroyImmediate(itemInstance.GetComponent<Outline>());
 
             DestroyImmediate(itemInstance.GetComponent<ItemOnstreet>());
 

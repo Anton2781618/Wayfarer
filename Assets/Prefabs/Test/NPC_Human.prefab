@@ -295,16 +295,14 @@ MonoBehaviour:
     experienceForKilling: 50
     hunger: 100
     sleep: 100
-  HpSlider: {fileID: 2261661633918178329}
-  MpSlider: {fileID: 5876061068355261066}
-  state: 2
-  anim: {fileID: 0}
-  sword: {fileID: 0}
+  _hpView: {fileID: 0}
+  _sword: {fileID: 0}
   solutions: []
   objectsForOperations: []
-  unitCanvas: {fileID: 501600340426978261}
-  aI:
-    eyes:
+  currentTerrain: {fileID: 0}
+  map: []
+  brain:
+    _eyes:
       viewRadiusEyes: 0
       viewAngleEyes: 0
       targetMaskForEyes:
@@ -314,23 +312,12 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 0
       visileTargets: []
-    mamry:
+    _mamry:
       workplace: {fileID: 0}
       mamryTargets: []
       groupMembers: []
-    hearing:
+    _hearing:
       hearObjectsList: []
-    AttackSolution:
-      importance: 0
-      solution: {fileID: 0}
-    currentSolution:
-      importance: 0
-      solution: {fileID: 0}
-  currentAction: 0
-  dialogTEST: {fileID: 0}
-  textMesh: {fileID: 0}
-  currentTerrain: {fileID: 0}
-  map: []
   posGame: {fileID: 0}
 --- !u!114 &2261661633899935388
 MonoBehaviour:
@@ -2025,7 +2012,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2261661633899935381}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!137 &2311302851951528854
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -3056,7 +3043,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2261661633899935381}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!137 &2311302852626555198
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -3337,7 +3324,7 @@ Transform:
   - {fileID: 2311302851273782302}
   m_Father: {fileID: 2261661633899935381}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1 &2311302852724273857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3934,7 +3921,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2261661633899935381}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!137 &2311302852809060424
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

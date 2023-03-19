@@ -16,7 +16,7 @@ public class PLayerController : AbstractBehavior
     private CharacterController controller;    
     private bool isGrounded = true;
     private float smoothVel;
-    public Vector3 velocity;
+    private Vector3 velocity;
     public static int noOfcliks = 0;
     private float lastClicedTime = 0;
     private float nextFireTime = 0;
@@ -177,6 +177,7 @@ public class PLayerController : AbstractBehavior
             }            
 
             _target = hitObject.transform.GetComponent<ICanUse>();
+            Debug.Log(hitObject.transform.name + " " + hitObject.transform.GetComponent<ICanUse>());
  
             _target.ShowOutline(true);
         }

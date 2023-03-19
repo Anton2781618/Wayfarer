@@ -42,6 +42,7 @@ public class InventoryController : MonoBehaviour
     private void Start() 
     {
         canvasTransform = transform.root;
+
         inventoryIHighLight = GetComponent<InventoryIHighLight>();  
 
         player = FindObjectOfType<PLayerController>();
@@ -144,6 +145,7 @@ public class InventoryController : MonoBehaviour
     //создать физически итем и установить его на сетку 
     public void CreateAndInsertItem(ItemData itemData, ItemGrid grid, int amount)
     {
+        Debug.Log("!!! " + itemData.title);
         CreateItem(itemData, amount);
         
         InventoryItem itemToInsert = selectedItem;
@@ -227,6 +229,7 @@ public class InventoryController : MonoBehaviour
 
     private void CreateItem(ItemData itemData, int amount)
     {
+        Debug.Log("dlskdj");
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.Amount = amount;
         selectedItem = inventoryItem;

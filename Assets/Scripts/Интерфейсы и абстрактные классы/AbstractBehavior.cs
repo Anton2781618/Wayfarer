@@ -118,11 +118,14 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     {
         if(_agent)_agent.enabled = false;
 
+        gameObject.layer = 0;
+        
         _animator.SetBool("die", true);
         
         IsDead = true;
 
         this.enabled = false;
+
 
         Debug.Log(transform.name + " умер");
     }

@@ -27,6 +27,7 @@ public class Unit : AbstractBehavior
     private delegate void Operation();
     [SerializeField] private Brain brain = new Brain();
 
+
     //участок земли 
 
     public override void Init()
@@ -249,6 +250,8 @@ public class Unit : AbstractBehavior
         needCreateMap = true;
 
         this.currentAction = DSAction.CommandStandStill;
+
+        _target = null;
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         

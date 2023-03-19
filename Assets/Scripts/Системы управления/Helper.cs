@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 //класс для хранения вспомогательных методов
 public class Helper : MonoBehaviour
@@ -22,5 +21,13 @@ public class Helper : MonoBehaviour
         string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
 
         Debug.Log("Тиков " + ts.Ticks);
+    }
+
+    //проверить маску на наличие в ней слоя
+    public static bool CheckMaskOnLayer(LayerMask layerMask, int indexlayer)
+    {
+        if((layerMask.value & (1 << indexlayer)) == 0) return false;
+
+        return true;
     }
 }

@@ -131,7 +131,17 @@ public class Brain
 
             currentSolution = null;
 
-            if(_unit.solutions.Count == 0) CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
+            if(_unit.solutions.Count == 0)
+            {
+                CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
+
+            } 
+            else
+            {
+                currentSolution = _unit.solutions[0];
+
+                StartSolution();
+            }
 
             return;
         }

@@ -470,13 +470,15 @@ public class Unit : AbstractBehavior
     {
         MoveToPoint(_target.transform.position);
 
-        CheckDistanceAndSwitchStage(_target.transform.position);
+        // CheckDistanceAndSwitchStage(_target.transform.position);
+        if(_agent.isStopped)SetCompleteCommand();
     }
     
+    [ContextMenu("CommandMoveToCoordinates")]
     private void CommandMoveToCoordinates()
     {
         MoveToPoint(CurrentModelData.pos);
-
+        
         CheckDistanceAndSwitchStage(CurrentModelData.pos);
     }
 
@@ -489,7 +491,7 @@ public class Unit : AbstractBehavior
     
     private void CheckDistanceAndSwitchStage(Vector3 point)
     {
-        if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance)
+        if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance && _agent.velocity.magnitude == 0)
         {
             SetCompleteCommand();
         }
@@ -500,6 +502,7 @@ public class Unit : AbstractBehavior
         if(_target == null) Debug.Log("нет таргета");
 
         bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
+
         SetCompleteCommand(res ? 0 : 1);
     }
     
@@ -515,7 +518,6 @@ public class Unit : AbstractBehavior
         SetCompleteCommand(Chest.CheckInventoryForItemsType(CurrentModelData.itemType));
     }
 
-    //! перенес
     private void CommandUseSelfInventoryItem()
     {
         InventoryItemInfo item = Chest.GetInventoryForItemType(CurrentModelData.itemType);
@@ -527,7 +529,6 @@ public class Unit : AbstractBehavior
         SetCompleteCommand();
     }
 
-    //! перенес
     private void CommandTakeItemFromTarget()
     {
         if(_target == null) Debug.Log("нет таргета");

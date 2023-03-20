@@ -33,10 +33,13 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
     public Chest Chest{get; private set;}
     [SerializeField] protected HPWindowUI _hpView;   
     [SerializeField] private Sword _sword;
+    private CharacterController _characterController;
 
     private void Start() 
     {
         _agent = GetComponent<NavMeshAgent>();
+
+        _characterController = GetComponent<CharacterController>();
 
         _animator = GetComponent<Animator>();
         
@@ -124,8 +127,9 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
         
         IsDead = true;
 
-        this.enabled = false;
+        _characterController.enabled = false;
 
+        this.enabled = false;
 
         Debug.Log(transform.name + " умер");
     }

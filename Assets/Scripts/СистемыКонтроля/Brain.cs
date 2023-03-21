@@ -44,6 +44,8 @@ public class Brain
         SolutionInfo newSolution = new SolutionInfo(100, solution);
 
         currentSolution = newSolution;
+
+        Debug.Log(_unit);
         
         _unit.solutions.Add(currentSolution);
 

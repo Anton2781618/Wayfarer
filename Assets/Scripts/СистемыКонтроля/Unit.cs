@@ -15,17 +15,16 @@ using Unity.VisualScripting;
 public class Unit : AbstractBehavior
 {
     public List<SolutionInfo> solutions;
-    public List<GameObject> objectsForOperations;
     public Terrain currentTerrain;//!ждет доработки
     public List<MapSquare> map = new List<MapSquare>();
     private DSAction currentAction = DSAction.CommandStandStill;
-    private ModelDate CurrentModelData;
     //двигается ли персонаж сейчас
     private bool needMoving = false;
     private bool needCreateMap = true;
     private Vector3 PintToWalke;
     private delegate void Operation();
     [SerializeField] private Brain brain = new Brain();
+    [SerializeField]private ModelDate _modelData;
 
 
     //участок земли 
@@ -79,7 +78,16 @@ public class Unit : AbstractBehavior
     {
         Debug.Log("устанавливаю задачу " + action);
         
-        CurrentModelData = modelDate;
+        if(_modelData.go == null)
+        {
+            _modelData = modelDate;
+        }
+        else
+        {
+            modelDate.go = _modelData.go;
+
+            _modelData = modelDate;
+        }
         
         currentAction = action;
     }
@@ -350,12 +358,12 @@ public class Unit : AbstractBehavior
             needMoving = false;
         }
         
-        if(FindTarget(CurrentModelData.targetMask)) SetCompleteCommand();
+        if(FindTarget(_modelData.targetMask)) SetCompleteCommand();
     }
     
     private void CommandHoldPositionFindTheTarget()
     {
-        if(FindTarget(CurrentModelData.targetMask)) SetCompleteCommand();
+        if(FindTarget(_modelData.targetMask)) SetCompleteCommand();
     }
 
     //стоять на месте
@@ -419,6 +427,8 @@ public class Unit : AbstractBehavior
     {
         IWorkplace newTarget = brain.GetMamry().workplace;
 
+        FaceToPoint(newTarget.transform.position);
+
         if(newTarget.WorkIsFinish)
         {
             SetAnimationGetToWork(true);
@@ -448,7 +458,7 @@ public class Unit : AbstractBehavior
 
     private void CommandStartDialogue()
     {
-        brain.StartDialogue(CurrentModelData.dialogue);
+        brain.StartDialogue(_modelData.dialogue);
 
         SetCompleteCommand();
     }
@@ -461,7 +471,7 @@ public class Unit : AbstractBehavior
 
     private void CommandPlayerGiveMoney()
     {
-        Chest.ReceiveMoney(GameManager.singleton.pLayerController.Chest, (int)CurrentModelData.number);
+        Chest.ReceiveMoney(GameManager.singleton.pLayerController.Chest, (int)_modelData.number);
         
         SetCompleteCommand();
     }
@@ -477,22 +487,45 @@ public class Unit : AbstractBehavior
     [ContextMenu("CommandMoveToCoordinates")]
     private void CommandMoveToCoordinates()
     {
-        MoveToPoint(CurrentModelData.pos);
+        MoveToPoint(_modelData.pos);
         
-        CheckDistanceAndSwitchStage(CurrentModelData.pos);
+        CheckDistanceAndSwitchStage(_modelData.pos);
     }
 
     private void CommandMoveToWork()
     {
+
+        // SetStateMoveToWork();
+        // return;
         MoveToPoint(brain.GetMamry().workplace.workPoint.position);
 
         CheckDistanceAndSwitchStage(brain.GetMamry().workplace.workPoint.position);
+    }
+
+    private void SetStateMoveToWork()
+    {
+        CustomEvent.Trigger(gameObject, "SetWorkState");
+    }
+
+    public void Work(Workplace workplace)
+    {
+        if(Vector3.Distance(transform.position, workplace.workPoint.position) <= _agent.stoppingDistance)
+        {
+            _agent.isStopped = true;
+            FaceToPoint(workplace.transform.position);
+        }
+        else
+        {
+            _agent.isStopped = false;
+            MoveToPoint(workplace.workPoint.position);
+        }
     }
     
     private void CheckDistanceAndSwitchStage(Vector3 point)
     {
         if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance && _agent.velocity.magnitude == 0)
         {
+
             SetCompleteCommand();
         }
     }
@@ -501,26 +534,26 @@ public class Unit : AbstractBehavior
     {
         if(_target == null) Debug.Log("нет таргета");
 
-        bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(CurrentModelData.itemData);
+        bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(_modelData.itemData);
 
         SetCompleteCommand(res ? 0 : 1);
     }
     
     private void CommandCheckSelfInventoryForItem()
     {
-        bool res = Chest.CheckInventoryForItems(CurrentModelData.itemData);
+        bool res = Chest.CheckInventoryForItems(_modelData.itemData);
 
         SetCompleteCommand(res ? 0 : 1);
     }
 
     private void CommandCheckSelfInventoryForItemType()
     {
-        SetCompleteCommand(Chest.CheckInventoryForItemsType(CurrentModelData.itemType));
+        SetCompleteCommand(Chest.CheckInventoryForItemsType(_modelData.itemType));
     }
 
     private void CommandUseSelfInventoryItem()
     {
-        InventoryItemInfo item = Chest.GetInventoryForItemType(CurrentModelData.itemType);
+        InventoryItemInfo item = Chest.GetInventoryForItemType(_modelData.itemType);
         
         item.Use(this);
 
@@ -535,7 +568,7 @@ public class Unit : AbstractBehavior
 
         Chest targetChest = _target.transform.GetComponent<Chest>();
 
-        InventoryItemInfo item = targetChest.GetInventoryItem(CurrentModelData.itemData);
+        InventoryItemInfo item = targetChest.GetInventoryItem(_modelData.itemData);
 
         targetChest.RemoveAtChestGrid(item);
         
@@ -550,7 +583,7 @@ public class Unit : AbstractBehavior
 
         Chest targetChest = _target.transform.GetComponent<Chest>();
 
-        targetChest.AddItemToChest(CurrentModelData.itemData);
+        targetChest.AddItemToChest(_modelData.itemData);
 
         SetCompleteCommand();
     }
@@ -570,7 +603,7 @@ public class Unit : AbstractBehavior
         {
             person._target = _target;
 
-            person.solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
+            person.solutions.Add(new SolutionInfo(101, _modelData.dialogue));
         }
 
         SetCompleteCommand();
@@ -582,7 +615,7 @@ public class Unit : AbstractBehavior
 
         brain.GetMamry().mamryTargets.Clear();
 
-        solutions.Add(new SolutionInfo(101, CurrentModelData.dialogue));
+        solutions.Add(new SolutionInfo(101, _modelData.dialogue));
 
         SetCompleteCommand();
     }
@@ -592,7 +625,7 @@ public class Unit : AbstractBehavior
     private void CommandPlayAnimation()
     {
         
-        if(CurrentModelData.currentAnimation == CurrentAnimation.Украсть)
+        if(_modelData.currentAnimation == CurrentAnimation.Украсть)
         {
             if(!_animator.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == false)
             {
@@ -629,22 +662,20 @@ public class Unit : AbstractBehavior
 
     private void CommandObjectOperation()
     {
-        GameObject obj = objectsForOperations[CurrentModelData.index];
-
-        if(CurrentModelData.objectOperation == ObjectOperation.Выключить)obj.SetActive(false);
+        if(_modelData.operation == ObjectOperation.Выключить)_modelData.go.SetActive(false);
         else
-        if(CurrentModelData.objectOperation == ObjectOperation.Включить)obj.SetActive(true);
+        if(_modelData.operation == ObjectOperation.Включить)_modelData.go.SetActive(true);
         else
-        if(CurrentModelData.objectOperation == ObjectOperation.Уничножить) Destroy(obj.gameObject);
+        if(_modelData.operation == ObjectOperation.Уничножить) Destroy(_modelData.go.gameObject);
         else
-        if(CurrentModelData.objectOperation == ObjectOperation.Использовать) obj.GetComponent<ICanUse>().Use();
+        if(_modelData.operation == ObjectOperation.Использовать) _modelData.go.GetComponent<ICanUse>().Use();
 
         SetCompleteCommand();
     }
 
     public void CommandPerformOperationWithAttribute()
     {
-        UnitAtribut info = CurrentModelData.unitAtribut;
+        UnitAtribut info = _modelData.unitAtribut;
 
         info = info switch
         {
@@ -659,9 +690,9 @@ public class Unit : AbstractBehavior
         {
             atribut = operation switch
             {
-                UnitOperation.Прибавить => atribut + (int)CurrentModelData.number,
+                UnitOperation.Прибавить => atribut + (int)_modelData.number,
             
-                UnitOperation.Вычисть => atribut - (int)CurrentModelData.number,
+                UnitOperation.Вычисть => atribut - (int)_modelData.number,
             
                 UnitOperation => throw new ArgumentException("Передан недопустимый аргумент")
             };
@@ -682,14 +713,14 @@ public class ModelDate
     public float number;
     public int index;
     public string text;
+    public GameObject go;
     public Vector3 pos;
     public ItemData itemData;
     public DSDialogueContainerSO dialogue;
     public LayerMask targetMask;
     public ItemData.ItemType itemType;
-    public Transform objectOnScen;
     public UnitAtribut unitAtribut;
-    public ObjectOperation objectOperation;
+    public ObjectOperation operation;
     public CurrentAnimation currentAnimation;
     public UnitOperation unitOperation;
     public DSAction dSAction;

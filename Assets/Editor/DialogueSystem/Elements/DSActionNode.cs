@@ -530,9 +530,7 @@ namespace DS.Elements
             
             ContainerForTransformation.Clear();
 
-            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.objectOperation, x => modelDate.objectOperation = (ObjectOperation)x.newValue));
-
-            ContainerForTransformation.Add(DSElementUtility.CreateIntegerField(modelDate.index, null, x => modelDate.index = x.newValue));
+            ContainerForTransformation.Add(DSElementUtility.CreateItemTypeField(modelDate.operation, x => modelDate.operation = (ObjectOperation)x.newValue));
 
             if(Choices.Count > 1)
             {

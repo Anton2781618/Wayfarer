@@ -422,27 +422,6 @@ public class Unit : AbstractBehavior
         }
     }
 
-    //метод запускает рабочий/производственный цикл
-    private void CommandGetToWork()
-    {
-        IWorkplace newTarget = brain.GetMamry().workplace;
-
-        FaceToPoint(newTarget.transform.position);
-
-        if(newTarget.WorkIsFinish)
-        {
-            SetAnimationGetToWork(true);
-
-            newTarget.Use();
-        }
-        else
-        {
-            SetAnimationGetToWork(false);
-
-            SetCompleteCommand();
-        }
-    }
-
     private void CommandSleep()
     {
         unitStats.sleep = 1000;
@@ -492,39 +471,41 @@ public class Unit : AbstractBehavior
         CheckDistanceAndSwitchStage(_modelData.pos);
     }
 
+    //метод запускает рабочий/производственный цикл
+    private void CommandGetToWork()
+    {
+        IWorkplace newTarget = brain.GetMamry().workplace;
+
+        FaceToPoint(newTarget.transform.position);
+
+        if(newTarget.WorkIsFinish)
+        {
+            SetAnimationGetToWork(true);
+
+            newTarget.Use();
+        }
+        else
+        {
+            SetAnimationGetToWork(false);
+
+            SetCompleteCommand();
+        }
+    }
+
     private void CommandMoveToWork()
     {
+        _agent.stoppingDistance = 0.3f;
 
-        // SetStateMoveToWork();
-        // return;
         MoveToPoint(brain.GetMamry().workplace.workPoint.position);
 
         CheckDistanceAndSwitchStage(brain.GetMamry().workplace.workPoint.position);
     }
 
-    private void SetStateMoveToWork()
-    {
-        CustomEvent.Trigger(gameObject, "SetWorkState");
-    }
-
-    public void Work(Workplace workplace)
-    {
-        if(Vector3.Distance(transform.position, workplace.workPoint.position) <= _agent.stoppingDistance)
-        {
-            _agent.isStopped = true;
-            FaceToPoint(workplace.transform.position);
-        }
-        else
-        {
-            _agent.isStopped = false;
-            MoveToPoint(workplace.workPoint.position);
-        }
-    }
-    
     private void CheckDistanceAndSwitchStage(Vector3 point)
     {
         if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance && _agent.velocity.magnitude == 0)
         {
+            _agent.stoppingDistance = 1.5f;
 
             SetCompleteCommand();
         }

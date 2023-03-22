@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202a3095b7477a4091d56344f0af6b3, type: 3}
+  m_Name: "\u0420\u0430\u0431\u043E\u0442\u0430\u0442\u044CGraph"
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: "\u0420\u0430\u0431\u043E\u0442\u0430\u0442\u044C"
+  <Groups>k__BackingField: []
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: b1d9dc69-cd05-487e-a230-43645847d1aa
+    <Name>k__BackingField: b1d9dc69-cd05-487e-a230-43645847d1aa
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: c9e20a9f-2337-407b-be6d-1e24a6c170d0
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 391, y: 144}
+    <Action>k__BackingField: 21
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      go: {fileID: 0}
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      unitAtribut: 0
+      operation: 0
+      currentAnimation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+  - <ID>k__BackingField: c9e20a9f-2337-407b-be6d-1e24a6c170d0
+    <Name>k__BackingField: c9e20a9f-2337-407b-be6d-1e24a6c170d0
+    <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 2
+    <Position>k__BackingField: {x: 793, y: 144}
+    <Action>k__BackingField: 19
+    <ModelDate>k__BackingField:
+      number: 0
+      index: 0
+      text: 
+      go: {fileID: 0}
+      pos: {x: 0, y: 0, z: 0}
+      itemData: {fileID: 0}
+      dialogue: {fileID: 0}
+      targetMask:
+        serializedVersion: 2
+        m_Bits: 0
+      itemType: 0
+      unitAtribut: 0
+      operation: 0
+      currentAnimation: 0
+      unitOperation: 0
+      dSAction: 0
+    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+  <OldGroupNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - b1d9dc69-cd05-487e-a230-43645847d1aa
+  - c9e20a9f-2337-407b-be6d-1e24a6c170d0
+  <OldGroupedNodeNames>k__BackingField:
+    list: []

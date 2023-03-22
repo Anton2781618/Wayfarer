@@ -9,7 +9,9 @@ public interface ICanUse
     public void ShowOutline(bool value);
 }
 
-public interface IWorkplace : ICanUse
+public interface IWorkplace
 {
+    public Transform transform {get;}
+    public void Use(Unit worker = null);
     public bool WorkIsFinish {get;}
 }

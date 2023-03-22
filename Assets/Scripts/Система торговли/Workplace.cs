@@ -21,11 +21,11 @@ public class Workplace : MonoBehaviour, IWorkplace
         throw new System.NotImplementedException();
     }
 
-    public void Use(AbstractBehavior applicant)
+    public void Use(Unit worker)
     {
         if(workTime <= 0)StartWork();
 
-        Debug.Log(workTime + " !!!!!!!!");
+        // Debug.Log(workTime + " !!!!!!!!");
 
         UpdateWorkProcess();
     }
@@ -51,6 +51,4 @@ public class Workplace : MonoBehaviour, IWorkplace
             }
         }
     }
-
-    
 }

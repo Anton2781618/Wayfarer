@@ -6,6 +6,7 @@ namespace DS.ScriptableObjects
     using Data;
     using Enumerations;
 
+    [SerializeField]
     public class DSDialogueSO : ScriptableObject
     {
         [field: SerializeField] public string DialogueName { get; set; }

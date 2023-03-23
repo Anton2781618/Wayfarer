@@ -9,10 +9,10 @@ using Unity.VisualScripting;
 public class Brain
 {   
     public SolutionInfo currentSolution {get; set;}
-    public DSDialogueSO stage{get; private set;}
+    public DSDialogueSO stage;//{get; private set;}
     private Unit _unit;
     private bool newDialogue = false;
-    private DialogueWindowUI _dialogueTransfer;
+    public DialogueWindowUI _dialogueWindowUI;
     [SerializeField] private Eyes _eyes = new Eyes();
     [SerializeField] private Mamry _mamry = new Mamry();
     [SerializeField] private Hearing _hearing = new Hearing();
@@ -85,7 +85,7 @@ public class Brain
         
         _unit.solutions.Add(currentSolution);
 
-        _dialogueTransfer = GameManager.singleton.GetDialogWindow();
+        _dialogueWindowUI = GameManager.singleton.GetDialogWindow();
         
         GameManager.singleton.SwithCameraEnabled(false);
 
@@ -100,7 +100,7 @@ public class Brain
             if(dialogueStage.IsStartingDialogue)stage = dialogueStage;
         }
         
-        _dialogueTransfer.ShowDialogWindow(true);
+        _dialogueWindowUI.ShowDialogWindow(true);
 
         newDialogue = true;
     }
@@ -157,11 +157,15 @@ public class Brain
 
         newDialogue = false;
 
-        _dialogueTransfer.SetDialogueText(stage.Text);
+        if(!_dialogueWindowUI)_dialogueWindowUI = GameManager.singleton.GetDialogWindow();
 
-        _dialogueTransfer.ClearButtons();
+        _dialogueWindowUI.ShowDialogWindow(true);
+        
+        _dialogueWindowUI.SetDialogueText(stage.Text);
 
-        stage.Choices.ForEach(t => _dialogueTransfer.CreateButtonsAnswers(t.Text, this));
+        _dialogueWindowUI.ClearButtons();
+
+        stage.Choices.ForEach(t => _dialogueWindowUI.CreateButtonsAnswers(t.Text, this));
     }
 
     public void CloseDialogueAndExitSoltuin()

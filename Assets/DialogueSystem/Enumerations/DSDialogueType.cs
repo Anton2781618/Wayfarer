@@ -62,5 +62,6 @@ namespace DS.Enumerations
         CommandObjectOperation,
         CommandTakeDecision,
         CommandPlayAnimation,
+        CommandFaceToTarget,
     }
 }

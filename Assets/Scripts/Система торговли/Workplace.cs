@@ -6,14 +6,13 @@ public class Workplace : MonoBehaviour, IWorkplace
 {
     //точка позиция работы
     public Transform workPoint;
-    public bool WorkIsFinish {get; private set;} = true;
-    
-    private float workTime = 60;
+    [SerializeField] private Work _work = Work.Blacksmith_work;
+    public bool PossibleToWork {get; private set;} = true;
 
-    public enum workStage
+    public enum Work
     {
-        Не_работает,
-        Работает   
+        Blacksmith_work,
+        Farmer_work,   
     }
 
     public void ShowOutline(bool value)
@@ -23,32 +22,24 @@ public class Workplace : MonoBehaviour, IWorkplace
 
     public void Use(Unit worker)
     {
-        if(workTime <= 0)StartWork();
+        Debug.Log("работаю !!!!!!!!");
 
-        // Debug.Log(workTime + " !!!!!!!!");
-
-        UpdateWorkProcess();
+        StartWork(worker);
     }
 
-    private void StartWork()
+    private void StartWork(Unit worker)
     {        
-        WorkIsFinish = false;
+        worker.SetAnimationWork(_work.ToString(), true);
+    }
 
-        workTime = 60;
+    public void FinishWork(Unit worker)
+    {
+        PossibleToWork = true;
+        
+        worker.SetAnimationWork(_work.ToString(), false);
     }
 
     private void UpdateWorkProcess()
     {
-        if(!WorkIsFinish)
-        {
-            if(workTime > 0)
-            {
-                workTime -= Time.deltaTime;
-            }
-            else
-            {
-                WorkIsFinish = true;
-            }
-        }
     }
 }

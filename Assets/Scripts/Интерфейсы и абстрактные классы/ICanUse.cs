@@ -13,5 +13,6 @@ public interface IWorkplace
 {
     public Transform transform {get;}
     public void Use(Unit worker = null);
-    public bool WorkIsFinish {get;}
+    public void FinishWork(Unit worker = null);
+    public bool PossibleToWork {get;}
 }

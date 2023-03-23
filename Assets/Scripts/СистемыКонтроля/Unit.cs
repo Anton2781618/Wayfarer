@@ -40,11 +40,16 @@ public class Unit : AbstractBehavior
 
     private void Update() => brain.Analyzer();
 
-    public override void Use(AbstractBehavior applicant) => CustomEvent.Trigger(this.gameObject, "StartDialogue");
+    public override void Use(AbstractBehavior applicant) 
+    {
+        CustomEvent.Trigger(this.gameObject, "StartDialogue");
+    }
 
     //метод принять решение, передает в мозг решение
     public void SetSolution(DSDialogueContainerSO solution)
     {
+        FinishWork();
+
         if(solution.UngroupedDialogues[0].DialogueType == DSDialogueType.Action)
         {
             brain.StartAction(solution);
@@ -253,13 +258,13 @@ public class Unit : AbstractBehavior
 
     
 
-    public void SetCompleteCommand(int dialogueIndex = 0)
+    public void CompleteCommand(int dialogueIndex = 0)
     {
         needCreateMap = true;
 
         this.currentAction = DSAction.CommandStandStill;
 
-        _target = null;
+        // _target = null;
 
         Debug.Log("задача выполнена! Перехожу к следующей задаче.");
         
@@ -275,13 +280,15 @@ public class Unit : AbstractBehavior
         SowHealthBar(false);
     }
 
-    private void FaceToPoint(Vector3 point)
+    private bool FaceToPoint(Vector3 point)
     {
         Vector3 direction = (point - transform.position).normalized;
 
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+        return lookRotation == transform.rotation;
     }
 
     //метод находит таргеты
@@ -326,7 +333,7 @@ public class Unit : AbstractBehavior
     public void SetAnimationWalk(bool value) => _animator.SetBool("Walk", value);
     public void SetAnimationRun(bool value) => _animator.SetBool("Run", value);
     public void SetAnimationRun(float value) => _animator.SetFloat("vertical", value);
-    public void SetAnimationGetToWork(bool value) => _animator.SetBool("Work", value);
+    public void SetAnimationWork(string workStr, bool value) => _animator.SetBool(workStr, value);
     
         
     #endregion Разные вспомогательные методы КОНЕЦ ---------------------------------------------------------------------------------------------------------------------//
@@ -358,12 +365,12 @@ public class Unit : AbstractBehavior
             needMoving = false;
         }
         
-        if(FindTarget(_modelData.targetMask)) SetCompleteCommand();
+        if(FindTarget(_modelData.targetMask)) CompleteCommand();
     }
     
     private void CommandHoldPositionFindTheTarget()
     {
-        if(FindTarget(_modelData.targetMask)) SetCompleteCommand();
+        if(FindTarget(_modelData.targetMask)) CompleteCommand();
     }
 
     //стоять на месте
@@ -380,7 +387,7 @@ public class Unit : AbstractBehavior
         {
             Debug.Log("У " + transform.name + " не установлен таргет! Или таргет не возможно атакавать");
             
-            SetCompleteCommand(1);
+            CompleteCommand(1);
 
             return;
         }
@@ -389,7 +396,7 @@ public class Unit : AbstractBehavior
 
         if(buferTarget.IsDead)
         {
-            SetCompleteCommand();
+            CompleteCommand();
             
             return;
         }
@@ -398,7 +405,6 @@ public class Unit : AbstractBehavior
 
         if(Vector3.Distance(transform.position, _target.transform.position) <= _agent.stoppingDistance ) 
         {
-
             FaceToPoint(_target.transform.position);
             
             Attack();
@@ -425,42 +431,50 @@ public class Unit : AbstractBehavior
     private void CommandSleep()
     {
         unitStats.sleep = 1000;
-        SetCompleteCommand();
+
+        CompleteCommand();
     }
 
     private void CommandTrading()
     {
         Chest.StartTrading(this);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandStartDialogue()
     {
         brain.StartDialogue(_modelData.dialogue);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
     public void CommandStartDialogue(DSDialogueContainerSO dialog)
     {
         brain.StartDialogue(dialog);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandPlayerGiveMoney()
     {
         Chest.ReceiveMoney(GameManager.singleton.pLayerController.Chest, (int)_modelData.number);
         
-        SetCompleteCommand();
+        CompleteCommand();
+    }
+
+    private void CommandFaceToTarget()
+    {
+        if(FaceToPoint(_target.transform.position))
+        {
+            CompleteCommand();
+        }
     }
 
     private void CommandMoveToTarget()
     {
         MoveToPoint(_target.transform.position);
 
-        // CheckDistanceAndSwitchStage(_target.transform.position);
-        if(_agent.isStopped)SetCompleteCommand();
+        CheckDistanceAndSwitchStage(_target.transform.position);
     }
     
     [ContextMenu("CommandMoveToCoordinates")]
@@ -478,18 +492,23 @@ public class Unit : AbstractBehavior
 
         FaceToPoint(newTarget.transform.position);
 
-        if(newTarget.WorkIsFinish)
+        if(newTarget.PossibleToWork)
         {
-            SetAnimationGetToWork(true);
-
-            newTarget.Use();
+            newTarget.Use(this);
         }
         else
         {
-            SetAnimationGetToWork(false);
-
-            SetCompleteCommand();
+            newTarget.FinishWork(this);
+            
+            CompleteCommand();
         }
+    }
+
+    public void FinishWork()
+    {
+        IWorkplace newTarget = brain.GetMamry().workplace;
+
+        newTarget.FinishWork(this);
     }
 
     private void CommandMoveToWork()
@@ -507,7 +526,7 @@ public class Unit : AbstractBehavior
         {
             _agent.stoppingDistance = 1.5f;
 
-            SetCompleteCommand();
+            CompleteCommand();
         }
     }
 
@@ -517,19 +536,19 @@ public class Unit : AbstractBehavior
 
         bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(_modelData.itemData);
 
-        SetCompleteCommand(res ? 0 : 1);
+        CompleteCommand(res ? 0 : 1);
     }
     
     private void CommandCheckSelfInventoryForItem()
     {
         bool res = Chest.CheckInventoryForItems(_modelData.itemData);
 
-        SetCompleteCommand(res ? 0 : 1);
+        CompleteCommand(res ? 0 : 1);
     }
 
     private void CommandCheckSelfInventoryForItemType()
     {
-        SetCompleteCommand(Chest.CheckInventoryForItemsType(_modelData.itemType));
+        CompleteCommand(Chest.CheckInventoryForItemsType(_modelData.itemType));
     }
 
     private void CommandUseSelfInventoryItem()
@@ -540,7 +559,7 @@ public class Unit : AbstractBehavior
 
         Chest.RemoveAtChestGrid(item);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandTakeItemFromTarget()
@@ -555,7 +574,7 @@ public class Unit : AbstractBehavior
         
         Chest.AddItemToChest(item);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandAddItemToTargetInventory()
@@ -566,7 +585,7 @@ public class Unit : AbstractBehavior
 
         targetChest.AddItemToChest(_modelData.itemData);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandPickUpItem()
@@ -575,7 +594,7 @@ public class Unit : AbstractBehavior
 
         _target.Use(this);
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private void CommandTaskToGroup()
@@ -584,21 +603,10 @@ public class Unit : AbstractBehavior
         {
             person._target = _target;
 
-            person.solutions.Add(new SolutionInfo(101, _modelData.dialogue));
+            // person.solutions.Add(new SolutionInfo(101, _modelData.dialogue));
         }
 
-        SetCompleteCommand();
-    }
-
-    private void CommandTakeDecision()
-    {
-        _target = null;
-
-        brain.GetMamry().mamryTargets.Clear();
-
-        solutions.Add(new SolutionInfo(101, _modelData.dialogue));
-
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     private string cunAnimPlay = "";
@@ -624,7 +632,7 @@ public class Unit : AbstractBehavior
 
             isPlayin = false;
 
-            SetCompleteCommand();
+            CompleteCommand();
         }
     }
 
@@ -651,7 +659,7 @@ public class Unit : AbstractBehavior
         else
         if(_modelData.operation == ObjectOperation.Использовать) _modelData.go.GetComponent<ICanUse>().Use();
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
 
     public void CommandPerformOperationWithAttribute()
@@ -681,7 +689,7 @@ public class Unit : AbstractBehavior
             return UnitAtribut.Здоровье;
         }
 
-        SetCompleteCommand();
+        CompleteCommand();
     }
     
     

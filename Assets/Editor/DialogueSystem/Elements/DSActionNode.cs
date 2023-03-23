@@ -66,6 +66,7 @@ namespace DS.Elements
             findСategory.Add(DSElementUtility.CreateButton("Найти таргет(стоять)", ()=> { actionChoicesContainer.text = CommandHoldPositionFindTheTarget();}));
 
             MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к таргету", ()=> {actionChoicesContainer.text = CommandMoveToTarget();}));
+            MoveСategory.Add(DSElementUtility.CreateButton("Повернуться к таргету", ()=> {actionChoicesContainer.text = CommandFaceToTarget();}));
             MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к корординатам", ()=> {actionChoicesContainer.text = CommandMoveToCoordinates();}));
             MoveСategory.Add(DSElementUtility.CreateButton("Двигаться к на работу", ()=> {actionChoicesContainer.text = CommandMoveToWork();}));
 
@@ -277,6 +278,19 @@ namespace DS.Elements
             }
             
             return "Двигаться к таргету";
+        }
+        private string CommandFaceToTarget()
+        {
+            Action = DSAction.CommandFaceToTarget;
+            
+            ContainerForTransformation.Clear();
+
+            if(Choices.Count > 1)
+            {
+                AddPort();
+            }
+            
+            return "Повернуться к таргету";
         }
         private string CommandCheckTargetInventoryForItem()
         {

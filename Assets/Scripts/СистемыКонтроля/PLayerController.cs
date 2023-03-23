@@ -55,7 +55,7 @@ public class PLayerController : AbstractBehavior
             ForwardCheckOversphere();
         }
 
-        if(GameManager.singleton.isControlingPlayer)
+        if(GameManager.Instance.isControlingPlayer)
         {
             Controller();
         }
@@ -189,14 +189,14 @@ public class PLayerController : AbstractBehavior
 
         _animator.SetFloat("horizontal", x, 0.1f, Time.deltaTime);
 
-        if(y != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0|| x != 0 && GameManager.singleton.cinemachine.m_XAxis.m_MaxSpeed > 0)RotationPlayer();
+        if(y != 0 && GameManager.Instance.cinemachine.m_XAxis.m_MaxSpeed > 0|| x != 0 && GameManager.Instance.cinemachine.m_XAxis.m_MaxSpeed > 0)RotationPlayer();
     }
 
     //поворачивает плеера в сторону камеры при движении
     private void RotationPlayer()
     {
         float angle = 
-        Mathf.SmoothDampAngle(transform.eulerAngles.y, GameManager.singleton.cameraControll.transform.eulerAngles.y, ref smoothVel, 0.1f);
+        Mathf.SmoothDampAngle(transform.eulerAngles.y, GameManager.Instance.cameraControll.transform.eulerAngles.y, ref smoothVel, 0.1f);
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }

@@ -22,7 +22,7 @@ public class Workplace : MonoBehaviour, IWorkplace
 
     public void Use(Unit worker)
     {
-        Debug.Log("работаю !!!!!!!!");
+        // Debug.Log("работаю !!!!!!!!");
 
         StartWork(worker);
     }

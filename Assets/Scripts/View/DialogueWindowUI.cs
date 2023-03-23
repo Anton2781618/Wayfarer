@@ -10,15 +10,9 @@ public class DialogueWindowUI : MonoBehaviour
     private List<DialogButtonUI>questButtons = new List<DialogButtonUI>();
     private int index = 0;
 
-    public void ShowDialogWindow(bool value)
-    {
-        dialogWindow.SetActive(value);
-    }
+    public void ShowDialogWindow(bool value) => dialogWindow.SetActive(value);
 
-    public void SetDialogueText(string value)
-    {
-        dialogText.text = value;
-    }
+    public void SetDialogueText(string value) => dialogText.text = value;
 
     public void CreateButtonsAnswers(string value, Brain brain)
     {

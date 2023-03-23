@@ -9,16 +9,18 @@ using Unity.VisualScripting;
 public class Brain
 {   
     public SolutionInfo currentSolution {get; set;}
-    public DSDialogueSO stage;//{get; private set;}
+    public DSDialogueSO stage{get; private set;}
     private Unit _unit;
     private bool newDialogue = false;
-    public DialogueWindowUI _dialogueWindowUI;
+    private DialogueWindowUI _dialogueWindowUI;
     [SerializeField] private Eyes _eyes = new Eyes();
     [SerializeField] private Mamry _mamry = new Mamry();
     [SerializeField] private Hearing _hearing = new Hearing();
 
     public void Init(Unit unit, Animator anim)
     {
+        _dialogueWindowUI = GameManager.Instance.GetDialogWindow();
+
         this._unit = unit;
 
         this._eyes.Init(_mamry, anim.GetBoneTransform(HumanBodyBones.Head), unit.transform);
@@ -44,10 +46,8 @@ public class Brain
         SolutionInfo newSolution = new SolutionInfo(100, solution);
 
         currentSolution = newSolution;
-
-        Debug.Log(_unit);
         
-        _unit.solutions.Add(currentSolution);
+        // _unit.solutions.Add(currentSolution);
 
         StartSolution();
     }
@@ -83,17 +83,9 @@ public class Brain
 
         currentSolution = newSolution;
         
-        _unit.solutions.Add(currentSolution);
+        // _unit.solutions.Add(currentSolution);
 
-        _dialogueWindowUI = GameManager.singleton.GetDialogWindow();
-        
-        GameManager.singleton.SwithCameraEnabled(false);
-
-        GameManager.singleton.SetIsControlingPlayer(false);
-
-        Cursor.visible = true;
-        
-        Cursor.lockState = CursorLockMode.None;
+        GameManager.Instance.BlockPlayerControl(true, false);
 
         foreach (var dialogueStage in currentSolution.solution.UngroupedDialogues)
         {
@@ -129,21 +121,21 @@ public class Brain
         {
             Debug.Log("Решение выполнено!");
 
-            _unit.solutions.Remove(currentSolution);
+            // _unit.solutions.Remove(currentSolution);
 
             currentSolution = null;
 
-            if(_unit.solutions.Count == 0)
-            {
-                CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
+            CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
+            // if(_unit.solutions.Count == 0)
+            // {
 
-            } 
-            else
-            {
-                currentSolution = _unit.solutions[0];
+            // } 
+            // else
+            // {
+            //     currentSolution = _unit.solutions[0];
 
-                StartSolution();
-            }
+            //     StartSolution();
+            // }
 
             return;
         }
@@ -157,7 +149,7 @@ public class Brain
 
         newDialogue = false;
 
-        if(!_dialogueWindowUI)_dialogueWindowUI = GameManager.singleton.GetDialogWindow();
+        GameManager.Instance.BlockPlayerControl(true, false);
 
         _dialogueWindowUI.ShowDialogWindow(true);
         
@@ -168,17 +160,15 @@ public class Brain
         stage.Choices.ForEach(t => _dialogueWindowUI.CreateButtonsAnswers(t.Text, this));
     }
 
-    public void CloseDialogueAndExitSoltuin()
+    public void CloseDialogue()
     {
         Debug.Log("Конец диалога");
+
+        GameManager.Instance.BlockPlayerControl(false, true);
         
-        GameManager.singleton.SwithCameraEnabled(true);
+        GameManager.Instance.GetDialogWindow().ShowDialogWindow(false);
 
-        GameManager.singleton.SetIsControlingPlayer(true);
-
-        GameManager.singleton.GetDialogWindow().ShowDialogWindow(false);
-
-        GameManager.singleton.CloseAllUiPanels();
+        GameManager.Instance.CloseAllUiPanels();
     }        
 
 #endregion Управление событиями и диалогом КОНЕЦ ------------------------------------------------------------------------------------------------------------------------//

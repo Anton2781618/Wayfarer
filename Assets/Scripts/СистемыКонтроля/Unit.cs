@@ -48,15 +48,16 @@ public class Unit : AbstractBehavior
     //метод принять решение, передает в мозг решение
     public void SetSolution(DSDialogueContainerSO solution)
     {
-        FinishWork();
-
         if(solution.UngroupedDialogues[0].DialogueType == DSDialogueType.Action)
         {
             brain.StartAction(solution);
+
+            Debug.Log("экшен " + solution.FileName + " " + solution.UngroupedDialogues[0].DialogueName);
         }
         else
         {
             CommandStartDialogue(solution);
+            Debug.Log("диалог");
         }
     }
 
@@ -457,7 +458,7 @@ public class Unit : AbstractBehavior
 
     private void CommandPlayerGiveMoney()
     {
-        Chest.ReceiveMoney(GameManager.singleton.pLayerController.Chest, (int)_modelData.number);
+        Chest.ReceiveMoney(GameManager.Instance.pLayerController.Chest, (int)_modelData.number);
         
         CompleteCommand();
     }

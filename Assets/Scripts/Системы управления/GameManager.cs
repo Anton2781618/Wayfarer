@@ -9,7 +9,7 @@ using static Cinemachine.CinemachineBrain;
 public class GameManager : MonoBehaviour
 {
     public GameObject Prefab;
-    public static GameManager singleton;
+    public static GameManager Instance;
     [SerializeField] private GameObject[] uiWindows;
     public PLayerController pLayerController{get; private set;}
     private InventoryController inventoryController;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     public enum windowsUI { HelpUI, InventoryUI, StatsUI, ChestUI, ContextMenuUI, InfoItemUI, DialogUI }
 
-    private void Start() 
+    private void Awake() 
     {
         Cursor.visible = false;
         
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         
         inventoryController = GetComponent<InventoryController>();
         
-        singleton = this;
+        Instance = this;
         
         pLayerController = FindObjectOfType<PLayerController>();     
 
@@ -170,11 +170,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        BlockPlayerControl(value);
+        BlockPlayerControl(value, !value);
     }
 
     //метод отключает контроль у камеры и включает мышку
-    public void BlockPlayerControl(bool value)
+    public void BlockPlayerControl(bool value, bool cursorBlock)
     {
         SwithCameraEnabled(!value);
         
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         
         Cursor.visible = value;
         
-        Cursor.lockState = !value ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.lockState = cursorBlock ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     //метод парализует камеру

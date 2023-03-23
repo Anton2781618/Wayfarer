@@ -21,7 +21,7 @@ public class DialogButtonUI : MonoBehaviour
     {      
         if(_brain.stage.Choices[_indexDialog].NextDialogue == null || _brain.stage.Choices[_indexDialog].NextDialogue.DialogueType == DSDialogueType.Action)
         {
-            _brain.CloseDialogueAndExitSoltuin();
+            _brain.CloseDialogue();
             
             _brain.NextStage(_indexDialog);
         }

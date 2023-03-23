@@ -112,7 +112,7 @@ public class Chest : MonoBehaviour, ICanUse
 
         chestGrid.ImageMoney.gameObject.SetActive(inventoryController.IsTreid || isPlayerInventory);
 
-        if(!isPlayerInventory)GameManager.singleton.OpenChest();
+        if(!isPlayerInventory)GameManager.Instance.OpenChest();
     }
 
     public void UpdateChestItems()

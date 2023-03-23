@@ -125,9 +125,9 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
         itemGrid.chestKeeper.RemoveAtChestGrid(this);
 
-        GameManager.singleton.SwithContextMenu(false);
+        GameManager.Instance.SwithContextMenu(false);
         
-        GameManager.singleton.SwithInfoItem(false);
+        GameManager.Instance.SwithInfoItem(false);
     }
 
     public void ShowOutline(bool value)

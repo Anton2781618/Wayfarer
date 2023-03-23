@@ -174,7 +174,7 @@ public class InventoryController : MonoBehaviour
             if(itemToHighLight != null)
             {
                 // StartCoroutine(WaitAndOpenInfo());
-                GameManager.singleton.GetInfoItem().GetComponent<WindowTranser>().SetTextsTransfers(itemToHighLight);
+                GameManager.Instance.GetInfoItem().GetComponent<WindowTranser>().SetTextsTransfers(itemToHighLight);
 
                 inventoryIHighLight.Show(true);
                 inventoryIHighLight.SetSize(itemToHighLight);
@@ -201,10 +201,10 @@ public class InventoryController : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
         
-        RectTransform rect = GameManager.singleton.GetInfoItem().GetComponent<RectTransform>();
+        RectTransform rect = GameManager.Instance.GetInfoItem().GetComponent<RectTransform>();
 
         SetPositionPopap(rect);
-        GameManager.singleton.SwithInfoItem(true);
+        GameManager.Instance.SwithInfoItem(true);
     }
 
     private void SetPositionPopap(RectTransform value)
@@ -255,9 +255,9 @@ public class InventoryController : MonoBehaviour
     {
         Vector2Int titleGridPosition = GetTitleGridPosition();
         
-        GameManager.singleton.SwithContextMenu(false);
+        GameManager.Instance.SwithContextMenu(false);
         
-        GameManager.singleton.SwithInfoItem(false);
+        GameManager.Instance.SwithInfoItem(false);
         
         if (selectedItem == null)
         {
@@ -283,7 +283,7 @@ public class InventoryController : MonoBehaviour
         
         if(!inventoryItem)return;
             
-        GameObject contextMenu = GameManager.singleton.SwithContextMenu(true);
+        GameObject contextMenu = GameManager.Instance.SwithContextMenu(true);
 
         contextMenu.GetComponent<ItemContextMenu>().SetTargetItem(inventoryItem);
         SetPositionPopap(contextMenu.GetComponent<RectTransform>());

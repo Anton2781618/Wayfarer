@@ -30,8 +30,8 @@ public class ItemContextMenu : MonoBehaviour
         
         Destroy(targetItem.gameObject);
         
-        GameManager.singleton.SwithContextMenu(false);
-        GameManager.singleton.SwithInfoItem(false);
+        GameManager.Instance.SwithContextMenu(false);
+        GameManager.Instance.SwithInfoItem(false);
     }
 
     public void UseItem()

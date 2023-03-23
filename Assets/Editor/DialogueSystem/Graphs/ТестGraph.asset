@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0202a3095b7477a4091d56344f0af6b3, type: 3}
-  m_Name: DialoguesFileNameGraph
+  m_Name: "\u0422\u0435\u0441\u0442Graph"
   m_EditorClassIdentifier: 
-  <FileName>k__BackingField: DialoguesFileName
+  <FileName>k__BackingField: "\u0422\u0435\u0441\u0442"
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: 963a6f04-0e96-49f5-a096-62dfee312f2f
-    <Name>k__BackingField: 963a6f04-0e96-49f5-a096-62dfee312f2f
+  - <ID>k__BackingField: c3509d34-694c-4325-924f-88f03743eb38
+    <Name>k__BackingField: c3509d34-694c-4325-924f-88f03743eb38
     <Text>k__BackingField: "\u0422\u0435\u043A\u0441\u0442"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: "\u0412\u044B\u0445\u043E\u0434"
+    - <Text>k__BackingField: New Choice
       <NodeID>k__BackingField: 
     <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 2
-    <Position>k__BackingField: {x: 444, y: 83}
-    <Action>k__BackingField: 28
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 292, y: 77}
+    <Action>k__BackingField: 5
     <ModelDate>k__BackingField:
       number: 0
       index: 0
@@ -42,9 +42,9 @@ MonoBehaviour:
       currentAnimation: 0
       unitOperation: 0
       dSAction: 0
-    <NodeMainColor>k__BackingField: {r: 0.99215686, g: 0.89411765, b: 0.54509807, a: 1}
+    <NodeMainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 963a6f04-0e96-49f5-a096-62dfee312f2f
+  - c3509d34-694c-4325-924f-88f03743eb38
   <OldGroupedNodeNames>k__BackingField:
     list: []

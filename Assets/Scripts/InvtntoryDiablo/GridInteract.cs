@@ -10,9 +10,10 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
    private InventoryController inventoryController;
    [SerializeField] private ItemGrid itemGrid;
 
-    private void Awake() 
+    private void Start() 
     {
-        inventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;    
+        inventoryController = GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryController();
+
         itemGrid = GetComponent<ItemGrid>();
     }
 

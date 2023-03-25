@@ -9,16 +9,22 @@ using static ItemData;
 public class InventoryItem : MonoBehaviour, ICanUse
 {    
     public ItemData itemData;
+    public int onGridPositionX;  
+    public int onGridPositionY; 
+    public bool rotated = false;
     public int Amount = 0;
     public RectTransform rectItemHighLight;
     public Text amauntText;
     public delegate void MyDelegate();
     private Dictionary<ItemType,MyDelegate> delegatesDict;
-
     private AbstractBehavior applicant;
+    public ItemGrid _grid;
+    
 
     private void Start() 
     {
+        GameManager.Instance.RegistrateUnit(this);
+
         InitDict();
     }
 
@@ -41,8 +47,6 @@ public class InventoryItem : MonoBehaviour, ICanUse
         delegatesDict.Add(ItemType.Золотые_монеты, UseMoney);
         delegatesDict.Add(ItemType.Еда, UseFood);
     }
-
-    
 
     public int HEIGHT
     {
@@ -68,14 +72,11 @@ public class InventoryItem : MonoBehaviour, ICanUse
        }
    }
 
-    public int onGridPositionX;  
-    public int onGridPositionY;  
-
-    public bool rotated = false;
-
-    internal void Setup(ItemData itemData)
+    internal void Setup(ItemData itemData, ItemGrid grid)
     {
         this.itemData = itemData;
+
+        _grid = grid;
 
         GetComponent<Image>().sprite = itemData.itemIcon; 
 
@@ -95,6 +96,9 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
         UpdateAmountItem();
     }
+
+    //установить сетку владельца
+    public void SetGrid(ItemGrid grid) => _grid = grid;
 
     public void UpdateAmountItem()
     {
@@ -117,17 +121,19 @@ public class InventoryItem : MonoBehaviour, ICanUse
         delegatesDict[itemData.itemType].Invoke();
     }
 
-    private void DestructSelf(ItemGrid itemGrid)
+    public void DestructSelf()
     {
         if(this == null) return;
-        
-        Destroy(gameObject);
 
-        itemGrid.chestKeeper.RemoveAtChestGrid(this);
+        Destroy(gameObject);
+        
+        GameManager.Instance.RemoveUsableObject(gameObject);
+
+        _grid.chestKeeper.RemoveAtChestGrid(this);
 
         GameManager.Instance.SwithContextMenu(false);
         
-        GameManager.Instance.SwithInfoItem(false);
+        GameManager.Instance.OpenDescriptInfo(false);
     }
 
     public void ShowOutline(bool value)
@@ -194,7 +200,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
         applicant.unitStats.hunger += Amount;
 
-        DestructSelf(applicant.Chest.GetChestGrid());
+        DestructSelf();
     }
 
     //Наплечники
@@ -207,18 +213,16 @@ public class InventoryItem : MonoBehaviour, ICanUse
     {
         applicant.Healing(Amount);
 
-        DestructSelf(applicant.Chest.GetChestGrid());
+        DestructSelf();
 
         Debug.Log("Использовал Зелье здоровья");
     }
 
     private void UseManaPotion()
     {
-        ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
+        applicant.Chest.GetChestGrid().abstractBehavior.RestoreMana(Amount);
 
-        buferGrid.abstractBehavior.RestoreMana(Amount);
-
-        DestructSelf(buferGrid);
+        DestructSelf();
 
         Debug.Log("Использовал Зелье Маны");
     }
@@ -226,12 +230,12 @@ public class InventoryItem : MonoBehaviour, ICanUse
     //деньги
     private void UseMoney()
     {
-        ItemGrid buferGrid = transform.parent.GetComponent<ItemGrid>();
+        applicant.Chest.GetChestGrid().chestKeeper.money += Amount;
 
-        buferGrid.chestKeeper.money += Amount;
-
-        buferGrid.chestKeeper.UpdateMoney();
+        applicant.Chest.GetChestGrid().chestKeeper.UpdateMoney();
         
-        DestructSelf(buferGrid);
+        DestructSelf();
+
+        Debug.Log("Добавлены деньги");
     }
 }

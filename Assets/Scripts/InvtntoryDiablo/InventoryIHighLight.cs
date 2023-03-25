@@ -11,6 +11,7 @@ public class InventoryIHighLight : MonoBehaviour
     public void Show(bool value)
     {
         highLighter.gameObject.SetActive(value);
+        
         highLighter.SetAsFirstSibling();
     }
 
@@ -48,6 +49,4 @@ public class InventoryIHighLight : MonoBehaviour
         if(targetGrid == null){return; }
         highLighter.SetParent(targetGrid.GetComponent<RectTransform>());
     }
-
-    
 }

@@ -8,14 +8,13 @@ public class InventoryController : MonoBehaviour
 {
 
     //инвнтарь игрока
-    private Chest playerChest;
+    public Chest playerChest;
     private ItemGrid buferGrid;
     
     //выбраный инвентарь
     public Chest selectedChest{get; set;}
     public bool IsTreid{get; set;} = false;
-    private
-     ItemGrid selectedItemGrid;
+    private ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid 
     {
         get => selectedItemGrid; 
@@ -23,7 +22,7 @@ public class InventoryController : MonoBehaviour
         set 
         {
             selectedItemGrid = value;
-        
+
             inventoryIHighLight.SetParent(value);
         }
     }
@@ -36,18 +35,18 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private GameObject itemPrefab;
 
     private Transform canvasTransform;
-    private InventoryIHighLight inventoryIHighLight;
+    public InventoryIHighLight inventoryIHighLight;
     private PLayerController player;
 
     private void Start() 
     {
         canvasTransform = transform.root;
 
-        inventoryIHighLight = GetComponent<InventoryIHighLight>();  
+        // inventoryIHighLight = GetComponent<InventoryIHighLight>();  
 
         player = FindObjectOfType<PLayerController>();
         
-        playerChest = player.GetComponent<Chest>();
+        // playerChest = player.GetComponent<Chest>();
     }
 
     private void Update() 
@@ -78,11 +77,9 @@ public class InventoryController : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0))
             {
-                // GameManager.singleton.SwithInfoItem(false);
-                // GameManager.singleton.SwithContextMenu(false);
-
                 if(selectedItem && !IsTreid)DropItem();
             }
+
             return;
         }
 
@@ -146,7 +143,8 @@ public class InventoryController : MonoBehaviour
     public void CreateAndInsertItem(ItemData itemData, ItemGrid grid, int amount)
     {
         Debug.Log("!!! " + itemData.title);
-        CreateItem(itemData, amount);
+        
+        CreateItem(itemData, grid, amount);
         
         InventoryItem itemToInsert = selectedItem;
         
@@ -157,28 +155,28 @@ public class InventoryController : MonoBehaviour
 
     public Chest GetPlayerChest() => playerChest;
 
-    Vector2Int oldPosition;
-    InventoryItem itemToHighLight;
+    private Vector2Int _oldPosition;
+    private InventoryItem _itemToHighLight;
 
     //метод подсветки предмета
     private void HandleHighlight()
     {
         Vector2Int positionOnGrid = GetTitleGridPosition();
-        if(oldPosition == positionOnGrid){return;}
+        if(_oldPosition == positionOnGrid){return;}
          
-        oldPosition = positionOnGrid;
+        _oldPosition = positionOnGrid;
         if(selectedItem == null)
         {
-            itemToHighLight = SelectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            _itemToHighLight = SelectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
             
-            if(itemToHighLight != null)
+            if(_itemToHighLight != null)
             {
                 // StartCoroutine(WaitAndOpenInfo());
-                GameManager.Instance.GetInfoItem().GetComponent<WindowTranser>().SetTextsTransfers(itemToHighLight);
+                GameManager.Instance.UIManager.GetDescriptionWindowUI().SetDescript(_itemToHighLight);
 
                 inventoryIHighLight.Show(true);
-                inventoryIHighLight.SetSize(itemToHighLight);
-                inventoryIHighLight.SetPosition(SelectedItemGrid, itemToHighLight);
+                inventoryIHighLight.SetSize(_itemToHighLight);
+                inventoryIHighLight.SetPosition(SelectedItemGrid, _itemToHighLight);
             }
             else
             {
@@ -201,10 +199,11 @@ public class InventoryController : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
         
-        RectTransform rect = GameManager.Instance.GetInfoItem().GetComponent<RectTransform>();
+        RectTransform rect = GameManager.Instance.UIManager.GetDescriptionWindowUI().GetRectTransform();
 
         SetPositionPopap(rect);
-        GameManager.Instance.SwithInfoItem(true);
+
+        GameManager.Instance.OpenDescriptInfo(true);
     }
 
     private void SetPositionPopap(RectTransform value)
@@ -224,12 +223,11 @@ public class InventoryController : MonoBehaviour
         rectTransform.SetAsLastSibling();
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
-        inventoryItem.Setup(items[selectedItemID]);
+        inventoryItem.Setup(items[selectedItemID], playerChest.GetChestGrid());
     }
 
-    private void CreateItem(ItemData itemData, int amount)
+    private void CreateItem(ItemData itemData, ItemGrid grid, int amount)
     {
-        Debug.Log("dlskdj");
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.Amount = amount;
         selectedItem = inventoryItem;
@@ -238,7 +236,7 @@ public class InventoryController : MonoBehaviour
         rectTransform.SetParent(canvasTransform);
         rectTransform.SetAsLastSibling();
 
-        inventoryItem.Setup(itemData);
+        inventoryItem.Setup(itemData, grid);
     }
 
     //метод перемещает итем в след за мышкой
@@ -257,7 +255,7 @@ public class InventoryController : MonoBehaviour
         
         GameManager.Instance.SwithContextMenu(false);
         
-        GameManager.Instance.SwithInfoItem(false);
+        GameManager.Instance.OpenDescriptInfo(false);
         
         if (selectedItem == null)
         {
@@ -341,7 +339,7 @@ public class InventoryController : MonoBehaviour
     //расположить вне торговли
     private void PlaceItemIsNotTraded(Vector2Int titleGridPosition)
     {
-        bool complete =  SelectedItemGrid.PlaceItem(selectedItem, titleGridPosition.x, titleGridPosition.y, ref overlapItem);        
+        bool complete = SelectedItemGrid.PlaceItem(selectedItem, titleGridPosition.x, titleGridPosition.y, ref overlapItem);        
         
         if(complete)
         {
@@ -371,18 +369,24 @@ public class InventoryController : MonoBehaviour
         if(SelectedItemGrid.chestKeeper.money < selectedItem.itemData.price)
         {
             SelectedItemGrid.NotEnoughMoneyAnimation();
+
             return;
         } 
 
         SelectedItemGrid.chestKeeper.money -= selectedItem.itemData.price;
+
         buferGrid.chestKeeper.money += selectedItem.itemData.price;
 
         buferGrid.chestKeeper.UpdateMoney();
+
         SelectedItemGrid.chestKeeper.UpdateMoney();
 
         InventoryItem buferItem = selectedItem;
+
         CreateAndInsertItem(buferItem.itemData, selectedItemGrid, selectedItem.Amount);
-        Destroy(buferItem.gameObject);
+
+        buferItem.DestructSelf();
+
         selectedItem = null;
     }
 
@@ -390,6 +394,7 @@ public class InventoryController : MonoBehaviour
     private void PutOnClothesOnBody(int index)
     {
         SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
+        
         SelectedItemGrid.GetSetCharacter().AddItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
     }
 
@@ -397,6 +402,7 @@ public class InventoryController : MonoBehaviour
     private void TakeOffClothes(int index)
     {
         SelectedItemGrid.GetSetCharacter().RemoveItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
+
         SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = null;
     }
 
@@ -405,10 +411,13 @@ public class InventoryController : MonoBehaviour
     {
         if(selectedItem)
         {
-            Destroy(selectedItem.gameObject);
+            GameManager.Instance.RemoveUsableObject(selectedItem.gameObject);
+
+            selectedItem.DestructSelf();
             
             Instantiate(selectedItem.itemData.prefab, 
-            new Vector3(player.transform.position.x + 1, player.transform.position.y + 1, player.transform.position.z), Quaternion.identity);
+                new Vector3(player.transform.position.x + 1, player.transform.position.y + 1, player.transform.position.z),
+                Quaternion.identity);
             
             selectedItem = null;
         }

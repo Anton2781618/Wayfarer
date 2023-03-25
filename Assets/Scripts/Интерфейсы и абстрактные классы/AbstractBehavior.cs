@@ -37,6 +37,8 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     private void Start() 
     {
+        GameManager.Instance.RegistrateUnit(this);
+
         _agent = GetComponent<NavMeshAgent>();
 
         _characterController = GetComponent<CharacterController>();

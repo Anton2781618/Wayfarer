@@ -8,7 +8,6 @@ using static ItemData;
 //устанавливается на UI сетки
 public class ItemGrid : MonoBehaviour
 {
-
     public const float titleSizeWidth = 32;
     public const float titleSizeHeight = 32;
 
@@ -128,7 +127,9 @@ public class ItemGrid : MonoBehaviour
     private void UpdateAmount(InventoryItem inventoryItem, InventoryItem overlapItem)
     {
         inventoryItem.amauntText.text = (inventoryItem.Amount += overlapItem.Amount).ToString();
-        Destroy(overlapItem.gameObject);
+
+        overlapItem.DestructSelf();
+        // Destroy(overlapItem.gameObject);
     }
 
     public void PlaceItem(InventoryItem inventoryItem, int posX, int posY)

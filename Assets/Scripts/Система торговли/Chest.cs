@@ -37,34 +37,33 @@ public class Chest : MonoBehaviour, ICanUse
 
     private void Start() 
     {
+        outline = GetComponent<Outline>();
 
-        outline = GetComponent<Outline>();    
+        //регистрирует себя только в слуае если это сундук
+        if(gameObject.layer == LayerMask.NameToLayer("Chest"))
+        {
+            GameManager.Instance.RegistrateUnit(this);
+        }
         
-        inventoryController = FindObjectOfType<InventoryController>();
+        inventoryController = GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryController();
         
         UpdateMoney();
     }
 
-    public void InitGrid(ItemGrid chestGrid)
-    {
-        this.chestGrid = chestGrid;
-        
-    }
+    public void InitGrid(ItemGrid chestGrid) => this.chestGrid = chestGrid;
     public void InitGrids(List<ItemGrid> chestGrids)
     {
         grids = chestGrids;
      
         chestGrid = grids[(int)InfoGrid.Инвентарь];
     }
-    
-    public void ShowOutline(bool value)
-    {
-        outline.enabled = value;
-    }  
+
+    public void ShowOutline(bool value) => outline.enabled = value;
 
     public void Use(AbstractBehavior applicant)
     {
         OpenChest(false);
+
         inventoryController.GetPlayerChest().OpenPlayerInventory();
     }
 
@@ -82,10 +81,7 @@ public class Chest : MonoBehaviour, ICanUse
         Use(applicant);
     }
 
-    public void OpenPlayerInventory()
-    {
-        OpenChest(true);
-    }
+    public void OpenPlayerInventory() => OpenChest(true);
 
     private void OpenChest(bool isPlayerInventory)
     {
@@ -175,16 +171,10 @@ public class Chest : MonoBehaviour, ICanUse
     }
 
     //добавить предмет в сундук предмет по  
-    public void AddItemToChest(InventoryItemInfo item)
-    {
-        inventoryItems.Add(item);
-    }
+    public void AddItemToChest(InventoryItemInfo item) => inventoryItems.Add(item);
 
     //добавить предмет в сундук по scriptable object
-    public void AddItemToChest(ItemData itemData)
-    {
-        inventoryItems.Add(new InventoryItemInfo(itemData, itemData.benefit));
-    }
+    public void AddItemToChest(ItemData itemData) => inventoryItems.Add(new InventoryItemInfo(itemData, itemData.benefit));
 
     // метод убирает из списка итемов в инвентаре определенный итем 
     public void RemoveAtChestGrid(InventoryItem item)
@@ -216,7 +206,9 @@ public class Chest : MonoBehaviour, ICanUse
     {
         foreach (Transform item in chestGrid.transform)
         {
-           if(item.gameObject.layer == 5) Destroy(item.gameObject);
+            GameManager.Instance.RemoveUsableObject(item.gameObject);
+
+            if(item.gameObject.layer == 5) Destroy(item.gameObject);
         }
     }
 
@@ -239,17 +231,16 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    public ItemGrid GetChestGrid()
-    {
-        return chestGrid;
-    }
+    public ItemGrid GetChestGrid() => chestGrid;
 
     public void ReceiveMoney(Chest targetChest, int value)
     {
         money += value;
+
         UpdateMoney();
 
         targetChest.money -= value;
+
         targetChest.UpdateMoney();
     }
 }

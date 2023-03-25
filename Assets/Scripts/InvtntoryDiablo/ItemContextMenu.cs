@@ -5,37 +5,31 @@ using UnityEngine;
 //Класс представляет контекстное меню
 public class ItemContextMenu : MonoBehaviour
 {
-    private InventoryItem targetItem;
-    private Transform player;
+    private InventoryItem _targetItem;
+    private PLayerController _player;
 
     private void Start() 
     {
-        player = FindObjectOfType<PLayerController>().transform;
+        _player = GameManager.Instance.pLayerController;
     }
 
-    public void SetTargetItem(InventoryItem value)
-    {
-        targetItem = value;
-    }
+    public void UseItem() => _targetItem.Use(_player);
 
-    public void ShowInfo()
+    public void SetTargetItem(InventoryItem item)
     {
-        
+        _targetItem = item;
     }
 
     public void DropItem()
     {
-        Instantiate(targetItem.itemData.prefab, 
-        new Vector3(player.position.x + 1, player.position.y + 1, player.position.z), Quaternion.identity);
+        Instantiate(_targetItem.itemData.prefab, 
+            new Vector3(_player.transform.position.x + 1, _player.transform.position.y + 1, _player.transform.position.z),
+            Quaternion.identity);
         
-        Destroy(targetItem.gameObject);
+        _targetItem.DestructSelf();
         
         GameManager.Instance.SwithContextMenu(false);
-        GameManager.Instance.SwithInfoItem(false);
-    }
 
-    public void UseItem()
-    {
-        targetItem.Use(player.GetComponent<PLayerController>());
+        GameManager.Instance.OpenDescriptInfo(false);
     }
 }

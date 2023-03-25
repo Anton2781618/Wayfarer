@@ -176,8 +176,7 @@ public class PLayerController : AbstractBehavior
                 }
             }            
 
-            _target = hitObject.transform.GetComponent<ICanUse>();
-            Debug.Log(hitObject.transform.name + " Надо исправить логику!!!!");
+            _target = GameManager.Instance.GetUsableObject(hitObject.transform.gameObject);
  
             _target.ShowOutline(true);
         }

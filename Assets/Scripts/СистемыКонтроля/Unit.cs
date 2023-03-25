@@ -14,17 +14,16 @@ using Unity.VisualScripting;
 
 public class Unit : AbstractBehavior
 {
-    public List<SolutionInfo> solutions;
     public Terrain currentTerrain;//!ждет доработки
     public List<MapSquare> map = new List<MapSquare>();
-    private DSAction currentAction = DSAction.CommandStandStill;
+    public DSAction CurrentAction{private get; set;} = DSAction.CommandStandStill;
     //двигается ли персонаж сейчас
     private bool needMoving = false;
     private bool needCreateMap = true;
     private Vector3 PintToWalke;
     private delegate void Operation();
     [SerializeField] private Brain brain = new Brain();
-    [SerializeField]private ModelDate _modelData;
+    public ModelDate ModelData{get; set;}
 
 
     //участок земли 
@@ -48,17 +47,8 @@ public class Unit : AbstractBehavior
     //метод принять решение, передает в мозг решение
     public void SetSolution(DSDialogueContainerSO solution)
     {
-        if(solution.UngroupedDialogues[0].DialogueType == DSDialogueType.Action)
-        {
-            brain.StartAction(solution);
-
-            Debug.Log("экшен " + solution.FileName + " " + solution.UngroupedDialogues[0].DialogueName);
-        }
-        else
-        {
-            CommandStartDialogue(solution);
-            Debug.Log("диалог");
-        }
+        Debug.Log("SetSolution ");
+        brain.StartSolution(solution);
     }
 
     //методы для работы слуха
@@ -78,32 +68,14 @@ public class Unit : AbstractBehavior
         }
     }
 
-    //установить действие
-    //! надо перенести в мозг
-    public void SetAction(DSAction action, ModelDate modelDate)
-    {
-        Debug.Log("устанавливаю задачу " + action);
-        
-        if(_modelData.go == null)
-        {
-            _modelData = modelDate;
-        }
-        else
-        {
-            modelDate.go = _modelData.go;
-
-            _modelData = modelDate;
-        }
-        
-        currentAction = action;
-    }
+    
 
     //выполнить текущую задачу работает постоянно постоянно
     public void ExecuteCurrentCommand()
     {
         if(_hpView.gameObject.activeSelf)RotateHpBar();
 
-        Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, currentAction.ToString());
+        Operation operation = (Operation)Delegate.CreateDelegate(typeof(Operation), this, CurrentAction.ToString());
 
         operation.Invoke();
     }
@@ -263,7 +235,7 @@ public class Unit : AbstractBehavior
     {
         needCreateMap = true;
 
-        this.currentAction = DSAction.CommandStandStill;
+        this.CurrentAction = DSAction.CommandStandStill;
 
         // _target = null;
 
@@ -275,7 +247,7 @@ public class Unit : AbstractBehavior
     public override void Die()
     {
         base.Die();
-
+        
         // transform.Find("граунд").GetComponent<ExampleClass>().gameObject.SetActive(false);
         
         SowHealthBar(false);
@@ -366,12 +338,12 @@ public class Unit : AbstractBehavior
             needMoving = false;
         }
         
-        if(FindTarget(_modelData.targetMask)) CompleteCommand();
+        if(FindTarget(ModelData.targetMask)) CompleteCommand();
     }
     
     private void CommandHoldPositionFindTheTarget()
     {
-        if(FindTarget(_modelData.targetMask)) CompleteCommand();
+        if(FindTarget(ModelData.targetMask)) CompleteCommand();
     }
 
     //стоять на месте
@@ -445,20 +417,15 @@ public class Unit : AbstractBehavior
 
     private void CommandStartDialogue()
     {
-        brain.StartDialogue(_modelData.dialogue);
-
-        CompleteCommand();
-    }
-    public void CommandStartDialogue(DSDialogueContainerSO dialog)
-    {
-        brain.StartDialogue(dialog);
+        Debug.Log("CommandStartDialogue");
+        brain.StartDialogue(ModelData.dialogue);
 
         CompleteCommand();
     }
 
     private void CommandPlayerGiveMoney()
     {
-        Chest.ReceiveMoney(GameManager.Instance.pLayerController.Chest, (int)_modelData.number);
+        Chest.ReceiveMoney(GameManager.Instance.pLayerController.Chest, (int)ModelData.number);
         
         CompleteCommand();
     }
@@ -481,9 +448,9 @@ public class Unit : AbstractBehavior
     [ContextMenu("CommandMoveToCoordinates")]
     private void CommandMoveToCoordinates()
     {
-        MoveToPoint(_modelData.pos);
+        MoveToPoint(ModelData.pos);
         
-        CheckDistanceAndSwitchStage(_modelData.pos);
+        CheckDistanceAndSwitchStage(ModelData.pos);
     }
 
     //метод запускает рабочий/производственный цикл
@@ -514,7 +481,9 @@ public class Unit : AbstractBehavior
 
     private void CommandMoveToWork()
     {
-        _agent.stoppingDistance = 0.3f;
+        _agent.speed = 1.5f;
+
+        _agent.stoppingDistance = 0.4f;
 
         MoveToPoint(brain.GetMamry().workplace.workPoint.position);
 
@@ -525,6 +494,8 @@ public class Unit : AbstractBehavior
     {
         if(Vector3.Distance(transform.position, point) <= _agent.stoppingDistance && _agent.velocity.magnitude == 0)
         {
+            _agent.speed = 3;
+
             _agent.stoppingDistance = 1.5f;
 
             CompleteCommand();
@@ -535,26 +506,26 @@ public class Unit : AbstractBehavior
     {
         if(_target == null) Debug.Log("нет таргета");
 
-        bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(_modelData.itemData);
+        bool res = _target.transform.GetComponent<Chest>().CheckInventoryForItems(ModelData.itemData);
 
         CompleteCommand(res ? 0 : 1);
     }
     
     private void CommandCheckSelfInventoryForItem()
     {
-        bool res = Chest.CheckInventoryForItems(_modelData.itemData);
+        bool res = Chest.CheckInventoryForItems(ModelData.itemData);
 
         CompleteCommand(res ? 0 : 1);
     }
 
     private void CommandCheckSelfInventoryForItemType()
     {
-        CompleteCommand(Chest.CheckInventoryForItemsType(_modelData.itemType));
+        CompleteCommand(Chest.CheckInventoryForItemsType(ModelData.itemType));
     }
 
     private void CommandUseSelfInventoryItem()
     {
-        InventoryItemInfo item = Chest.GetInventoryForItemType(_modelData.itemType);
+        InventoryItemInfo item = Chest.GetInventoryForItemType(ModelData.itemType);
         
         item.Use(this);
 
@@ -569,7 +540,7 @@ public class Unit : AbstractBehavior
 
         Chest targetChest = _target.transform.GetComponent<Chest>();
 
-        InventoryItemInfo item = targetChest.GetInventoryItem(_modelData.itemData);
+        InventoryItemInfo item = targetChest.GetInventoryItem(ModelData.itemData);
 
         targetChest.RemoveAtChestGrid(item);
         
@@ -584,7 +555,7 @@ public class Unit : AbstractBehavior
 
         Chest targetChest = _target.transform.GetComponent<Chest>();
 
-        targetChest.AddItemToChest(_modelData.itemData);
+        targetChest.AddItemToChest(ModelData.itemData);
 
         CompleteCommand();
     }
@@ -615,7 +586,7 @@ public class Unit : AbstractBehavior
     private void CommandPlayAnimation()
     {
         
-        if(_modelData.currentAnimation == CurrentAnimation.Украсть)
+        if(ModelData.currentAnimation == CurrentAnimation.Украсть)
         {
             if(!_animator.GetCurrentAnimatorStateInfo(0).IsName(cunAnimPlay) && isPlayin == false)
             {
@@ -652,20 +623,20 @@ public class Unit : AbstractBehavior
 
     private void CommandObjectOperation()
     {
-        if(_modelData.operation == ObjectOperation.Выключить)_modelData.go.SetActive(false);
+        if(ModelData.operation == ObjectOperation.Выключить)ModelData.go.SetActive(false);
         else
-        if(_modelData.operation == ObjectOperation.Включить)_modelData.go.SetActive(true);
+        if(ModelData.operation == ObjectOperation.Включить)ModelData.go.SetActive(true);
         else
-        if(_modelData.operation == ObjectOperation.Уничножить) Destroy(_modelData.go.gameObject);
+        if(ModelData.operation == ObjectOperation.Уничножить) Destroy(ModelData.go.gameObject);
         else
-        if(_modelData.operation == ObjectOperation.Использовать) _modelData.go.GetComponent<ICanUse>().Use();
+        if(ModelData.operation == ObjectOperation.Использовать) ModelData.go.GetComponent<ICanUse>().Use();
 
         CompleteCommand();
     }
 
     public void CommandPerformOperationWithAttribute()
     {
-        UnitAtribut info = _modelData.unitAtribut;
+        UnitAtribut info = ModelData.unitAtribut;
 
         info = info switch
         {
@@ -680,9 +651,9 @@ public class Unit : AbstractBehavior
         {
             atribut = operation switch
             {
-                UnitOperation.Прибавить => atribut + (int)_modelData.number,
+                UnitOperation.Прибавить => atribut + (int)ModelData.number,
             
-                UnitOperation.Вычисть => atribut - (int)_modelData.number,
+                UnitOperation.Вычисть => atribut - (int)ModelData.number,
             
                 UnitOperation => throw new ArgumentException("Передан недопустимый аргумент")
             };
@@ -737,20 +708,5 @@ public class MapSquare
     {
         this.pos = pos;
         this.size = size;
-    }
-}
-
-[Serializable]
-public class SolutionInfo
-{
-    //важность решения
-    public float importance = 0;
-    
-    public DSDialogueContainerSO solution;
-
-    public SolutionInfo(float importance, DSDialogueContainerSO solution)
-    {
-        this.importance = importance;
-        this.solution = solution;
     }
 }

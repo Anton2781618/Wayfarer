@@ -10,8 +10,10 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
 
     private Outline outline;
 
-    private void Awake() 
+    private void Start() 
     {
+        GameManager.Instance.RegistrateUnit(this);
+
         outline = GetComponent<Outline>();    
     }
 
@@ -25,6 +27,8 @@ public class ItemOnstreet : MonoBehaviour, ICanUse
     public void TakeItem(Chest chest)
     {       
         chest.AddItemToChest(new InventoryItemInfo(itemData, Amount));
+
+        GameManager.Instance.RemoveUsableObject(gameObject);
 
         Destroy(this.gameObject);
     }

@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 [Serializable]
 public class Brain
 {   
-    public SolutionInfo currentSolution {get; set;}
+    public DSDialogueContainerSO CurrentSolution {get; set;}
     public DSDialogueSO stage{get; private set;}
     private Unit _unit;
     private bool newDialogue = false;
@@ -19,7 +19,7 @@ public class Brain
 
     public void Init(Unit unit, Animator anim)
     {
-        _dialogueWindowUI = GameManager.Instance.GetDialogWindow();
+        _dialogueWindowUI = GameManager.Instance.UIManager.GetDialogueWindow();
 
         this._unit = unit;
 
@@ -40,18 +40,6 @@ public class Brain
         _unit.ExecuteCurrentCommand();
     }
 
-    //запустить решение
-    public void StartAction(DSDialogueContainerSO solution)
-    {
-        SolutionInfo newSolution = new SolutionInfo(100, solution);
-
-        currentSolution = newSolution;
-        
-        // _unit.solutions.Add(currentSolution);
-
-        StartSolution();
-    }
-
     public Eyes GetEyes() => _eyes;   
 
     public Mamry GetMamry() => _mamry;   
@@ -61,9 +49,11 @@ public class Brain
     #region [rgba(30,106,143, 0.05)] Управление событиями и диалогами -------------------------------------------------------------------------------------------------------//
     
     //старт решения
-    public void StartSolution()
+    public void StartSolution(DSDialogueContainerSO solution)
     {
-        foreach (var item in currentSolution.solution.UngroupedDialogues)
+        CurrentSolution = solution;
+
+        foreach (var item in CurrentSolution.UngroupedDialogues)
         {
             if(item.IsStartingDialogue) 
             {   
@@ -79,15 +69,11 @@ public class Brain
     //старт диалога
     public void StartDialogue(DSDialogueContainerSO dialogueContainer)
     {
-        SolutionInfo newSolution = new SolutionInfo(100, dialogueContainer);
-
-        currentSolution = newSolution;
+        CurrentSolution = dialogueContainer;
         
-        // _unit.solutions.Add(currentSolution);
-
         GameManager.Instance.BlockPlayerControl(true, false);
 
-        foreach (var dialogueStage in currentSolution.solution.UngroupedDialogues)
+        foreach (var dialogueStage in CurrentSolution.UngroupedDialogues)
         {
             if(dialogueStage.IsStartingDialogue)stage = dialogueStage;
         }
@@ -97,14 +83,21 @@ public class Brain
         newDialogue = true;
     }
     
-    //старт этапа
-    public void StartActionStage() => _unit.SetAction(stage.Action, stage.ModelDate);
+    //старт действия
+    public void StartActionStage(DSAction action, ModelDate modelDate)
+    {
+        Debug.Log("устанавливаю задачу " + action);
+
+        _unit.ModelData = modelDate;
+        
+        _unit.CurrentAction = action;
+    }
 
     private void StartStage()
     {
         if(stage.DialogueType == DSDialogueType.Action)
         {
-            StartActionStage();
+            StartActionStage(stage.Action, stage.ModelDate);
         }
         else
         {
@@ -121,21 +114,9 @@ public class Brain
         {
             Debug.Log("Решение выполнено!");
 
-            // _unit.solutions.Remove(currentSolution);
-
-            currentSolution = null;
+            CurrentSolution = null;
 
             CustomEvent.Trigger(_unit.gameObject, "ReturnToIdle");
-            // if(_unit.solutions.Count == 0)
-            // {
-
-            // } 
-            // else
-            // {
-            //     currentSolution = _unit.solutions[0];
-
-            //     StartSolution();
-            // }
 
             return;
         }
@@ -166,9 +147,9 @@ public class Brain
 
         GameManager.Instance.BlockPlayerControl(false, true);
         
-        GameManager.Instance.GetDialogWindow().ShowDialogWindow(false);
+        GameManager.Instance.UIManager.GetDialogueWindow().ShowDialogWindow(false);
 
-        GameManager.Instance.CloseAllUiPanels();
+        GameManager.Instance.CloseAllWindows();
     }        
 
 #endregion Управление событиями и диалогом КОНЕЦ ------------------------------------------------------------------------------------------------------------------------//

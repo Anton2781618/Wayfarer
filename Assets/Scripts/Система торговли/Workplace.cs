@@ -29,11 +29,15 @@ public class Workplace : MonoBehaviour, IWorkplace
 
     private void StartWork(Unit worker)
     {        
+        Debug.Log("Начал работать");
+        
         worker.SetAnimationWork(_work.ToString(), true);
     }
 
     public void FinishWork(Unit worker)
     {
+        Debug.Log("Закочнить работу");
+
         PossibleToWork = true;
         
         worker.SetAnimationWork(_work.ToString(), false);

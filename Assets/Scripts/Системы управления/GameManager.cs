@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         InputHandler();
     }
 
-    [ContextMenu("dsd")]
+    [ContextMenu("Показать словарь юзабельных объектов")]
     public void tra()
     {
         foreach (var item in _allUsableObjects)
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.Escape))  
         {
-            CloseAllWindows();
+            if(!UIManager.GetDialogueWindow().gameObject.activeSelf)CloseAllWindows();
         }
     }
 

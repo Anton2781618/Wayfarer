@@ -48,6 +48,7 @@ public class Unit : AbstractBehavior
     public void SetSolution(DSDialogueContainerSO solution)
     {
         Debug.Log("SetSolution ");
+
         brain.StartSolution(solution);
     }
 
@@ -90,10 +91,10 @@ public class Unit : AbstractBehavior
         }
     }
 
-    #region [rgba(30,106,143, 0.05)] Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
+    #region Разные вспомогательные методы -----------------------------------------------------------------------------------------------------//
 
     //двигаться к точке, пересчитывая путь
-    private void MoveToPoint(Vector3 point)
+    private bool MoveToPoint(Vector3 point)
     {
         _agent.SetDestination(point);
 
@@ -103,6 +104,8 @@ public class Unit : AbstractBehavior
         {
             FaceToPoint(_agent.path.corners[1]);
         }
+
+        return Vector3.Distance(transform.position, point) <= _agent.stoppingDistance && _agent.velocity.magnitude == 0;
     }
 
     private NavMeshPath CreatePath(Vector3 point)
@@ -261,7 +264,7 @@ public class Unit : AbstractBehavior
 
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 
-        return lookRotation == transform.rotation;
+        return Quaternion.Angle(transform.rotation, lookRotation) < 10;
     }
 
     //метод находит таргеты
@@ -418,6 +421,7 @@ public class Unit : AbstractBehavior
     private void CommandStartDialogue()
     {
         Debug.Log("CommandStartDialogue");
+        
         brain.StartDialogue(ModelData.dialogue);
 
         CompleteCommand();
@@ -432,6 +436,8 @@ public class Unit : AbstractBehavior
 
     private void CommandFaceToTarget()
     {
+        MoveToPoint(transform.position);
+
         if(FaceToPoint(_target.transform.position))
         {
             CompleteCommand();
@@ -445,7 +451,6 @@ public class Unit : AbstractBehavior
         CheckDistanceAndSwitchStage(_target.transform.position);
     }
     
-    [ContextMenu("CommandMoveToCoordinates")]
     private void CommandMoveToCoordinates()
     {
         MoveToPoint(ModelData.pos);
@@ -479,11 +484,12 @@ public class Unit : AbstractBehavior
         newTarget.FinishWork(this);
     }
 
+
     private void CommandMoveToWork()
     {
         _agent.speed = 1.5f;
 
-        _agent.stoppingDistance = 0.4f;
+        _agent.stoppingDistance = 1f;
 
         MoveToPoint(brain.GetMamry().workplace.workPoint.position);
 

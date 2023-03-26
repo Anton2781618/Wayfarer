@@ -4381,7 +4381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2680946358662613663}
-  m_LocalRotation: {x: -0, y: 0.9791791, z: -0, w: 0.20299838}
+  m_LocalRotation: {x: 0, y: 0.97917855, z: 0, w: 0.20300099}
   m_LocalPosition: {x: 63.221, y: 4.43, z: 113.932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4432,7 +4432,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0.000001907349, y: 0.9731519, z: -0.04763126}
+  m_Center: {x: 0, y: 0.97, z: 0}
 --- !u!114 &4177525475716153821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4474,7 +4474,6 @@ MonoBehaviour:
     sleep: 100
   _hpView: {fileID: 5389300625501627758}
   _sword: {fileID: 7473719661076684068}
-  solutions: []
   currentTerrain: {fileID: 0}
   map:
   - pos: {x: 6.25, y: 6.25}
@@ -4671,7 +4670,7 @@ MonoBehaviour:
     cubePref: {fileID: 0}
   brain:
     _eyes:
-      viewRadiusEyes: 6
+      viewRadiusEyes: 8
       viewAngleEyes: 360
       targetMaskForEyes:
         serializedVersion: 2
@@ -4686,23 +4685,6 @@ MonoBehaviour:
       groupMembers: []
     _hearing:
       hearObjectsList: []
-  _modelData:
-    number: 0
-    index: 0
-    text: 
-    go: {fileID: 0}
-    pos: {x: 0, y: 0, z: 0}
-    itemData: {fileID: 0}
-    dialogue: {fileID: 0}
-    targetMask:
-      serializedVersion: 2
-      m_Bits: 0
-    itemType: 0
-    unitAtribut: 0
-    operation: 0
-    currentAnimation: 0
-    unitOperation: 0
-    dSAction: 0
   posGame: {fileID: 0}
 --- !u!114 &2562537170870461055
 MonoBehaviour:
@@ -4804,13 +4786,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Plyer","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"PLayerController,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Trigger","value":{"$content":1,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
-      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Work
-      Place","value":{"$content":2,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"Workplace,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Work
+      Place","value":null,"typeHandle":{"Identification":"Workplace, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences:
-    - {fileID: 0}
-    - {fileID: 0}
     - {fileID: 0}
 --- !u!1 &2683151654042978865
 GameObject:

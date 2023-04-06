@@ -132,7 +132,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -607,13 +607,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Unit Genesis(Clone)
+    - name: Unit 8.1(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Genesis8_1Male
-      parentName: Unit Genesis(Clone)
+      parentName: Unit 8.1(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -765,7 +765,7 @@ ModelImporter:
     - name: lThumb2
       parentName: lThumb1
       position: {x: -0.010035819, y: -0.022635039, z: 0.03793874}
-      rotation: {x: -0.16119249, y: 0.048744887, z: -0.013557852, w: 0.9856252}
+      rotation: {x: -0.1611925, y: 0.048744887, z: -0.013557853, w: 0.9856252}
       scale: {x: 1, y: 1, z: 1}
     - name: lThumb3
       parentName: lThumb2
@@ -1290,7 +1290,7 @@ ModelImporter:
     - name: rThumb2
       parentName: rThumb1
       position: {x: 0.010035819, y: -0.022635039, z: 0.03793874}
-      rotation: {x: -0.16119249, y: -0.048744887, z: 0.013557852, w: 0.9856252}
+      rotation: {x: -0.1611925, y: -0.048744887, z: 0.013557853, w: 0.9856252}
       scale: {x: 1, y: 1, z: 1}
     - name: rThumb3
       parentName: rThumb2
@@ -1315,7 +1315,7 @@ ModelImporter:
     - name: lThighBend
       parentName: pelvis
       position: {x: -0.07611847, y: -0.1103672, z: -0.00996871}
-      rotation: {x: 8.6736174e-19, y: -1.4105932e-36, z: -1.6263033e-18, w: 1}
+      rotation: {x: 0.0053207306, y: 0.08699317, z: 0.060816236, w: 0.9943366}
       scale: {x: 1, y: 1, z: 1}
     - name: lThighTwist
       parentName: lThighBend
@@ -1395,7 +1395,7 @@ ModelImporter:
     - name: rThighBend
       parentName: pelvis
       position: {x: 0.07611847, y: -0.1103672, z: -0.00996871}
-      rotation: {x: 8.6736174e-19, y: 6.938894e-18, z: 4.553649e-18, w: 1}
+      rotation: {x: 0.0053207306, y: -0.08699317, z: -0.060816236, w: 0.9943366}
       scale: {x: 1, y: 1, z: 1}
     - name: rThighTwist
       parentName: rThighBend

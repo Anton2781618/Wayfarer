@@ -9,41 +9,22 @@ using static ItemData;
 
 public class Chest : MonoBehaviour, ICanUse
 {
-    public int money = 500;//{get; set;} = 500;
+    public int money = 500;
     private InventoryController inventoryController;
     private Outline outline;
-    [SerializeField] private List<ItemGrid> grids;
-    [SerializeField] private ItemGrid chestGrid;
-    
-
-    [Header("Предметы")]
-    [Tooltip("Соты для одежды")] [SerializeField] public SetCharacter clothes;
-    [Tooltip("Предметы в сетке инвентаря")] [SerializeField] private List<InventoryItemInfo> inventoryItems;
-
-    public enum InfoGrid
-    {
-        Шлем,
-        Броня,
-        Ремень,
-        Штаны,
-        Сапоги,
-        Оружие,
-        Щит,
-        Кольцо,
-        Кольцо2,
-        Наплечники,
-        Ожерелье,
-        Инвентарь,
-    }
+    private ItemGrid chestGrid;
+    [HideInInspector] public SetCharacter Clothes;
+    [SerializeField] private List<InventoryItemInfo> inventoryItems;
 
     private void Start() 
     {
-        outline = GetComponent<Outline>();
 
-        //регистрирует себя только в слуае если это сундук
+        //регистрирует себя только в случае если это сундук
         if(gameObject.layer == LayerMask.NameToLayer("Chest"))
         {
             GameManager.Instance.RegistrateUnit(this);
+            
+            outline = GetComponent<Outline>();
         }
         
         inventoryController = GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryController();
@@ -51,12 +32,6 @@ public class Chest : MonoBehaviour, ICanUse
         UpdateMoney();
     }
     public void InitGrid(ItemGrid chestGrid) => this.chestGrid = chestGrid;
-    public void InitGrids(List<ItemGrid> chestGrids)
-    {
-        grids = chestGrids;
-     
-        chestGrid = grids[(int)InfoGrid.Инвентарь];
-    }
 
     public void ShowOutline(bool value) => outline.enabled = value;
 
@@ -212,21 +187,6 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    
-    
-
-    [ContextMenu("Add")]
-    public void Add()
-    {
-        clothes.AddItem(3);
-    }
-
-    [ContextMenu("Remove")]
-    public void Remove()
-    {
-        clothes.RemoveItem(3);
-    }
-
     //взять итемы из списка и создать физически
     private void InsertAllInventoryItems()
     {
@@ -235,13 +195,18 @@ public class Chest : MonoBehaviour, ICanUse
            inventoryController.CreateAndInsertItem(item.itemData, chestGrid, item.Amount);
         }
     
-        for (int i = 0; i < grids.Count; i++)
+        foreach (var item in Clothes.items)
         {
-            GameObject buferPrefab = grids[i].GetSetCharacter().items[i].prefab;
-
-            if(buferPrefab != null)
+            if(item.prefab != null)
             {
-                inventoryController.CreateAndInsertItem( buferPrefab.GetComponent<ItemOnstreet>().GetItemData(), grids[i], 0);
+                foreach (var grid in inventoryController.inventoryWindowUI.GetInventoryGrids())
+                {
+                    if(grid.GetGridForItemsType() == item.ItemType)
+                    {
+                        inventoryController.CreateAndInsertItem(item.prefab.GetComponent<ItemOnstreet>().GetItemData(), grid, 0);
+                    }
+                }
+                
             }
         }
     }

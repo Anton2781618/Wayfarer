@@ -10,12 +10,11 @@ namespace CartoonHeroes
     {
         public SetCharacter(Transform myTransform)
         {
-            _myTransform = myTransform;
+            characterRoot = myTransform;
         }
         
-        public Transform _myTransform;
         public Transform characterRoot;
-        public List<Item> items;
+        public List<Item> items = new List<Item>();
         const string namePrefix = "Set Character_";
         const string hideString = "(Hide)";
         public GameObject disabledGraySkeleton;
@@ -23,7 +22,12 @@ namespace CartoonHeroes
         [System.Serializable]
         public class Item
         {
+            public Item( ItemData.ItemType itemType)
+            {
+                ItemType = itemType;
+            }
             public string name;
+            public ItemData.ItemType ItemType;
             public GameObject prefab;
         }
 
@@ -130,8 +134,8 @@ namespace CartoonHeroes
             Transform[] allCharacterChildren = GetAllCharacterChildren();
             Transform[] allItemChildren = itemInstance.GetComponentsInChildren<Transform>();
             
-            itemInstance.transform.position = _myTransform.transform.position;
-            itemInstance.transform.parent = _myTransform.transform;
+            itemInstance.transform.position = characterRoot.transform.position;
+            itemInstance.transform.parent = characterRoot.transform;
 
             string[] allItemChildren_NewNames= new string[allItemChildren.Length];
 
@@ -169,16 +173,7 @@ namespace CartoonHeroes
 
         public Transform GetRoot()
         {
-            Transform root;
-            if (characterRoot == null)
-            {
-                root = _myTransform.transform;
-            }
-            else
-            {
-                root = characterRoot;
-            }
-            return root;
+            return characterRoot;
         }
 
         public Transform[] GetAllCharacterChildren()

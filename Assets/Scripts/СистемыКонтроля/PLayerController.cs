@@ -25,23 +25,7 @@ public class PLayerController : AbstractBehavior
 
         if(!controller)controller = GetComponent<CharacterController>();
 
-        List<ItemGrid> buferGrids = new List<ItemGrid>();
-
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Шлем).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Броня).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Ремень).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Штаны).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Сапоги).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Оружие).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Щит).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Кольцо).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Кольцо2).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Наплечники).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Ожерелье).GetComponent<ItemGrid>());
-        buferGrids.Add(Initializer.singleton.InitObject(InitializerNames.Сетка_Инвентарь).GetComponent<ItemGrid>());
-
-        Chest.InitGrids(buferGrids);
-        // chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
+        Chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
         
         // chest.GetChestGrid().chestKeeper = chest;
     }

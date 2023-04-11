@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class InventoryWindowUI : MonoBehaviour
 {
-    [SerializeField] private InventoryController inventoryController;
+    [SerializeField] private InventoryController _inventoryController;
+    [SerializeField] private List<ItemGrid> _grids; 
+    // [SerializeField] private Grid inventoryController;
 
-    public InventoryController GetInventoryController() => inventoryController;
+    public InventoryController GetInventoryController() => _inventoryController;
+    public List<ItemGrid> GetInventoryGrids() => _grids;
 }

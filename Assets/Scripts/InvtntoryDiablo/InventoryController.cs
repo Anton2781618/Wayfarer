@@ -6,6 +6,7 @@ using static ItemData;
 //класс является системой управления всех ивентарей, основной функцианал инвентарей находится тут
 public class InventoryController : MonoBehaviour
 {
+    public InventoryWindowUI inventoryWindowUI;
 
     //инвнтарь игрока
     public Chest playerChest;
@@ -137,7 +138,7 @@ public class InventoryController : MonoBehaviour
 
         if(posOnGrid == null) 
         {
-            Debug.Log("нет места для предмета");
+            Debug.Log($"нет места для предмета {itemToInsert.itemData} на сетке {grid.transform.name}");
             return;
         }
         grid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
@@ -397,17 +398,17 @@ public class InventoryController : MonoBehaviour
     //надеть одежду 
     private void PutOnClothesOnBody(int index)
     {
-        SelectedItemGrid.GetSetCharacter().items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
+        playerChest.Clothes.items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
         
-        SelectedItemGrid.GetSetCharacter().AddItem(index);
+        playerChest.Clothes.AddItem(index);
     }
 
     //снять одежду
     private void TakeOffClothes(int index)
     {
-        SelectedItemGrid.GetSetCharacter().RemoveItem(index);
+        playerChest.Clothes.RemoveItem(index);
 
-        SelectedItemGrid.GetSetCharacter().items[index].prefab = null;
+        playerChest.Clothes.items[index].prefab = null;
     }
 
     //метод выкинуть предмет

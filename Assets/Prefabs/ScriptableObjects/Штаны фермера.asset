@@ -16,10 +16,11 @@ MonoBehaviour:
   description: "\u0414\u0435\u0435\u0432\u044B\u0435 \u0448\u0442\u0430\u043D\u044B
     \u0444\u0435\u0440\u043C\u0435\u0440\u0430"
   price: 100
+  benefit: 0
   width: 2
   height: 3
   itemIcon: {fileID: 21300000, guid: 699073324edfd8745a0649a7c221d2ae, type: 3}
-  prefab: {fileID: 2311271085865604942, guid: 4ffd7269aa3e01c4196c6eb5ae4d7cae, type: 3}
-  prefabForPutOn: {fileID: 2311271085865604942, guid: 4ffd7269aa3e01c4196c6eb5ae4d7cae, type: 3}
+  prefab: {fileID: 6227374041410465359, guid: 1efacc371d5a47e4a838644a8ea921fc, type: 3}
   itemType: 8
+  pos: {x: 0, y: 0, z: 0}
   isSingle: 1

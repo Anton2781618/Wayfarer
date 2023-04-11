@@ -27,7 +27,6 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] private int GridSizeWidth = 20; 
     [SerializeField] private int GridSizeHeight = 10; 
     [SerializeField] private ItemType gridForItemsType;
-    [SerializeField] private SetCharacter setCharacter;
 
     private int TextX; 
     private int TextY;
@@ -40,11 +39,6 @@ public class ItemGrid : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();    
         
         Init(GridSizeWidth,GridSizeHeight);
-    }
-
-    public SetCharacter GetSetCharacter()
-    {
-        return setCharacter;
     }
 
     public ItemType GetGridForItemsType()

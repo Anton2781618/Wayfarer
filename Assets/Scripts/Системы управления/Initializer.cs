@@ -24,9 +24,4 @@ public class Initializer : MonoBehaviour
     {
         return objectsForInit[(int)value];
     }
-
-    public string Test()
-    {
-        return "dsd";
-    }
 }

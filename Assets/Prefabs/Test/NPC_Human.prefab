@@ -115,7 +115,6 @@ GameObject:
   - component: {fileID: 2261661633899935381}
   - component: {fileID: 2261661633899935382}
   - component: {fileID: 2758377265812097296}
-  - component: {fileID: 2261661633899935386}
   - component: {fileID: 2261661633899935387}
   - component: {fileID: 2261661633899935391}
   - component: {fileID: 2261661633899935388}
@@ -192,54 +191,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0.000001907349, y: 0.9731519, z: -0.04763126}
---- !u!114 &2261661633899935386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2261661633899935360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63cbfa81008c7294a85576892c8f674a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterRoot: {fileID: 2261661633899935381}
-  itemGroups:
-  - name: New Item Group 0
-    items:
-    - prefab: {fileID: 4809023669481177333, guid: 0dd03f540a92d874ba599cf6cd0508e5, type: 3}
-    - prefab: {fileID: 3516626261806731263, guid: 5031431ff5b0fe1409aff85c784a80ba, type: 3}
-    - prefab: {fileID: 2311271085865604942, guid: 4ffd7269aa3e01c4196c6eb5ae4d7cae, type: 3}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    slots: 30
-  disabledGraySkeleton: {fileID: 0}
 --- !u!114 &2261661633899935387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,8 +248,6 @@ MonoBehaviour:
     sleep: 100
   _hpView: {fileID: 0}
   _sword: {fileID: 0}
-  solutions: []
-  objectsForOperations: []
   currentTerrain: {fileID: 0}
   map: []
   brain:
@@ -331,9 +280,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ad0299b2330ea4cb12aa1189f01e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  money: 500
   grids: []
   chestGrid: {fileID: 0}
-  money: 500
+  clothes:
+    _myTransform: {fileID: 0}
+    characterRoot: {fileID: 0}
+    items: []
+    disabledGraySkeleton: {fileID: 0}
   inventoryItems: []
 --- !u!114 &2261661633899935390
 MonoBehaviour:

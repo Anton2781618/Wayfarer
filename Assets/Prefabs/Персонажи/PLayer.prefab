@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 2733664116426769075}
   - component: {fileID: 2733664116427027265}
   - component: {fileID: 2733664116417565651}
-  - component: {fileID: 7609551651328177350}
   - component: {fileID: 2733664116427027271}
   - component: {fileID: 2733664116427027270}
   - component: {fileID: 7609551651328177344}
@@ -149,54 +148,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7609551651328177350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2733664116427027269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63cbfa81008c7294a85576892c8f674a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterRoot: {fileID: 2733664116426769075}
-  itemGroups:
-  - name: New Item Group 0
-    items:
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    - prefab: {fileID: 0}
-    slots: 30
-  disabledGraySkeleton: {fileID: 0}
 --- !u!114 &2733664116427027271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,11 +203,8 @@ MonoBehaviour:
     experienceForKilling: 50
     hunger: 100
     sleep: 100
-  HpSlider: {fileID: 0}
-  MpSlider: {fileID: 0}
-  state: 2
-  anim: {fileID: 0}
-  sword: {fileID: 9076309013435876496}
+  _hpView: {fileID: 0}
+  _sword: {fileID: 0}
   groundCheckObject: {fileID: 2733664115908126611}
   frontCheckObject: {fileID: 6263066858215234560}
   groundMask:
@@ -277,8 +225,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ad0299b2330ea4cb12aa1189f01e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestGrid: {fileID: 0}
   money: 500
+  grids: []
+  chestGrid: {fileID: 0}
+  clothes:
+    _myTransform: {fileID: 0}
+    characterRoot: {fileID: 0}
+    items: []
+    disabledGraySkeleton: {fileID: 0}
   inventoryItems:
   - itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
     Amount: 0
@@ -353,7 +307,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -558,7 +512,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -761,7 +715,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -904,7 +858,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5830733273131869476}
-  m_LocalRotation: {x: 3e-45, y: 1e-45, z: -0, w: 1}
+  m_LocalRotation: {x: -1e-45, y: 1e-45, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -949,7 +903,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5383,7 +5337,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9076309014007011093}
-  m_LocalRotation: {x: 3e-45, y: 1e-45, z: -0, w: 1}
+  m_LocalRotation: {x: -1e-45, y: 1e-45, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5486343, z: -4.0795403}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5811,7 +5765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75482c9558218784bb9fc074dac604a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holder: {fileID: 0}
+  _holder: {fileID: 0}
   damage: 20
   triggerMask:
     serializedVersion: 2

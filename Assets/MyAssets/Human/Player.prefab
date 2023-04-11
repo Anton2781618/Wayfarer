@@ -6506,7 +6506,6 @@ GameObject:
   - component: {fileID: 8210791146100818337}
   - component: {fileID: 5663022903043681464}
   - component: {fileID: 6509025532434204231}
-  - component: {fileID: 9132187198407606203}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6607,7 +6606,6 @@ MonoBehaviour:
   forwardMask:
     serializedVersion: 2
     m_Bits: 3200
-  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &8210791146100818337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6633,9 +6631,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ad0299b2330ea4cb12aa1189f01e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  money: 500
   grids: []
   chestGrid: {fileID: 0}
-  money: 500
+  clothes:
+    _myTransform: {fileID: 0}
+    characterRoot: {fileID: 0}
+    items: []
+    disabledGraySkeleton: {fileID: 0}
   inventoryItems:
   - itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
     Amount: 100
@@ -6672,26 +6675,6 @@ MonoBehaviour:
   headIkWeight: 0.8
   eyesIkWeight: 0
   clampWeight: 0.8
---- !u!114 &9132187198407606203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249857907114874170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63cbfa81008c7294a85576892c8f674a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterRoot: {fileID: 8734364936382697344}
-  itemGroups:
-  - name: New Item Group 0
-    items:
-    - prefab: {fileID: 919132149155446097, guid: fb48370d4a5d1874097dd6f3b9b78d60, type: 3}
-    - prefab: {fileID: 919132149155446097, guid: f46028f77bca3494a97a277a1d14ccb8, type: 3}
-    slots: 2
-  disabledGraySkeleton: {fileID: 0}
 --- !u!1 &8301625430005392745
 GameObject:
   m_ObjectHideFlags: 0

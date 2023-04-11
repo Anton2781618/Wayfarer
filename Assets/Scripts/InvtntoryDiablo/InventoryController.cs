@@ -118,10 +118,10 @@ public class InventoryController : MonoBehaviour
         InventoryItem itemToInsert = selectedItem;
 
         selectedItem = null;
-        InsertItem(itemToInsert);
+        InsertItemSelectedGrid(itemToInsert);
     }
 
-    private void InsertItem(InventoryItem itemToInsert)
+    private void InsertItemSelectedGrid(InventoryItem itemToInsert)
     {
         Vector2Int? posOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
 
@@ -130,12 +130,16 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
-    private void InsertItemV2(InventoryItem itemToInsert, ItemGrid grid)
+    private void InsertItemOnGrid(InventoryItem itemToInsert, ItemGrid grid)
     {
+        Debug.Log("InsertItemOnGrid" + grid.transform.name);
         Vector2Int? posOnGrid = grid.FindSpaceForObject(itemToInsert);
 
-        if(posOnGrid == null) {return;}
-
+        if(posOnGrid == null) 
+        {
+            Debug.Log("нет места для предмета");
+            return;
+        }
         grid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
@@ -150,7 +154,7 @@ public class InventoryController : MonoBehaviour
         
         selectedItem = null;
         
-        InsertItemV2(itemToInsert, grid);
+        InsertItemOnGrid(itemToInsert, grid);
     }
 
     public Chest GetPlayerChest() => playerChest;
@@ -393,17 +397,17 @@ public class InventoryController : MonoBehaviour
     //надеть одежду 
     private void PutOnClothesOnBody(int index)
     {
-        SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
+        SelectedItemGrid.GetSetCharacter().items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
         
-        SelectedItemGrid.GetSetCharacter().AddItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
+        SelectedItemGrid.GetSetCharacter().AddItem(index);
     }
 
     //снять одежду
     private void TakeOffClothes(int index)
     {
-        SelectedItemGrid.GetSetCharacter().RemoveItem(SelectedItemGrid.GetSetCharacter().itemGroups[0], index);
+        SelectedItemGrid.GetSetCharacter().RemoveItem(index);
 
-        SelectedItemGrid.GetSetCharacter().itemGroups[0].items[index].prefab = null;
+        SelectedItemGrid.GetSetCharacter().items[index].prefab = null;
     }
 
     //метод выкинуть предмет

@@ -6,8 +6,6 @@ using static ItemData;
 //класс является системой управления всех ивентарей, основной функцианал инвентарей находится тут
 public class InventoryController : MonoBehaviour
 {
-    public InventoryWindowUI inventoryWindowUI;
-
     //инвнтарь игрока
     public Chest playerChest;
     private ItemGrid buferGrid;
@@ -116,31 +114,27 @@ public class InventoryController : MonoBehaviour
         if(selectedItemGrid == null) {return;}
 
         CreateRandomItem();
+
         InventoryItem itemToInsert = selectedItem;
 
         selectedItem = null;
-        InsertItemSelectedGrid(itemToInsert);
-    }
-
-    private void InsertItemSelectedGrid(InventoryItem itemToInsert)
-    {
-        Vector2Int? posOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
-
-        if(posOnGrid == null) {return;}
-
-        selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+        
+        InsertItemOnGrid(itemToInsert, selectedItemGrid);
     }
 
     private void InsertItemOnGrid(InventoryItem itemToInsert, ItemGrid grid)
     {
-        Debug.Log("InsertItemOnGrid" + grid.transform.name);
         Vector2Int? posOnGrid = grid.FindSpaceForObject(itemToInsert);
 
         if(posOnGrid == null) 
         {
-            Debug.Log($"нет места для предмета {itemToInsert.itemData} на сетке {grid.transform.name}");
+            Debug.Log($"На сетке {grid} нет места для {itemToInsert.itemData.title}");
+            Debug.Log("ВНИМАНИЕ! Надо переделать так что бы сначало проверялась сетка на наличие места, а потом ставился итем");
+            Destroy(itemToInsert.gameObject);
+
             return;
         }
+
         grid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
@@ -398,7 +392,7 @@ public class InventoryController : MonoBehaviour
     //надеть одежду 
     private void PutOnClothesOnBody(int index)
     {
-        playerChest.Clothes.items[index].prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
+        playerChest.Clothes.items[index].Prefab = SelectedItemGrid.GetItem(0, 0).itemData.prefab;
         
         playerChest.Clothes.AddItem(index);
     }
@@ -408,7 +402,7 @@ public class InventoryController : MonoBehaviour
     {
         playerChest.Clothes.RemoveItem(index);
 
-        playerChest.Clothes.items[index].prefab = null;
+        playerChest.Clothes.items[index].Prefab = null;
     }
 
     //метод выкинуть предмет

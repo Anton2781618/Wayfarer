@@ -8,12 +8,15 @@ namespace CartoonHeroes
     [System.Serializable]
     public class SetCharacter
     {
-        public SetCharacter(Transform myTransform)
+        public SetCharacter(Transform myTransform, Animator anim)
         {
             characterRoot = myTransform;
+
+            animator = anim;
         }
         
         public Transform characterRoot;
+        public Animator animator;
         public List<Item> items = new List<Item>();
         const string namePrefix = "Set Character_";
         const string hideString = "(Hide)";
@@ -22,20 +25,26 @@ namespace CartoonHeroes
         [System.Serializable]
         public class Item
         {
-            public Item( ItemData.ItemType itemType)
+            public Item(ItemData.ItemType itemType, bool useRig, HumanBodyBones humanBody = HumanBodyBones.Head)
             {
                 ItemType = itemType;
+
+                IsUseRig = useRig;
+
+                humanBodyBone = humanBody;
             }
-            public string name;
+
             public ItemData.ItemType ItemType;
-            public GameObject prefab;
+            public ItemOnstreet Prefab;
+            public bool IsUseRig {get;}//анимируется ли итем
+            public HumanBodyBones humanBodyBone; 
         }
 
         public GameObject AddItem(int itemSlot)
         {
             Item item = items[itemSlot];
             
-            GameObject itemInstance = GameObject.Instantiate(item.prefab);
+            GameObject itemInstance = GameObject.Instantiate(item.Prefab.gameObject);
             
             // itemInstance.GetComponent<Collider>().enabled = false;
             Object.DestroyImmediate(itemInstance.GetComponent<Collider>());
@@ -47,26 +56,54 @@ namespace CartoonHeroes
             Object.DestroyImmediate(itemInstance.GetComponent<Rigidbody>());
 
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
-
-            RemoveAnimator(itemInstance);
             
-            ParentObjectAndBones(itemInstance);
+            if(item.IsUseRig)
+            {
+                ParentObjectAndBones(itemInstance);
 
-            SetGraySkeletonVisibility(!VisibleItems());
+                SetGraySkeletonVisibility(!VisibleItems());
+            }
+            else
+            {
+                SetSetItemNotUseRig(item, itemInstance);
+            }
+            
 
             return itemInstance;
         }
 
+        private void SetSetItemNotUseRig(Item item, GameObject itemInstance)
+        {
+            itemInstance.transform.SetParent(animator.GetBoneTransform(item.humanBodyBone)); 
+            
+            itemInstance.transform.localPosition = Vector3.zero;
+        }
+
+        private void RemoveItedNotUseRig(Item itemInstance)
+        {
+            GameObject.DestroyImmediate(GetChildOnSkelet(itemInstance));
+        }
+
         public void RemoveItem(int itemSlot)
         {
-            List<GameObject> removedObjs = GetRemoveObjList(itemSlot);
-                            
-            for(int m = 0; m < removedObjs.Count; m ++)
+            Item item = items[itemSlot];
+
+            if(item.IsUseRig)
             {
-                if(removedObjs[m] != null)
+                List<GameObject> removedObjs = GetRemoveObjList(itemSlot);
+
+                for(int m = 0; m < removedObjs.Count; m ++)
                 {
-                    Object.DestroyImmediate(removedObjs[m]);
+                    if(removedObjs[m] != null)
+                    {
+                        Object.DestroyImmediate(removedObjs[m]);
+                    }
                 }
+
+            }
+            else
+            {
+                RemoveItedNotUseRig(item);
             }
         }
         
@@ -99,7 +136,8 @@ namespace CartoonHeroes
                     }
                 }
              }
-            else {
+            else 
+            {
                 if (disabledGraySkeleton != null)
                 {
                     disabledGraySkeleton.SetActive(true);
@@ -108,17 +146,54 @@ namespace CartoonHeroes
 
         }
 
+        private GameObject GetChildOnSkelet(Item item)
+        {
+            Transform bone = animator.GetBoneTransform(item.humanBodyBone);
+
+            foreach (Transform child in bone)
+            {
+                if (child.name == item.Prefab.transform.name)
+                {
+                    return child.gameObject;
+                }
+            }
+
+            return null;
+        }
+
         public bool HasItem(int itemSlot)
         {
-            if (items[itemSlot].prefab != null)
-            {
+            Item item = items[itemSlot];
 
+            if(item.Prefab == null)
+            {
+                Debug.Log("префаб не установлен");
+
+                return false;
+            } 
+
+            if (item.IsUseRig && item.Prefab != null)
+            {
                 Transform root = GetRoot();
-                Transform prefab = items[itemSlot].prefab.transform;
+
                 for (int i = 0; i < root.childCount; i++)
                 {
                     Transform child = root.GetChild(i); 
-                    if (child.name.Contains(prefab.name) && child.name.Contains(namePrefix))
+
+                    if (child.name.Contains(item.Prefab.transform.name) && child.name.Contains(namePrefix))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            if(!item.IsUseRig)
+            {
+                Transform bone = animator.GetBoneTransform(item.humanBodyBone);
+
+                foreach (Transform child in bone)
+                {
+                    if (child.name == item.Prefab.transform.name)
                     {
                         return true;
                     }
@@ -198,21 +273,11 @@ namespace CartoonHeroes
 
         public bool BelongsToItem(Transform obj, int itemSlot)
         {
-            if(obj == null || items[itemSlot].prefab == null)
+            if(obj == null || items[itemSlot].Prefab == null)
             {
                 return false;
             }
-            return (obj.name.Contains(namePrefix) && obj.name.Contains(items[itemSlot].prefab.name));
-        }
-
-        //удаляет аниматор с одежды 
-        public void RemoveAnimator(GameObject item)
-        {
-            Animator animator = item.GetComponent<Animator>();
-            if(animator != null)
-            {
-                Object.DestroyImmediate(animator);
-            }
+            return (obj.name.Contains(namePrefix) && obj.name.Contains(items[itemSlot].Prefab.name));
         }
 
         public void MatchTransform(Transform obj, Transform target)

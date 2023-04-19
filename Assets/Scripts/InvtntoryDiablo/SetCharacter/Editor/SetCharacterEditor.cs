@@ -17,14 +17,6 @@ namespace CartoonHeroes
 
             Chest chest = (Chest)target;
 
-            
-            // GUILayout.Space(defaultSpace);
-
-            // chest.clothes.characterRoot = EditorGUILayout.ObjectField("Character Root", chest.clothes.characterRoot, typeof(Transform), true) as Transform;
-
-            // GUILayout.Space(defaultSpace);
-
-
             EditorGUILayout.BeginHorizontal("Box");
             
             _showBckgrounds = EditorGUILayout.Foldout(_showBckgrounds, "Одежда", true);
@@ -81,32 +73,32 @@ namespace CartoonHeroes
                     
                     if (!chest.Clothes.HasItem(n))
                     {
-
                         if (GUILayout.Button("Надеть"))
                         {
-                            GameObject addedObj = chest.Clothes.AddItem(n);
+                            chest.Clothes.AddItem(n);
                         }
                     }
                     else
                     {
                         if (GUILayout.Button("Снять"))
                         {
-                            List<GameObject> removedObjs = chest.Clothes.GetRemoveObjList(n);
+                            chest.Clothes.RemoveItem(n);
+                            // List<GameObject> removedObjs = chest.Clothes.GetRemoveObjList(n);
                             
-                            for(int m = 0; m < removedObjs.Count; m ++)
-                            {
-                                if(removedObjs[m] != null)
-                                {
-                                    DestroyImmediate(removedObjs[m]);
-                                }
-                            }
+                            // for(int m = 0; m < removedObjs.Count; m ++)
+                            // {
+                            //     if(removedObjs[m] != null)
+                            //     {
+                            //         DestroyImmediate(removedObjs[m]);
+                            //     }
+                            // }
                         }
                     }
 
                     if(chest.Clothes.items[n] != null)
                     {
-                        chest.Clothes.items[n].prefab = 
-                        EditorGUILayout.ObjectField(chest.Clothes.items[n].prefab, typeof(GameObject), true) as GameObject;
+                        chest.Clothes.items[n].Prefab = 
+                        EditorGUILayout.ObjectField(chest.Clothes.items[n].Prefab, typeof(ItemOnstreet), true) as ItemOnstreet;
                     }
                     
                     // if (GUILayout.Button("X"))
@@ -125,29 +117,29 @@ namespace CartoonHeroes
 
         private void CreateCloches(Chest chest)
         {
-            chest.Clothes = new SetCharacter(chest.transform);
+            chest.Clothes = new SetCharacter(chest.transform, chest.transform.GetComponent<Animator>());
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Шлем));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Шлем, false, HumanBodyBones.Head));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Броня));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Броня, true));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Ремень));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Ремень, true));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Штаны));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Штаны, true));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Сапоги));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Сапоги, true));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Оружие));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Оружие, false, HumanBodyBones.RightHand));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Щит));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Щит, false, HumanBodyBones.LeftHand));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Кольцо));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Кольцо, false, HumanBodyBones.RightHand));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Кольцо));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Кольцо, false, HumanBodyBones.LeftHand));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Наплечники));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Наплечники, true));
 
-            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Ожерелье));
+            chest.Clothes.items.Add(new SetCharacter.Item(ItemData.ItemType.Ожерелье, false, HumanBodyBones.Neck));
         }
     }
 }

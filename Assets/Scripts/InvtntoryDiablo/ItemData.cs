@@ -18,7 +18,7 @@ public class ItemData : ScriptableObject
     public int height = 1;
 
     public Sprite itemIcon;
-    public GameObject prefab;
+    public ItemOnstreet prefab;
 
     //этот префаб одежды которая наденется непосредственно на
     // public GameObject prefabForPutOn;

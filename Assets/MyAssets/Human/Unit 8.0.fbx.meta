@@ -1310,7 +1310,7 @@ ModelImporter:
     - name: lThighBend
       parentName: pelvis
       position: {x: -0.07611847, y: -0.11036718, z: -0.00996871}
-      rotation: {x: 0, y: 0, z: 0.034899496, w: 0.99939084}
+      rotation: {x: 0.003992766, y: 0.06091784, z: 0.065281145, w: 0.9959977}
       scale: {x: 1, y: 1, z: 0.99999994}
     - name: lThighTwist
       parentName: lThighBend
@@ -1390,7 +1390,7 @@ ModelImporter:
     - name: rThighBend
       parentName: pelvis
       position: {x: 0.07611847, y: -0.11036718, z: -0.00996871}
-      rotation: {x: 0, y: 0, z: -0.034899496, w: 0.99939084}
+      rotation: {x: -0.003992768, y: 0.060917873, z: 0.065281145, w: -0.9959977}
       scale: {x: 1, y: 1, z: 1.0000001}
     - name: rThighTwist
       parentName: rThighBend

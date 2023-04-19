@@ -197,16 +197,15 @@ public class Chest : MonoBehaviour, ICanUse
     
         foreach (var item in Clothes.items)
         {
-            if(item.prefab != null)
+            if(item.Prefab != null)
             {
-                foreach (var grid in inventoryController.inventoryWindowUI.GetInventoryGrids())
+                foreach (var grid in GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryGrids())
                 {
                     if(grid.GetGridForItemsType() == item.ItemType)
                     {
-                        inventoryController.CreateAndInsertItem(item.prefab.GetComponent<ItemOnstreet>().GetItemData(), grid, 0);
+                        inventoryController.CreateAndInsertItem(item.Prefab.GetItemData(), grid, 0);
                     }
                 }
-                
             }
         }
     }

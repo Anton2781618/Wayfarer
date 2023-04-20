@@ -25,14 +25,12 @@ public class Unit : AbstractBehavior
     [SerializeField] private Brain brain = new Brain();
     public ModelDate ModelData{get; set;}
 
-
     //участок земли 
-
     public override void Init()
     {
         _agent.updateRotation = false;
-        
-        Chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Моб).GetComponent<ItemGrid>());
+
+        Chest.Init(this, GameManager.Instance.UIManager.GetNpcInventoryWindowUI().GetNpcInventoryGrid());
 
         brain.Init(this, _animator);
     }    

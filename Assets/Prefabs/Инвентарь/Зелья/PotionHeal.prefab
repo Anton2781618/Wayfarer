@@ -180,7 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d277677c906feb14abb64a3c01a4fb47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
+  _itemData: {fileID: 11400000, guid: 89850e3040eed284d902e5c39737fec7, type: 2}
+  _collider: {fileID: 5975218461323820055}
+  _rigidbody: {fileID: 5975218461323820054}
+  _outline: {fileID: 5975218461323820053}
   Amount: 0
 --- !u!1 &5975218461735965880
 GameObject:

@@ -12,24 +12,15 @@ public class ItemGrid : MonoBehaviour
     public const float titleSizeHeight = 32;
 
     //это ссылка на того чей инвентарь
-    public Chest chestKeeper {get; set;}
-    public AbstractBehavior abstractBehavior;
-    
-    public Text moneyText;
-    public Image ImageMoney;
+    public Chest chest;// {get; set;}
     private InventoryItem[,] inventoryItemSlot;
-
     private RectTransform rectTransform;
-    
     private Vector2 positionOnTheGrid = new Vector2();
     private Vector2Int titeGridPosition = new Vector2Int();
 
     [SerializeField] private int GridSizeWidth = 20; 
     [SerializeField] private int GridSizeHeight = 10; 
     [SerializeField] private ItemType gridForItemsType;
-
-    private int TextX; 
-    private int TextY;
 
     //поле определяет сетка для одного предмета или нет
     public bool isSingle = false;
@@ -146,24 +137,6 @@ public class ItemGrid : MonoBehaviour
         rectTransform.localPosition = positionItem;
     }
 
-    public void NotEnoughMoneyAnimation()
-    {
-        StartCoroutine(MoneyAnimation());
-    }
-
-    private IEnumerator MoneyAnimation()
-    {
-        moneyText.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        moneyText.color = Color.black;    
-        yield return new WaitForSeconds(0.2f);
-        moneyText.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        moneyText.color = Color.black;        
-        
-
-        
-    }
     public Vector2 CalculatePositionOnGrid(InventoryItem inventoryItem, int posX, int posY)
     {
         Vector2 positionItem = new Vector2();

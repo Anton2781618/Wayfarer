@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class ItemOnstreet : MonoBehaviour, ICanUse
 {
-    [SerializeField] private ItemData itemData;
+    [SerializeField] private ItemData _itemData;
+    [SerializeField] private Collider _collider;
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Outline _outline;
 
     public int Amount = 0;
-
-    private Outline outline;
 
     private void Start() 
     {
         GameManager.Instance.RegistrateUnit(this);
-
-        outline = GetComponent<Outline>();    
     }
+
+    public Collider GetCollider() => _collider;
+    public Rigidbody GetRigidbody() => _rigidbody;
+    public Outline GetOutline() => _outline;
 
     public void ShowOutline(bool value)
     {
-        outline.enabled = value;
+        _outline.enabled = value;
     }
 
-    public ItemData GetItemData() => itemData;
+    public ItemData GetItemData() => _itemData;
 
     public void TakeItem(Chest chest)
     {       
-        chest.AddItemToChest(new InventoryItemInfo(itemData, Amount));
+        chest.AddItemToChest(new InventoryItemInfo(_itemData, Amount));
 
         GameManager.Instance.RemoveUsableObject(gameObject);
 

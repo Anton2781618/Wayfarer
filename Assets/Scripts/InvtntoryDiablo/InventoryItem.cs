@@ -129,7 +129,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
         
         GameManager.Instance.RemoveUsableObject(gameObject);
 
-        _grid.chestKeeper.RemoveAtChestGrid(this);
+        _grid.chest.RemoveAtChestGrid(this);
 
         GameManager.Instance.SwithContextMenu(false);
         
@@ -220,7 +220,7 @@ public class InventoryItem : MonoBehaviour, ICanUse
 
     private void UseManaPotion()
     {
-        applicant.Chest.GetChestGrid().abstractBehavior.RestoreMana(Amount);
+        applicant.RestoreMana(Amount);
 
         DestructSelf();
 
@@ -230,9 +230,9 @@ public class InventoryItem : MonoBehaviour, ICanUse
     //деньги
     private void UseMoney()
     {
-        applicant.Chest.GetChestGrid().chestKeeper.money += Amount;
+        applicant.Chest.money += Amount;
 
-        applicant.Chest.GetChestGrid().chestKeeper.UpdateMoney();
+        applicant.Chest.UpdateMoney();
         
         DestructSelf();
 

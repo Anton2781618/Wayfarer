@@ -17,17 +17,16 @@ public class PLayerController : AbstractBehavior
     private bool isGrounded = true;
     private float smoothVel;
     private Vector3 velocity;
-    public static int noOfcliks = 0;
+    public static int noOffcliks = 0;
     private float lastClicedTime = 0;
     private float nextFireTime = 0;
     public override void Init()
     {
-
         if(!controller)controller = GetComponent<CharacterController>();
-
-        Chest.InitGrid(Initializer.singleton.InitObject(InitializerNames.Инвентарь_Плеер).GetComponent<ItemGrid>());
         
-        // chest.GetChestGrid().chestKeeper = chest;
+        GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().GetPlayerInventoryGrids().ForEach(item => item.chest = Chest);
+        
+        Chest.Init(this, GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().GetPlayerInventoryChest());
     }
 
     private void Update()
@@ -51,6 +50,15 @@ public class PLayerController : AbstractBehavior
 
     private void Controller()
     {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            _animator.SetBool("FightAnim", true);
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            _animator.SetBool("FightAnim", false);
+        }
+
         if(!Input.GetKey(KeyCode.Mouse1))
         {
             MovePlayer(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -63,14 +71,14 @@ public class PLayerController : AbstractBehavior
         
         if(Time.time - lastClicedTime > 1.5f)
         {
-            noOfcliks = 0;
+            noOffcliks = 0;
             _animator.SetBool("Attack1", false);
             _animator.SetBool("Attack2", false);
             _animator.SetBool("Attack3", false);
         }
 
+        RotationPlayer();
 
-            RotationPlayer();
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
 
@@ -78,22 +86,22 @@ public class PLayerController : AbstractBehavior
             
             if(Time.time <= nextFireTime) return;
 
-            noOfcliks ++;
+            noOffcliks ++;
 
-            noOfcliks = Mathf.Clamp(noOfcliks, 0, 3);
+            noOffcliks = Mathf.Clamp(noOffcliks, 0, 3);
 
             
-            if(noOfcliks >= 1)
+            if(noOffcliks >= 1)
             {
                 _animator.SetBool("Attack1", true);
             }
 
-            if(noOfcliks >= 2)
+            if(noOffcliks >= 2)
             {
                 _animator.SetBool("Attack2", true);
             }
 
-            if(noOfcliks >= 3)
+            if(noOffcliks >= 3)
             {
                 _animator.SetBool("Attack3", true);
             }

@@ -12,7 +12,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Start() 
     {
-        inventoryController = GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryController();
+        inventoryController = GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().GetInventoryController();
 
         itemGrid = GetComponent<ItemGrid>();
     }

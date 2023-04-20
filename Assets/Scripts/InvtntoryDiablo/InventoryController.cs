@@ -141,7 +141,7 @@ public class InventoryController : MonoBehaviour
     //создать физически итем и установить его на сетку 
     public void CreateAndInsertItem(ItemData itemData, ItemGrid grid, int amount)
     {
-        Debug.Log("!!! " + itemData.title);
+        Debug.Log($"Создан предмет {itemData.title}");
         
         CreateItem(itemData, grid, amount);
         
@@ -256,6 +256,7 @@ public class InventoryController : MonoBehaviour
         
         GameManager.Instance.OpenDescriptInfo(false);
         
+        
         if (selectedItem == null)
         {
             PickUpItem(titleGridPosition);
@@ -306,7 +307,7 @@ public class InventoryController : MonoBehaviour
     private void PickUpItem(Vector2Int titleGridPosition)
     {
         selectedItem = SelectedItemGrid.SelectIteme(titleGridPosition.x, titleGridPosition.y);
-
+        Debug.Log(SelectedItemGrid + " / " + selectedItem);
         if(SelectedItemGrid.isSingle)
         {
             TakeOffClothes(selectedItem.itemData.GetItemTypeIndex());
@@ -325,7 +326,7 @@ public class InventoryController : MonoBehaviour
     //расположить предмет на сетке 
     private void PlaceItem(Vector2Int titleGridPosition)
     {
-        if(IsTreid && buferGrid.chestKeeper != SelectedItemGrid.chestKeeper)
+        if(IsTreid && buferGrid.chest != SelectedItemGrid.chest)
         {
             PlaceItemInTrade();
         }
@@ -365,20 +366,20 @@ public class InventoryController : MonoBehaviour
     //расположить при торговли
     private void PlaceItemInTrade()
     {
-        if(SelectedItemGrid.chestKeeper.money < selectedItem.itemData.price)
+        if(SelectedItemGrid.chest.money < selectedItem.itemData.price)
         {
-            SelectedItemGrid.NotEnoughMoneyAnimation();
+            GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().NotEnoughMoneyAnimation();
 
             return;
         } 
 
-        SelectedItemGrid.chestKeeper.money -= selectedItem.itemData.price;
+        SelectedItemGrid.chest.money -= selectedItem.itemData.price;
 
-        buferGrid.chestKeeper.money += selectedItem.itemData.price;
+        buferGrid.chest.money += selectedItem.itemData.price;
 
-        buferGrid.chestKeeper.UpdateMoney();
+        buferGrid.chest.UpdateMoney();
 
-        SelectedItemGrid.chestKeeper.UpdateMoney();
+        SelectedItemGrid.chest.UpdateMoney();
 
         InventoryItem buferItem = selectedItem;
 

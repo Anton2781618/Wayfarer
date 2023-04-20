@@ -29,35 +29,41 @@ namespace CartoonHeroes
             {
                 ItemType = itemType;
 
-                IsUseRig = useRig;
+                UseRig = useRig;
 
                 humanBodyBone = humanBody;
             }
 
             public ItemData.ItemType ItemType;
             public ItemOnstreet Prefab;
-            public bool IsUseRig {get;}//анимируется ли итем
+            public bool UseRig;//использует ли итем скелет 
             public HumanBodyBones humanBodyBone; 
         }
 
-        public GameObject AddItem(int itemSlot)
+        public void AddItem(int itemSlot)
         {
             Item item = items[itemSlot];
-            
-            GameObject itemInstance = GameObject.Instantiate(item.Prefab.gameObject);
-            
-            // itemInstance.GetComponent<Collider>().enabled = false;
-            Object.DestroyImmediate(itemInstance.GetComponent<Collider>());
-            
-            // DestroyImmediate(itemInstance.GetComponent<Outline>());
 
-            Object.DestroyImmediate(itemInstance.GetComponent<ItemOnstreet>());
+            if(item.Prefab == null)
+            {
+                Debug.Log("Слот пуст!");
 
-            Object.DestroyImmediate(itemInstance.GetComponent<Rigidbody>());
+                return;
+            }
+                
+            ItemOnstreet itemInstance = GameObject.Instantiate(item.Prefab);
+            
+            GameObject.DestroyImmediate(itemInstance.GetCollider());
+
+            GameObject.DestroyImmediate(itemInstance.GetRigidbody());
+            
+            GameObject.DestroyImmediate(itemInstance.GetOutline());
+
+            // GameObject.DestroyImmediate(itemInstance.GetComponent<ItemOnstreet>());
 
             itemInstance.name = itemInstance.name.Substring(0, itemInstance.name.Length - "(Clone)".Length);
             
-            if(item.IsUseRig)
+            if(item.UseRig)
             {
                 ParentObjectAndBones(itemInstance);
 
@@ -67,16 +73,15 @@ namespace CartoonHeroes
             {
                 SetSetItemNotUseRig(item, itemInstance);
             }
-            
-
-            return itemInstance;
         }
 
-        private void SetSetItemNotUseRig(Item item, GameObject itemInstance)
+        private void SetSetItemNotUseRig(Item item, ItemOnstreet itemInstance)
         {
             itemInstance.transform.SetParent(animator.GetBoneTransform(item.humanBodyBone)); 
             
             itemInstance.transform.localPosition = Vector3.zero;
+
+            itemInstance.transform.localRotation = Quaternion.identity;
         }
 
         private void RemoveItedNotUseRig(Item itemInstance)
@@ -88,7 +93,7 @@ namespace CartoonHeroes
         {
             Item item = items[itemSlot];
 
-            if(item.IsUseRig)
+            if(item.UseRig)
             {
                 List<GameObject> removedObjs = GetRemoveObjList(itemSlot);
 
@@ -167,12 +172,10 @@ namespace CartoonHeroes
 
             if(item.Prefab == null)
             {
-                Debug.Log("префаб не установлен");
-
                 return false;
             } 
 
-            if (item.IsUseRig && item.Prefab != null)
+            if (item.UseRig && item.Prefab != null)
             {
                 Transform root = GetRoot();
 
@@ -187,7 +190,7 @@ namespace CartoonHeroes
                 }
             }
             else
-            if(!item.IsUseRig)
+            if(!item.UseRig)
             {
                 Transform bone = animator.GetBoneTransform(item.humanBodyBone);
 
@@ -204,7 +207,7 @@ namespace CartoonHeroes
         }
 
         //удочерить кости одежды к костям персонажа 
-        public void ParentObjectAndBones(GameObject itemInstance)
+        public void ParentObjectAndBones(ItemOnstreet itemInstance)
         {
             Transform[] allCharacterChildren = GetAllCharacterChildren();
             Transform[] allItemChildren = itemInstance.GetComponentsInChildren<Transform>();
@@ -283,6 +286,7 @@ namespace CartoonHeroes
         public void MatchTransform(Transform obj, Transform target)
         {
             obj.position = target.position;
+
             obj.rotation = target.rotation;
         }
 

@@ -67,8 +67,10 @@ public abstract class AbstractBehavior : MonoBehaviour, ICanTakeDamage, ICanUse
 
     public void SowHealthBar(bool value) => _hpView.gameObject.SetActive(value);
 
+    //вызывается из анимции эвентом
     public void SetHitBoolOFF() => _sword.SetHitBoolOFF();
 
+    //вызывается из анимции эвентом
     public void SetHitBoolOn() => _sword.SetHitBoolOn();
 
     public void ShowOutline(bool value)

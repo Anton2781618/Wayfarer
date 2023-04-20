@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         
         Cursor.lockState = CursorLockMode.Locked;
         
-        inventoryController = UIManager.GetInventoryWindowUI().GetInventoryController();
+        inventoryController = UIManager.GetPlayerInventoryWindowUI().GetInventoryController();
         
         pLayerController = FindObjectOfType<PLayerController>();     
 
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 
             inventoryController.IsTreid = false;
 
-            OpenWindowUI(UIManager.GetInventoryWindowUI().gameObject, !UIManager.GetInventoryWindowUI().gameObject.activeSelf);
+            OpenWindowUI(UIManager.GetPlayerInventoryWindowUI().gameObject, !UIManager.GetPlayerInventoryWindowUI().gameObject.activeSelf);
             
             OpenWindowUI(UIManager.GetDialogueWindow().gameObject, false);
             
@@ -77,15 +77,15 @@ public class GameManager : MonoBehaviour
             
             inventoryController.SelectedItemGrid = null;
             
-            if(UIManager.GetСhestWindowUI().gameObject.activeSelf)
+            if(UIManager.GetNpcInventoryWindowUI().gameObject.activeSelf)
             {
-                OpenWindowUI(UIManager.GetСhestWindowUI().gameObject, !UIManager.GetСhestWindowUI().gameObject.activeSelf);
+                OpenWindowUI(UIManager.GetNpcInventoryWindowUI().gameObject, !UIManager.GetNpcInventoryWindowUI().gameObject.activeSelf);
 
                 inventoryController.selectedChest = null;
             }
 
             //при открытии инвентаря создаем предметы внутри инвентаря
-            if (UIManager.GetInventoryWindowUI().gameObject.activeSelf) inventoryController.GetPlayerChest().OpenPlayerInventory();
+            if (UIManager.GetPlayerInventoryWindowUI().gameObject.activeSelf) inventoryController.GetPlayerChest().OpenPlayerInventory();
         }  
 
         if(Input.GetKeyDown(KeyCode.C))
@@ -124,9 +124,9 @@ public class GameManager : MonoBehaviour
     ///</summary>
     public void OpenChest()
     {
-        OpenWindowUI(UIManager.GetСhestWindowUI().gameObject, true);
+        OpenWindowUI(UIManager.GetNpcInventoryWindowUI().gameObject, true);
 
-        OpenWindowUI(UIManager.GetInventoryWindowUI().gameObject, true);
+        OpenWindowUI(UIManager.GetPlayerInventoryWindowUI().gameObject, true);
     }
 
     ///<summary>

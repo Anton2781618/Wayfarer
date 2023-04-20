@@ -12,13 +12,13 @@ public class Chest : MonoBehaviour, ICanUse
     public int money = 500;
     private InventoryController inventoryController;
     private Outline outline;
-    private ItemGrid chestGrid;
+    private ItemGrid _chestGrid;
+    [SerializeField] private AbstractBehavior _chestKeeper;
     [HideInInspector] public SetCharacter Clothes;
     [SerializeField] private List<InventoryItemInfo> inventoryItems;
 
     private void Start() 
     {
-
         //регистрирует себя только в случае если это сундук
         if(gameObject.layer == LayerMask.NameToLayer("Chest"))
         {
@@ -27,11 +27,19 @@ public class Chest : MonoBehaviour, ICanUse
             outline = GetComponent<Outline>();
         }
         
-        inventoryController = GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryController();
+        inventoryController = GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().GetInventoryController();
         
         UpdateMoney();
     }
-    public void InitGrid(ItemGrid chestGrid) => this.chestGrid = chestGrid;
+    public void Init(AbstractBehavior chestKeeper, ItemGrid chestGrid)
+    {
+        _chestKeeper = chestKeeper;
+
+        _chestGrid = chestGrid;
+    } 
+
+
+    public AbstractBehavior GetchestKeeper() => _chestKeeper;
 
     public void ShowOutline(bool value) => outline.enabled = value;
 
@@ -44,9 +52,11 @@ public class Chest : MonoBehaviour, ICanUse
 
     public void UpdateMoney()
     {
-        if(!chestGrid || !chestGrid.moneyText) return;
+        Text moneyText = GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().moneyText;
+        
+        if(!moneyText) return;
 
-        chestGrid.moneyText.text = money.ToString();
+        moneyText.text = money.ToString();
     }
 
     public void StartTrading(AbstractBehavior applicant)
@@ -62,35 +72,35 @@ public class Chest : MonoBehaviour, ICanUse
     {
         if(!isPlayerInventory)inventoryController.selectedChest = this;
 
-        chestGrid.chestKeeper = this;
-
-        this.TryGetComponent(out chestGrid.abstractBehavior);
+        _chestGrid.chest = this;
         
         ClearItems();
 
         StartCoroutine(WaightSecAndOpenChest(isPlayerInventory));
     }
 
+    
     private IEnumerator WaightSecAndOpenChest(bool isPlayerInventory)
     {
         yield return null;
 
-        inventoryController.SelectedItemGrid = chestGrid;
+        inventoryController.SelectedItemGrid = _chestGrid;
         
         InsertAllInventoryItems();
         
         inventoryController.SelectedItemGrid = null;
 
-        chestGrid.ImageMoney.gameObject.SetActive(inventoryController.IsTreid || isPlayerInventory);
+        GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().BlockMoneyImage(inventoryController.IsTreid || isPlayerInventory);
 
         if(!isPlayerInventory)GameManager.Instance.OpenChest();
     }
 
+    //вставить все итемы в инвентарь
     public void UpdateChestItems()
     {
         inventoryItems.Clear();
 
-        foreach (Transform item in chestGrid.transform)
+        foreach (Transform item in _chestGrid.transform)
         {
             if(item.gameObject.layer == 5)
             {
@@ -179,7 +189,7 @@ public class Chest : MonoBehaviour, ICanUse
     //удалить UI объекты из слоя инвентаря
     private void ClearItems()
     {
-        foreach (Transform item in chestGrid.transform)
+        foreach (Transform item in _chestGrid.transform)
         {
             GameManager.Instance.RemoveUsableObject(item.gameObject);
 
@@ -192,14 +202,14 @@ public class Chest : MonoBehaviour, ICanUse
     {
         foreach (InventoryItemInfo item in inventoryItems)
         {
-           inventoryController.CreateAndInsertItem(item.itemData, chestGrid, item.Amount);
+           inventoryController.CreateAndInsertItem(item.itemData, _chestGrid, item.Amount);
         }
     
         foreach (var item in Clothes.items)
         {
             if(item.Prefab != null)
             {
-                foreach (var grid in GameManager.Instance.UIManager.GetInventoryWindowUI().GetInventoryGrids())
+                foreach (var grid in GameManager.Instance.UIManager.GetPlayerInventoryWindowUI().GetPlayerInventoryGrids())
                 {
                     if(grid.GetGridForItemsType() == item.ItemType)
                     {
@@ -210,7 +220,7 @@ public class Chest : MonoBehaviour, ICanUse
         }
     }
 
-    public ItemGrid GetChestGrid() => chestGrid;
+    public ItemGrid GetChestGrid() => _chestGrid;
 
     public void ReceiveMoney(Chest targetChest, int value)
     {
